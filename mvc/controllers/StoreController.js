@@ -6,27 +6,27 @@ class StoreController {
         this.view.setController(this);
         this.model.addObserver(this.view);
     }
-
     init(extensions, categories) {
         this.model.setData(extensions, categories);
     }
-
     handleSearch(term) {
         this.model.setSearchTerm(term);
     }
-
     handleCategory(category) {
         this.model.setCategory(category);
     }
-
     handleSort(sortBy) {
         this.model.setSortBy(sortBy);
     }
-
     handleFeaturedTab(tab) {
         this.model.setFeaturedTab(tab);
     }
-
+    handlePageChange(page) {
+        this.model.setPage(page);
+    }
+    handleToggleFeatured() {
+        this.model.toggleFeatured();
+    }
     handleOpenExtension(id) {
         // Hooks into the main app.js routing handling
         if (window.openExtensionHandler) {
@@ -34,5 +34,4 @@ class StoreController {
         }
     }
 }
-
 window.StoreController = StoreController;

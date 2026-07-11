@@ -1,4 +1,4 @@
-// GoF Pattern: Observer (Observer Participant) 
+// GoF Pattern: Observer (Observer Participant)
 class StoreView {
     constructor() {
         this.controller = null;
@@ -9,11 +9,9 @@ class StoreView {
         this.bindEvents();
         this.bindScrollEvents();
     }
-
     setController(controller) {
         this.controller = controller;
     }
-
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
@@ -32,6 +30,14 @@ class StoreView {
         
         // Global Event Delegation for dynamic structural components
         document.body.addEventListener('click', (event) => {
+            // Toggle Featured Section
+            const toggleFeaturedBtn = event.target.closest('[data-action="toggle-featured"]');
+            if (toggleFeaturedBtn && this.controller) {
+                event.preventDefault();
+                this.controller.handleToggleFeatured();
+                return;
+            }
+            
             // Pill Categories Filter
             const categoryBtn = event.target.closest('[data-category]');
             if (categoryBtn && this.controller) {
@@ -45,9 +51,23 @@ class StoreView {
                 this.controller.handleFeaturedTab(featuredTabBtn.getAttribute('data-featured-tab'));
             }
             
+            // Pagination Click Triggers
+            const pageBtn = event.target.closest('[data-page]');
+            if (pageBtn && this.controller) {
+                event.preventDefault();
+                const pageNum = parseInt(pageBtn.getAttribute('data-page'), 10);
+                if (!isNaN(pageNum)) {
+                    this.controller.handlePageChange(pageNum);
+                    window.scrollTo({ top: document.getElementById('main-divider').offsetTop - 80, behavior: 'smooth' });
+                }
+            }
+            
             // General Extension Cards Open Details
             const card = event.target.closest('[data-extension-id]');
             if (card && this.controller) {
+                // Ensure clicks on pagination elements inside body don't misfire card detail views
+                if (event.target.closest('#pagination-container') || event.target.closest('#featured-section button')) return;
+                
                 const extId = card.getAttribute('data-extension-id');
                 
                 // Add unfolding animation class
@@ -58,11 +78,10 @@ class StoreView {
                     this.controller.handleOpenExtension(extId);
                     // Clean up to ensure state is reset if navigating back
                     card.classList.remove('card-unfold-active');
-                }, 350); 
+                }, 350);
             }
         });
     }
-
     bindScrollEvents() {
         const catContainer = document.getElementById('categories-container');
         const scrollLeftBtn = document.getElementById('cat-scroll-left');
@@ -90,11 +109,11 @@ class StoreView {
             });
         }
     }
-
     update(data) {
         this.renderCategories(data.categories, data.state.selectedCategory);
-        this.renderFeatured(data.featured, data.state.featuredTab);
+        this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden);
         this.renderExtensions(data.filtered, data.state.selectedCategory);
+        this.renderPagination(data.pagination);
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
         
@@ -125,11 +144,10 @@ class StoreView {
             } else {
                 featuredSection.classList.remove('hidden');
                 mainDivider.classList.remove('hidden');
-                resultsHeader.classList.add('hidden'); 
+                resultsHeader.classList.add('hidden');
             }
         }
     }
-
     renderCategories(categories, selectedCategory) {
         const container = document.getElementById('categories-container');
         if (!container) return;
@@ -149,11 +167,30 @@ class StoreView {
         
         container.innerHTML = buttons;
     }
-
-    renderFeatured(featured, activeTab) {
+    renderFeatured(featured, activeTab, isHidden) {
         const featuredSection = document.getElementById('featured-section');
         if (!featuredSection) return;
         
+        if (isHidden) {
+            // Remove the large bottom margin when hidden so the gap isn't huge
+            featuredSection.classList.remove('mb-12');
+            featuredSection.classList.add('mb-2');
+            
+            featuredSection.innerHTML = `
+                <div class="flex justify-end animate-fade-in">
+                    <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-2 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        Show Featured
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        // Restore the original margin when the section is visible
+        featuredSection.classList.remove('mb-2');
+        featuredSection.classList.add('mb-12');
+
         const tabs = [
             { id: 'trending', label: 'Trending' },
             { id: 'popular', label: 'Popular' },
@@ -170,12 +207,20 @@ class StoreView {
             `;
         }).join('');
         
+        const hideBtnHtml = `
+            <button type="button" data-action="toggle-featured" class="ml-auto text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-[#deddda] dark:hover:bg-[#3d3846]" title="Hide Featured">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                Hide
+            </button>
+        `;
+        
         const extensionsToShow = featured[activeTab] || [];
         
         featuredSection.innerHTML = `
             <div class="flex flex-col gap-6 animate-fade-in">
-                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
                     ${tabsHtml}
+                    ${hideBtnHtml}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     ${extensionsToShow.map(ext => this.generateCardHTML(ext)).join('')}
@@ -183,7 +228,6 @@ class StoreView {
             </div>
         `;
     }
-
     renderExtensions(visible, selectedCategory) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
@@ -201,14 +245,52 @@ class StoreView {
         emptyState.classList.add('hidden');
         resultsHeader.innerHTML = `
             <div class="animate-fade-in">
-                <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">${visible.length} extensions</h3>
+                <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Showing extensions ${visible.length}</h3>
                 <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
             </div>
         `;
         
         grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
     }
-
+    renderPagination(pagination) {
+        const container = document.getElementById('pagination-container');
+        if (!container) return;
+        
+        if (!pagination || pagination.totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        
+        let paginationHtml = '';
+        
+        // Previous page button
+        const isPrevDisabled = pagination.currentPage === 1;
+        paginationHtml += `
+            <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isPrevDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Previous page">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </button>
+        `;
+        
+        // Page index buttons
+        for (let i = 1; i <= pagination.totalPages; i++) {
+            const isCurrent = i === pagination.currentPage;
+            paginationHtml += `
+                <button type="button" data-page="${i}" class="px-4 py-2 rounded-xl text-sm font-bold transition-all ${isCurrent ? 'bg-gnome-blue text-white shadow-md scale-105' : 'border border-[#c0bfbc] dark:border-[#3d3846] text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Page ${i}">
+                    ${i}
+                </button>
+            `;
+        }
+        
+        // Next page button
+        const isNextDisabled = pagination.currentPage === pagination.totalPages;
+        paginationHtml += `
+            <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isNextDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Next page">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+        `;
+        
+        container.innerHTML = paginationHtml;
+    }
     generateCardHTML(extension) {
         return `
             <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}">
@@ -238,7 +320,6 @@ class StoreView {
             </article>
         `;
     }
-
     escapeHtml(value) {
         return String(value)
             .replace(/&/g, '&amp;')
