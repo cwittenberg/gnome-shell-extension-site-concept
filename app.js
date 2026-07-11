@@ -106,12 +106,15 @@
 
     function closeExtension() {
         detailController.clearExtension();
+        if (storeController && typeof storeController.handleReset === 'function') {
+            storeController.handleReset();
+        }
         showView('store');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showView(view) {
         const views = ['store', 'details', 'upload', 'local', 'about'];
-
         views.forEach(v => {
             const el = document.getElementById(`${v}-view`);
             if (el) {

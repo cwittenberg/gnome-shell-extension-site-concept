@@ -115,6 +115,15 @@ class StoreModel {
         this.notifyObservers();
     }
 
+    resetFilters() {
+        this.state.selectedCategory = 'All';
+        this.state.sortBy = 'downloads';
+        this.state.searchTerm = '';
+        this.state.currentPage = 1;
+        this.state.featuredTab = 'trending';
+        this.notifyObservers();
+    }
+
     getFilteredExtensions() {
         return this.extensions.filter((extension) => {
             const matchesCategory = this.state.selectedCategory === 'All' || extension.category === this.state.selectedCategory;

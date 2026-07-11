@@ -184,6 +184,17 @@ class StoreView {
     }
 
     update(data) {
+        // Sync DOM inputs with state to handle external resets (like clicking the logo)
+        const searchInput = document.getElementById('search-input');
+        if (searchInput && searchInput.value !== data.state.searchTerm) {
+            searchInput.value = data.state.searchTerm;
+        }
+
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect && sortSelect.value !== data.state.sortBy) {
+            sortSelect.value = data.state.sortBy;
+        }
+
         this.updateLayoutToggleUI(data.state.layoutMode);
         
         // Only render categories if they actually changed to preserve scroll position

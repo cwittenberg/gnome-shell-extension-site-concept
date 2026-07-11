@@ -47,6 +47,12 @@ class StoreController {
         }
     }
 
+    handleReset() {
+        if (this.model && typeof this.model.resetFilters === 'function') {
+            this.model.resetFilters();
+        }
+    }
+
     handleOpenExtension(id) {
         // Hooks into the main app.js routing handling
         if (window.openExtensionHandler) {
