@@ -8,7 +8,8 @@
   <title>GNOME Extensions Store</title>
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
-  <!-- Tailwind Configuration for Dark Mode -->
+  
+  <!-- Tailwind Configuration for Dark Mode & Animations -->
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -25,18 +26,32 @@
               grey: '#77767B',
               black: '#241F31',
             }
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.4s ease-out forwards',
           }
         }
       }
     }
   </script>
+  
   <!-- External Stylesheets -->
   <link rel="stylesheet" href="stylesheet.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
 </head>
 <body class="bg-[#f6f5f4] dark:bg-gnome-black text-gnome-black dark:text-gnome-white transition-colors duration-300 min-h-screen">
+
+  <!-- Exhaustive Tailwind Safelist (Forces CDN to generate classes injected by JS) -->
+  <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in"></div>
+
   <!-- Header -->
-  <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#deddda] dark:border-[#3d3846] transition-colors duration-300">
+  <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#c0bfbc] dark:border-[#3d3846] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center justify-between gap-y-3 gap-x-4">
       
       <!-- Logo (Order 1 on all sizes) -->
@@ -73,7 +88,7 @@
           type="search"
           id="search-input"
           placeholder="Search extensions..."
-          class="w-full bg-gnome-white dark:bg-[#2d2640] text-gnome-black dark:text-gnome-white border border-[#deddda] dark:border-[#3d3846] rounded-xl px-4 py-2 text-sm placeholder:text-gnome-grey focus:outline-none focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all"
+          class="w-full bg-gnome-white dark:bg-[#2d2640] text-gnome-black dark:text-gnome-white border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl px-4 py-2 text-sm placeholder:text-gnome-grey focus:outline-none focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-sm"
         />
       </div>
 
@@ -95,15 +110,15 @@
             <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.78a1 1 0 011.42 1.42l-.71.7a1 1 0 11-1.41-1.41l.7-.71zM18 9a1 1 0 110 2h-1a1 1 0 110-2h1zM5.64 16.36a1 1 0 001.41-1.41l-.7-.71a1 1 0 00-1.42 1.42l.71.7zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-5.66-2.34l-.71.71a1 1 0 001.42 1.42l.7-.71a1 1 0 00-1.41-1.42zM3 10a1 1 0 110 2H2a1 1 0 110-2h1zm1.22-5.78l.7.71a1 1 0 001.41-1.42l-.7-.71A1 1 0 004.22 4.22zM10 6a4 4 0 100 8 4 4 0 000-8z" clip-rule="evenodd" />
           </svg>
         </button>
-        <button class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-[#1c71d8] transition-colors">
+
+        <button class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-[#1c71d8] transition-colors shadow-sm">
           Log in
         </button>
       </nav>
-
     </div>
 
     <!-- Mobile Menu (Drops down) -->
-    <div id="mobile-menu" class="hidden sm:hidden border-t border-[#deddda] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
+    <div id="mobile-menu" class="hidden sm:hidden border-t border-[#c0bfbc] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
       <a href="#" data-nav="store" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Extensions</a>
       <a href="#" data-nav="upload" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Add yours</a>
       <a href="#" data-nav="local" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Installed extensions</a>
@@ -115,12 +130,12 @@
   <!-- STORE VIEW -->
   <div id="store-view">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden gnome-hero">
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-gnome-black dark:text-gnome-white mb-4 tracking-tight">
+    <section id="hero-section" class="relative overflow-hidden gnome-hero transition-all duration-500 ease-in-out">
+      <div id="hero-content" class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center transition-all duration-500 transform">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight drop-shadow-md">
           GNOME Shell Extensions
         </h1>
-        <p class="text-lg text-[#5e5c64] dark:text-[#c0bfbc] max-w-xl mx-auto leading-relaxed">
+        <p class="text-lg text-white/90 max-w-xl mx-auto leading-relaxed drop-shadow-sm">
           Extend and customize your GNOME Shell experience with community-made extensions.
         </p>
       </div>
@@ -130,19 +145,35 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       
       <!-- Featured Extensions Section -->
-      <section id="featured-section" class="mb-12">
-        <h2 class="text-[22px] font-extrabold text-gnome-black dark:text-gnome-white mb-5">
-          Featured Extensions
-        </h2>
-        <div id="featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-      </section>
+      <div id="featured-section" class="mb-12 animate-fade-in">
+        <!-- Rendered by JS -->
+      </div>
 
-      <!-- Filters Bar -->
-      <div class="flex flex-col sm:flex-row gap-3 mb-6">
-        <div id="categories-container" class="flex gap-2 overflow-x-auto pb-1 flex-1 scrollbar-hide">
-          <!-- Rendered by JS -->
+      <!-- Main Visual Separator -->
+      <div id="main-divider" class="flex items-center gap-4 mb-8 transition-opacity duration-300">
+        <hr class="flex-1 border-[#c0bfbc] dark:border-[#3d3846]">
+        <span class="text-sm font-bold text-gnome-grey uppercase tracking-wider">All Extensions</span>
+        <hr class="flex-1 border-[#c0bfbc] dark:border-[#3d3846]">
+      </div>
+
+      <!-- Filters Bar with Scrollable Categories -->
+      <div class="flex flex-col md:flex-row gap-3 mb-8">
+        <div class="relative flex-1 flex items-center overflow-hidden border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl bg-[#f6f5f4] dark:bg-[#2d2640] p-1 shadow-sm">
+          
+          <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          
+          <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full relative z-0 px-1">
+            <!-- Rendered by JS -->
+          </div>
+          
+          <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </button>
         </div>
-        <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#deddda] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-lg px-3 py-1.5 hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer flex-shrink-0">
+        
+        <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-4 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer flex-shrink-0 h-[44px]">
           <option value="downloads">Most Downloaded</option>
           <option value="rating">Highest Rated</option>
           <option value="newest">Newest</option>
@@ -151,27 +182,28 @@
       </div>
 
       <!-- Results Header -->
-      <div id="results-header" class="flex items-center justify-between mb-4">
+      <div id="results-header" class="flex items-center justify-between mb-4 animate-fade-in">
         <!-- Rendered by JS -->
       </div>
 
-      <!-- Extensions Grid -->
+      <!-- Main Extensions Grid -->
       <div id="extensions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <!-- Rendered by JS -->
       </div>
 
       <!-- Empty State -->
-      <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-center">
+      <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-center animate-fade-in">
         <h3 class="text-lg font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions found</h3>
         <p class="text-sm text-gnome-grey max-w-sm">Try adjusting your search or category filter to find what you're looking for.</p>
       </div>
+
     </main>
   </div>
 
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
     <!-- Back Header -->
-    <div class="border-b border-[#deddda] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
+    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4">
         <button onclick="window.closeExtension()" class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
@@ -183,13 +215,12 @@
     </div>
     
     <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
-      <!-- Details Hero -->
       <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
-        <div id="detail-icon" class="w-32 h-32 rounded-3xl bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden text-gnome-blue">
+        <div id="detail-icon" class="w-32 h-32 rounded-3xl bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden text-gnome-blue animate-fade-in">
           <!-- JS injected SVG -->
         </div>
         
-        <div class="flex-1 w-full">
+        <div class="flex-1 w-full animate-fade-in">
           <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
             <div>
               <h1 id="detail-title" class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight"></h1>
@@ -198,10 +229,10 @@
             </div>
             
             <div class="flex-shrink-0 w-full md:w-auto flex flex-col gap-2">
-              <button id="detail-install-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-sm">
+              <button id="detail-install-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-md">
                 <!-- JS injected -->
               </button>
-              <button id="detail-donate-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg shadow-sm bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white hover:border-gnome-blue">
+              <button id="detail-donate-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg shadow-md bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white hover:border-gnome-blue">
                 Donate
               </button>
             </div>
@@ -210,7 +241,7 @@
       </div>
 
       <!-- Carousel Section -->
-      <div class="mb-12 bg-gnome-white dark:bg-[#2d2640] rounded-2xl border border-[#deddda] dark:border-[#3d3846] p-4 shadow-sm">
+      <div class="mb-12 bg-gnome-white dark:bg-[#2d2640] rounded-2xl border border-[#c0bfbc] dark:border-[#3d3846] p-4 shadow-md animate-fade-in">
         <div id="carousel-main" class="w-full aspect-video bg-[#f6f5f4] dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
            <!-- JS injected -->
         </div>
@@ -221,48 +252,39 @@
 
       <!-- Description & Metadata Split -->
       <div class="flex flex-col md:flex-row gap-12">
-        
-        <!-- Main Body (Markdown + Reviews + Analytics + Versions) -->
         <div class="flex-1 min-w-0">
-          
-          <!-- Markdown Body -->
           <div class="mb-16">
-            <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none">
+            <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
               <!-- Rendered by marked.js -->
             </div>
           </div>
 
-          <!-- User Reviews Section -->
-          <div class="border-t border-[#deddda] dark:border-[#3d3846] pt-10 mb-10">
+          <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mb-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">User Reviews</h3>
-            <div id="detail-reviews-container" class="space-y-4">
+            <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
               <!-- JS Injected Reviews -->
             </div>
           </div>
 
-          <!-- Global Analytics Section (World Map) -->
-          <div class="border-t border-[#deddda] dark:border-[#3d3846] pt-10 mt-10">
+          <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mt-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">Global Installations</h3>
             <p class="text-sm text-gnome-grey mb-4">See where this extension is being utilized around the world.</p>
-            <div class="w-full bg-[#f6f5f4] dark:bg-[#2d2640] rounded-xl border border-[#deddda] dark:border-[#3d3846] p-4 flex items-center justify-center relative overflow-hidden" id="detail-analytics-map">
+            <div class="w-full bg-[#f6f5f4] dark:bg-[#2d2640] rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] p-4 flex items-center justify-center relative overflow-hidden shadow-sm animate-fade-in" id="detail-analytics-map">
               <!-- DetailView Injected Actual JS Vector Map -->
             </div>
           </div>
 
-          <!-- Version History Section -->
-          <div class="border-t border-[#deddda] dark:border-[#3d3846] pt-10 mt-10">
+          <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mt-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">Version History</h3>
-            <div id="detail-versions-container" class="space-y-4">
+            <div id="detail-versions-container" class="space-y-4 animate-fade-in">
               <!-- JS Injected Versions -->
             </div>
           </div>
         </div>
         
-        <!-- Sidebar Metadata (Sticky Scrolling) -->
-        <div class="w-full md:w-80 flex-shrink-0">
-          <div class="bg-gnome-white dark:bg-[#2d2640] rounded-xl border border-[#deddda] dark:border-[#3d3846] p-6 sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
-            <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white uppercase tracking-wider mb-4 border-b border-[#deddda] dark:border-[#3d3846] pb-2">Information</h3>
-            
+        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
+          <div class="bg-gnome-white dark:bg-[#2d2640] rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] p-6 shadow-md sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
+            <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white uppercase tracking-wider mb-4 border-b border-[#c0bfbc] dark:border-[#3d3846] pb-2">Information</h3>
             <dl class="space-y-4 text-sm">
               <div>
                 <dt class="text-gnome-grey font-semibold">UUID</dt>
@@ -295,6 +317,7 @@
             </dl>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -309,7 +332,7 @@
   <div id="about-view" class="hidden relative pb-16"></div>
 
   <!-- Footer -->
-  <footer class="border-t border-[#deddda] dark:border-[#3d3846] mt-16 transition-colors duration-300">
+  <footer class="border-t border-[#c0bfbc] dark:border-[#3d3846] mt-16 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
         <div>
@@ -337,7 +360,7 @@
           </ul>
         </div>
       </div>
-      <div class="pt-6 border-t border-[#deddda] dark:border-[#3d3846] flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="pt-6 border-t border-[#c0bfbc] dark:border-[#3d3846] flex flex-col sm:flex-row items-center justify-between gap-3">
         <p class="text-xs font-medium text-gnome-grey">© 2026 The GNOME Project | Licensed under <a href="#" class="text-gnome-blue hover:underline">GPL-2.0-or-later</a></p>
         <p class="text-xs font-medium text-gnome-grey">Made with <span class="text-gnome-red">♥</span> by the GNOME community</p>
       </div>
@@ -356,12 +379,12 @@
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
-  
+
   <!-- New Static Views -->
   <script src="mvc/views/UploadView.js"></script>
   <script src="mvc/views/LocalView.js"></script>
   <script src="mvc/views/AboutView.js"></script>
-  
+
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>

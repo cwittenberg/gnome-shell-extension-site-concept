@@ -8,7 +8,8 @@ class StoreModel {
         this.state = {
             selectedCategory: 'All',
             sortBy: 'downloads',
-            searchTerm: ''
+            searchTerm: '',
+            featuredTab: 'trending'
         };
     }
 
@@ -21,10 +22,18 @@ class StoreModel {
     }
 
     notifyObservers() {
+        const allExtensions = [...this.extensions];
+        
         const data = {
             state: this.state,
             categories: this.categories,
-            featured: this.extensions.filter(e => e.featured).slice(0, 4),
+            // Pre-process sorted categories for the Featured tab view
+            featured: {
+                trending: [...allExtensions].sort((a, b) => b.ratingCount - a.ratingCount).slice(0, 4),
+                popular: [...allExtensions].sort((a, b) => b.downloads - a.downloads).slice(0, 4),
+                newest: [...allExtensions].sort((a, b) => (b.new ? 1 : 0) - (a.new ? 1 : 0)).slice(0, 4),
+                updated: [...allExtensions].sort((a, b) => b.version - a.version).slice(0, 4)
+            },
             filtered: this.getFilteredExtensions()
         };
         
@@ -51,6 +60,11 @@ class StoreModel {
 
     setSortBy(sortBy) {
         this.state.sortBy = sortBy;
+        this.notifyObservers();
+    }
+
+    setFeaturedTab(tab) {
+        this.state.featuredTab = tab;
         this.notifyObservers();
     }
 

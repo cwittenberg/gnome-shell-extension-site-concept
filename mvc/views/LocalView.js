@@ -5,6 +5,7 @@ class LocalView {
 
     render() {
         if (!this.container) return;
+
         this.container.innerHTML = `
             <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
               <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-6 tracking-tight">Installed extensions</h1>
@@ -24,7 +25,7 @@ class LocalView {
                 </div>
               </div>
 
-              <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-sm text-center">
+              <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
                 <svg class="w-12 h-12 text-gnome-grey mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                 </svg>

@@ -7,6 +7,7 @@ class StoreView {
                 <path d="M16 11V7a2 2 0 00-2-2h-1V3.5a2.5 2.5 0 00-5 0V5H7a2 2 0 00-2 2v1H3.5a2.5 2.5 0 000 5H5v3a2 2 0 002 2h1v1.5a2.5 2.5 0 005 0V19h3a2 2 0 002-2v-1h1.5a2.5 2.5 0 000-5H16z" />
             </svg>`;
         this.bindEvents();
+        this.bindScrollEvents();
     }
 
     setController(controller) {
@@ -16,9 +17,6 @@ class StoreView {
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
-        const categoriesContainer = document.getElementById('categories-container');
-        const featuredGrid = document.getElementById('featured-grid');
-        const extensionsGrid = document.getElementById('extensions-grid');
 
         if (searchInput) {
             searchInput.addEventListener('input', (event) => {
@@ -32,34 +30,93 @@ class StoreView {
             });
         }
 
-        if (categoriesContainer) {
-            categoriesContainer.addEventListener('click', (event) => {
-                const button = event.target.closest('[data-category]');
-                if (!button) return;
-                if (this.controller) this.controller.handleCategory(button.getAttribute('data-category'));
-            });
-        }
+        // Global Event Delegation for dynamic structural components
+        document.body.addEventListener('click', (event) => {
+            // Pill Categories Filter
+            const categoryBtn = event.target.closest('[data-category]');
+            if (categoryBtn && this.controller) {
+                this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
+            }
 
-        // Delegate extension card clicks
-        if (featuredGrid) {
-            featuredGrid.addEventListener('click', (event) => {
-                const card = event.target.closest('[data-extension-id]');
-                if (card && this.controller) this.controller.handleOpenExtension(card.getAttribute('data-extension-id'));
-            });
-        }
+            // Featured Tabs Pill Buttons
+            const featuredTabBtn = event.target.closest('[data-featured-tab]');
+            if (featuredTabBtn && this.controller) {
+                event.preventDefault();
+                this.controller.handleFeaturedTab(featuredTabBtn.getAttribute('data-featured-tab'));
+            }
 
-        if (extensionsGrid) {
-            extensionsGrid.addEventListener('click', (event) => {
-                const card = event.target.closest('[data-extension-id]');
-                if (card && this.controller) this.controller.handleOpenExtension(card.getAttribute('data-extension-id'));
+            // General Extension Cards Open Details
+            const card = event.target.closest('[data-extension-id]');
+            if (card && this.controller) {
+                this.controller.handleOpenExtension(card.getAttribute('data-extension-id'));
+            }
+        });
+    }
+
+    bindScrollEvents() {
+        const catContainer = document.getElementById('categories-container');
+        const scrollLeftBtn = document.getElementById('cat-scroll-left');
+        const scrollRightBtn = document.getElementById('cat-scroll-right');
+
+        if (catContainer && scrollLeftBtn && scrollRightBtn) {
+            const updateScrollButtons = () => {
+                scrollLeftBtn.classList.toggle('hidden', catContainer.scrollLeft <= 0);
+                scrollRightBtn.classList.toggle('hidden', catContainer.scrollLeft + catContainer.clientWidth >= catContainer.scrollWidth - 1);
+            };
+
+            catContainer.addEventListener('scroll', updateScrollButtons);
+            window.addEventListener('resize', updateScrollButtons);
+            
+            // Re-verify sizing anytime new nodes get injected
+            const observer = new MutationObserver(() => updateScrollButtons());
+            observer.observe(catContainer, { childList: true, subtree: true });
+
+            scrollLeftBtn.addEventListener('click', () => {
+                catContainer.scrollBy({ left: -200, behavior: 'smooth' });
+            });
+            scrollRightBtn.addEventListener('click', () => {
+                catContainer.scrollBy({ left: 200, behavior: 'smooth' });
             });
         }
     }
 
     update(data) {
         this.renderCategories(data.categories, data.state.selectedCategory);
-        this.renderFeatured(data.featured);
+        this.renderFeatured(data.featured, data.state.featuredTab);
         this.renderExtensions(data.filtered, data.state.selectedCategory);
+
+        const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
+        
+        // Element Hooks
+        const heroSection = document.getElementById('hero-section');
+        const heroContent = document.getElementById('hero-content');
+        const featuredSection = document.getElementById('featured-section');
+        const mainDivider = document.getElementById('main-divider');
+        const resultsHeader = document.getElementById('results-header');
+
+        // Smooth Auto-hide Hero section logic
+        if (heroSection && heroContent) {
+            if (isFiltering) {
+                heroSection.classList.add('hero-hidden');
+                heroContent.classList.add('opacity-0', 'scale-95');
+            } else {
+                heroSection.classList.remove('hero-hidden');
+                heroContent.classList.remove('opacity-0', 'scale-95');
+            }
+        }
+
+        // Hide Featured components when searching/filtering
+        if (featuredSection && mainDivider && resultsHeader) {
+            if (isFiltering) {
+                featuredSection.classList.add('hidden');
+                mainDivider.classList.add('hidden');
+                resultsHeader.classList.remove('hidden');
+            } else {
+                featuredSection.classList.remove('hidden');
+                mainDivider.classList.remove('hidden');
+                resultsHeader.classList.add('hidden'); 
+            }
+        }
     }
 
     renderCategories(categories, selectedCategory) {
@@ -72,36 +129,48 @@ class StoreView {
                 <button
                     type="button"
                     data-category="${this.escapeHtml(category)}"
-                    class="px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${active ? 'bg-gnome-blue text-white' : 'bg-gnome-white dark:bg-[#2d2640] text-[#5e5c64] dark:text-[#c0bfbc] border border-[#deddda] dark:border-[#3d3846]'}"
+                    class="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 ${active ? 'bg-gnome-blue text-white shadow-sm' : 'text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}"
                 >
                     ${this.escapeHtml(category)}
                 </button>
             `;
         }).join('');
+
         container.innerHTML = buttons;
     }
 
-    renderFeatured(featured) {
-        const featuredGrid = document.getElementById('featured-grid');
-        if (!featuredGrid) return;
+    renderFeatured(featured, activeTab) {
+        const featuredSection = document.getElementById('featured-section');
+        if (!featuredSection) return;
 
-        featuredGrid.innerHTML = featured.map((extension) => `
-            <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue transition-all" data-extension-id="${extension.id}">
-                <div class="flex items-start justify-between gap-3">
-                    <div class="flex items-start gap-3 min-w-0">
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f6f5f4] dark:bg-[#241F31]">
-                            ${extension.icon || this.defaultExtensionSvg}
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(extension.name)}</h3>
-                            <p class="text-sm text-gnome-grey mt-1">${this.escapeHtml(extension.author)}</p>
-                        </div>
-                    </div>
-                    <span class="text-xs font-semibold bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full">Featured</span>
+        const tabs = [
+            { id: 'trending', label: 'Trending' },
+            { id: 'popular', label: 'Popular' },
+            { id: 'newest', label: 'New' },
+            { id: 'updated', label: 'Updated' }
+        ];
+
+        const tabsHtml = tabs.map(tab => {
+            const isActive = tab.id === activeTab;
+            return `
+                <button type="button" data-featured-tab="${tab.id}" class="px-5 py-1.5 rounded-full text-sm font-bold transition-all ${isActive ? 'bg-gnome-blue text-white shadow-sm scale-105' : 'bg-transparent text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white'}">
+                    ${this.escapeHtml(tab.label)}
+                </button>
+            `;
+        }).join('');
+
+        const extensionsToShow = featured[activeTab] || [];
+
+        featuredSection.innerHTML = `
+            <div class="flex flex-col gap-6 animate-fade-in">
+                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+                    ${tabsHtml}
                 </div>
-                <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-3">${this.escapeHtml(extension.description)}</p>
-            </article>
-        `).join('');
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${extensionsToShow.map(ext => this.generateCardHTML(ext)).join('')}
+                </div>
+            </div>
+        `;
     }
 
     renderExtensions(visible, selectedCategory) {
@@ -120,14 +189,18 @@ class StoreView {
 
         emptyState.classList.add('hidden');
         resultsHeader.innerHTML = `
-            <div>
+            <div class="animate-fade-in">
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">${visible.length} extensions</h3>
                 <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
             </div>
         `;
 
-        grid.innerHTML = visible.map((extension) => `
-            <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue transition-all flex flex-col justify-between" data-extension-id="${extension.id}">
+        grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
+    }
+
+    generateCardHTML(extension) {
+        return `
+            <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}">
                 <div>
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-start gap-3 min-w-0">
@@ -141,17 +214,18 @@ class StoreView {
                         </div>
                         <div class="text-right shrink-0">
                             <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
-                            <div class="text-xs text-gnome-grey">${extension.downloads.toLocaleString()} dls</div>
+                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${extension.downloads.toLocaleString()} dls</div>
                         </div>
                     </div>
                     <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3">${this.escapeHtml(extension.description)}</p>
                 </div>
-                <div class="mt-4 flex items-center justify-between pt-4 border-t border-[#deddda] dark:border-[#3d3846]">
+                
+                <div class="mt-4 flex items-center justify-between pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
                     <span class="text-xs font-semibold bg-[#f6f5f4] dark:bg-[#3d3846] text-gnome-grey px-2.5 py-1 rounded-full">${this.escapeHtml(extension.category)}</span>
                     <button type="button" class="text-sm font-semibold text-gnome-blue hover:underline">View details</button>
                 </div>
             </article>
-        `).join('');
+        `;
     }
 
     escapeHtml(value) {

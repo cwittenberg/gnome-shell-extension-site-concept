@@ -43,7 +43,7 @@ class DetailView {
         const installButton = document.getElementById('detail-install-btn');
         if (installButton) {
             installButton.textContent = 'Install';
-            installButton.className = 'detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-sm bg-gnome-blue text-gnome-white hover:bg-[#1c71d8]';
+            installButton.className = 'detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-md bg-gnome-blue text-gnome-white hover:bg-[#1c71d8]';
         }
 
         const description = document.getElementById('detail-description');
@@ -58,7 +58,7 @@ class DetailView {
                 versionsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No version history available.</p>';
             } else {
                 versionsContainer.innerHTML = versions.map((version) => `
-                  <div class="border border-[#deddda] dark:border-[#3d3846] rounded-xl p-4 bg-[#f6f5f4] dark:bg-[#2d2640]">
+                  <div class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-[#f6f5f4] dark:bg-[#2d2640]">
                     <div class="flex items-center justify-between gap-3">
                       <div>
                         <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">Version ${this.escapeHtml(version.version)}</p>
@@ -79,7 +79,7 @@ class DetailView {
                 reviewsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No reviews have been submitted for this extension yet.</p>';
             } else {
                 reviewsContainer.innerHTML = reviews.map((review) => `
-                  <div class="border border-[#deddda] dark:border-[#3d3846] rounded-xl p-4 bg-gnome-white dark:bg-[#2d2640]">
+                  <div class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-gnome-white dark:bg-[#2d2640]">
                     <div class="flex items-center justify-between gap-3">
                       <div>
                         <p class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(review.user)}</p>
@@ -122,7 +122,7 @@ class DetailView {
         }
 
         carouselThumbnails.innerHTML = mediaItems.map((media) => `
-          <button type="button" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border border-[#deddda] dark:border-[#3d3846]">
+          <button type="button" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border border-[#c0bfbc] dark:border-[#3d3846]">
             ${media.type === 'video' ? `<img src="${this.escapeHtml(media.poster || '')}" alt="Preview" class="w-full h-full object-cover">` : `<img src="${this.escapeHtml(media.url)}" alt="Preview" class="w-full h-full object-cover">`}
           </button>
         `).join('');
@@ -153,7 +153,7 @@ class DetailView {
         }
 
         const isDarkMode = document.documentElement.classList.contains('dark');
-        const fillBaseColor = isDarkMode ? '#3d3846' : '#deddda';
+        const fillBaseColor = isDarkMode ? '#3d3846' : '#c0bfbc';
 
         const markerData = [
             { name: "United States", coords: [37.0902, -95.7129], installs: 45200 },
@@ -166,6 +166,7 @@ class DetailView {
         ];
 
         const maxInstalls = Math.max(...markerData.map(m => m.installs));
+
         const bubbleMarkers = markerData.map(data => {
             const radius = 4 + (data.installs / maxInstalls) * 12;
             return {

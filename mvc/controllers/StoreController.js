@@ -23,6 +23,10 @@ class StoreController {
         this.model.setSortBy(sortBy);
     }
 
+    handleFeaturedTab(tab) {
+        this.model.setFeaturedTab(tab);
+    }
+
     handleOpenExtension(id) {
         // Hooks into the main app.js routing handling
         if (window.openExtensionHandler) {
