@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+html {
+  /* Prevents horizontal layout shift when switching between long/short views */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: 'Inter', sans-serif;
 }
@@ -14,6 +20,18 @@ body {
 /* Hide scrollbar for category pills */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Header */
+.gnome-hero {
+  color: #fff;
+  background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
+  background-size: 1024px;    
+}
+.dark .gnome-hero {
+  color: #fff;
+  background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
+  background-size: 1024px;    
+}
 
 /* Clean Markdown Typography Styling for Light & Dark Mode */
 .prose {
@@ -54,16 +72,12 @@ body {
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   will-change: transform, box-shadow;
 }
-
-.extension-card:hover,
-.extension-card:focus-within {
+.extension-card:hover, .extension-card:focus-within {
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
   border-color: #3584e4;
 }
-
-.dark .extension-card:hover,
-.dark .extension-card:focus-within {
+.dark .extension-card:hover, .dark .extension-card:focus-within {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
@@ -73,7 +87,6 @@ body {
   transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
   will-change: transform, box-shadow;
 }
-
 .detail-action-btn::before {
   content: '';
   position: absolute;
@@ -82,19 +95,13 @@ body {
   transform: translateX(-100%);
   transition: transform 220ms ease;
 }
-
-.detail-action-btn:hover,
-.detail-action-btn:focus-visible {
+.detail-action-btn:hover, .detail-action-btn:focus-visible {
   transform: translateY(-2px) scale(1.01);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
 }
-
-.detail-action-btn:hover::before,
-.detail-action-btn:focus-visible::before {
+.detail-action-btn:hover::before, .detail-action-btn:focus-visible::before {
   transform: translateX(100%);
 }
-
-.dark .detail-action-btn:hover,
-.dark .detail-action-btn:focus-visible {
+.dark .detail-action-btn:hover, .dark .detail-action-btn:focus-visible {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }

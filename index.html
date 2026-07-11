@@ -6,11 +6,8 @@
   <meta name="referrer" content="no-referrer">
   <link rel="icon" type="image/svg+xml" href="/favicon.png">
   <title>GNOME Extensions Store</title>
-  
-  
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
-
   <!-- Tailwind Configuration for Dark Mode -->
   <script>
     tailwind.config = {
@@ -33,17 +30,17 @@
       }
     }
   </script>
-  <!-- External Stylesheet -->
+  <!-- External Stylesheets -->
   <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
 </head>
 <body class="bg-[#f6f5f4] dark:bg-gnome-black text-gnome-black dark:text-gnome-white transition-colors duration-300 min-h-screen">
-  
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#deddda] dark:border-[#3d3846] transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center justify-between gap-y-3 gap-x-4">
       
-      <!-- Logo -->
-      <div class="flex items-center gap-3 flex-shrink-0 cursor-pointer" onclick="window.closeExtension()">
+      <!-- Logo (Order 1 on all sizes) -->
+      <div class="flex items-center gap-3 flex-shrink-0 cursor-pointer order-1" onclick="window.closeExtension()">
         <svg class="w-8 h-8 fill-gnome-black dark:fill-gnome-white" viewBox="-10 -5 125 130" xmlns="http://www.w3.org/2000/svg" aria-label="GNOME">
           <path d="M 86.068,0 C 61.466,0 56.851,35.041 70.691,35.041 C 84.529,35.041 110.671,0 86.068,0 z" />
           <path d="M 45.217,30.699 C 52.586,31.149 60.671,2.577 46.821,4.374 C 32.976,6.171 37.845,30.249 45.217,30.699 z" />
@@ -56,8 +53,22 @@
         </div>
       </div>
 
-      <!-- Search -->
-      <div id="search-container" class="w-full sm:flex-1 sm:max-w-xl relative">
+      <!-- Mobile Menu Toggle (Order 2 on mobile, hidden on Desktop) -->
+      <div class="sm:hidden flex items-center gap-1 order-2">
+        <button id="theme-toggle-mobile" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey" aria-label="Toggle theme">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors font-bold text-gnome-grey" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search (Order 3 on mobile taking full width, Order 2 on desktop sharing row) -->
+      <div id="search-container" class="w-full sm:w-auto sm:flex-1 sm:max-w-xl relative order-3 sm:order-2">
         <input
           type="search"
           id="search-input"
@@ -66,8 +77,8 @@
         />
       </div>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden sm:flex items-center gap-1">
+      <!-- Desktop Nav (Hidden on mobile, Order 3 on desktop) -->
+      <nav class="hidden sm:flex items-center gap-1 order-4 sm:order-3">
         <a href="#" data-nav="store" class="text-sm text-gnome-black dark:text-gnome-white px-3 py-1.5 rounded-lg bg-[#f6f5f4] dark:bg-[#2d2640] transition-all font-semibold">Extensions</a>
         <a href="#" data-nav="upload" class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white px-3 py-1.5 rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-all font-semibold">Add yours</a>
         <a href="#" data-nav="local" class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white px-3 py-1.5 rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-all font-semibold">Installed extensions</a>
@@ -89,22 +100,9 @@
         </button>
       </nav>
 
-      <!-- Mobile Menu Toggle -->
-      <div class="sm:hidden flex items-center gap-1">
-        <button id="theme-toggle-mobile" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey" aria-label="Toggle theme">
-          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-          </svg>
-        </button>
-        <button id="mobile-menu-btn" class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors font-bold text-gnome-grey" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
     </div>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu (Drops down) -->
     <div id="mobile-menu" class="hidden sm:hidden border-t border-[#deddda] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
       <a href="#" data-nav="store" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Extensions</a>
       <a href="#" data-nav="upload" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Add yours</a>
@@ -115,10 +113,10 @@
   </header>
 
   <!-- STORE VIEW -->
-  <div id="store-view" class="block">
+  <div id="store-view">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden border-b border-[#deddda] dark:border-[#3d3846] transition-colors duration-300 bg-gnome-white dark:bg-[#2d2640]">
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+    <section class="relative overflow-hidden gnome-hero">
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 text-center">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-gnome-black dark:text-gnome-white mb-4 tracking-tight">
           GNOME Shell Extensions
         </h1>
@@ -183,7 +181,7 @@
         </button>
       </div>
     </div>
-
+    
     <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
       <!-- Details Hero -->
       <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
@@ -200,7 +198,7 @@
             </div>
             
             <div class="flex-shrink-0 w-full md:w-auto flex flex-col gap-2">
-              <button id="detail-install-btn" class="w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-sm">
+              <button id="detail-install-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-sm">
                 <!-- JS injected -->
               </button>
               <button id="detail-donate-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg shadow-sm bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white hover:border-gnome-blue">
@@ -247,7 +245,7 @@
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">Global Installations</h3>
             <p class="text-sm text-gnome-grey mb-4">See where this extension is being utilized around the world.</p>
             <div class="w-full bg-[#f6f5f4] dark:bg-[#2d2640] rounded-xl border border-[#deddda] dark:border-[#3d3846] p-4 flex items-center justify-center relative overflow-hidden" id="detail-analytics-map">
-              <!-- JS Injected SVG Map -->
+              <!-- DetailView Injected Actual JS Vector Map -->
             </div>
           </div>
 
@@ -258,7 +256,6 @@
               <!-- JS Injected Versions -->
             </div>
           </div>
-
         </div>
         
         <!-- Sidebar Metadata (Sticky Scrolling) -->
@@ -302,72 +299,14 @@
     </div>
   </div>
 
-  <!-- UPLOAD VIEW (ADD YOURS) -->
-  <div id="upload-view" class="hidden relative pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
-      <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-4 tracking-tight">Add yours</h1>
-      <p class="text-lg text-gnome-grey mb-8">Upload and submit your GNOME Shell extension to the official directory.</p>
-      
-      <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-6 sm:p-10 shadow-sm">
-        <form class="space-y-6">
-          <div>
-            <label class="block text-sm font-bold text-gnome-black dark:text-gnome-white mb-2">Extension ZIP file</label>
-            <div class="border-2 border-dashed border-[#deddda] dark:border-[#3d3846] rounded-xl p-10 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-gnome-black hover:border-gnome-blue transition-colors cursor-pointer">
-              <svg class="w-10 h-10 text-gnome-grey mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-              </svg>
-              <span class="text-base font-semibold text-gnome-blue mb-1">Click to browse or drag and drop</span>
-              <span class="text-sm text-gnome-grey">Must be a valid GNOME Shell extension .zip</span>
-            </div>
-          </div>
-          <div class="border-t border-[#deddda] dark:border-[#3d3846] pt-6 flex justify-end">
-            <button type="button" class="bg-gnome-blue text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1c71d8] transition-colors w-full sm:w-auto shadow-sm">Upload Extension</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <!-- UPLOAD VIEW (Managed by UploadView.js) -->
+  <div id="upload-view" class="hidden relative pb-16"></div>
 
-  <!-- LOCAL VIEW (INSTALLED EXTENSIONS) -->
-  <div id="local-view" class="hidden relative pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
-      <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-6 tracking-tight">Installed extensions</h1>
-      
-      <div class="bg-[#d9edf7] dark:bg-[#243f55] border border-[#bce8f1] dark:border-[#2f5573] rounded-xl p-4 sm:p-5 mb-8 flex items-start gap-4 shadow-sm">
-        <div class="text-[#31708f] dark:text-[#9bc2d5] shrink-0 mt-0.5">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <div class="text-sm text-[#31708f] dark:text-[#9bc2d5] leading-relaxed">
-          <p>To control GNOME Shell extensions using this site you must install GNOME Shell integration that consists of two parts: browser extension and native host messaging application[cite: 2].</p>
-          <p class="mt-2">
-            <a href="#" onclick="return false;" class="font-bold underline hover:no-underline">Click here to install browser extension[cite: 2]</a>. 
-            See <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html" target="_blank" rel="noreferrer" class="font-bold underline hover:no-underline">wiki page[cite: 2]</a> for native host connector installation instructions[cite: 2].
-          </p>
-        </div>
-      </div>
+  <!-- LOCAL VIEW (Managed by LocalView.js) -->
+  <div id="local-view" class="hidden relative pb-16"></div>
 
-      <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-sm text-center">
-        <svg class="w-12 h-12 text-gnome-grey mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-        </svg>
-        <h3 class="text-xl font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions detected</h3>
-        <p class="text-base text-gnome-grey">GNOME Shell Extensions cannot list your installed extensions without the host connector.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ABOUT VIEW -->
-  <div id="about-view" class="hidden relative pb-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
-      <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-4 tracking-tight">About</h1>
-      <div class="prose prose-slate dark:prose-invert max-w-none bg-gnome-white dark:bg-[#2d2640] border border-[#deddda] dark:border-[#3d3846] rounded-2xl p-6 sm:p-10 shadow-sm">
-        <p>GNOME Shell extensions add functionality to the GNOME desktop that is not present by default. They can modify the appearance of the shell, add new panel indicators, change window management behavior, or integrate external services.</p>
-        <p>Extensions are the primary way to customize GNOME, and this official extensions repository hosts thousands of them created by developers from around the world.</p>
-      </div>
-    </div>
-  </div>
+  <!-- ABOUT VIEW (Managed by AboutView.js) -->
+  <div id="about-view" class="hidden relative pb-16"></div>
 
   <!-- Footer -->
   <footer class="border-t border-[#deddda] dark:border-[#3d3846] mt-16 transition-colors duration-300">
@@ -406,6 +345,23 @@
   </footer>
 
   <!-- App Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+  
+  <!-- MVC Logic (Order matters) -->
+  <script src="mvc/models/ExtensionModel.js"></script>
+  <script src="mvc/views/DetailView.js"></script>
+  <script src="mvc/controllers/DetailController.js"></script>
+  
+  <script src="mvc/models/StoreModel.js"></script>
+  <script src="mvc/views/StoreView.js"></script>
+  <script src="mvc/controllers/StoreController.js"></script>
+  
+  <!-- New Static Views -->
+  <script src="mvc/views/UploadView.js"></script>
+  <script src="mvc/views/LocalView.js"></script>
+  <script src="mvc/views/AboutView.js"></script>
+  
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>
