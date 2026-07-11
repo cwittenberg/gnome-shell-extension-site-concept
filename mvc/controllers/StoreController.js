@@ -24,6 +24,9 @@ class StoreController {
     handlePageChange(page) {
         this.model.setPage(page);
     }
+    handleItemsPerPage(limit) {
+        this.model.setItemsPerPage(limit);
+    }
     handleToggleFeatured() {
         this.model.toggleFeatured();
     }

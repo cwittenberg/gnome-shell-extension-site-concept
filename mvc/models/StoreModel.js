@@ -84,6 +84,11 @@ class StoreModel {
         this.state.currentPage = page;
         this.notifyObservers();
     }
+    setItemsPerPage(limit) {
+        this.state.itemsPerPage = parseInt(limit, 10);
+        this.state.currentPage = 1;
+        this.notifyObservers();
+    }
     toggleFeatured() {
         this.state.isFeaturedHidden = !this.state.isFeaturedHidden;
         this.notifyObservers();

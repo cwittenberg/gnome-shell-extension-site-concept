@@ -9,9 +9,27 @@ class StoreView {
         this.bindEvents();
         this.bindScrollEvents();
     }
+
     setController(controller) {
         this.controller = controller;
     }
+    
+    // Helper method to keep card click logic clean and DRY
+    handleCardClick(card) {
+        if (!this.controller) return;
+        const extId = card.getAttribute('data-extension-id');
+        
+        // Add unfolding animation class
+        card.classList.add('card-unfold-active');
+        
+        // Wait for the CSS animation to complete before switching views
+        setTimeout(() => {
+            this.controller.handleOpenExtension(extId);
+            // Clean up to ensure state is reset if navigating back
+            card.classList.remove('card-unfold-active');
+        }, 350);
+    }
+
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
@@ -28,60 +46,88 @@ class StoreView {
             });
         }
         
-        // Global Event Delegation for dynamic structural components
-        document.body.addEventListener('click', (event) => {
-            // Toggle Featured Section
-            const toggleFeaturedBtn = event.target.closest('[data-action="toggle-featured"]');
-            if (toggleFeaturedBtn && this.controller) {
-                event.preventDefault();
-                this.controller.handleToggleFeatured();
-                return;
-            }
-            
-            // Pill Categories Filter
-            const categoryBtn = event.target.closest('[data-category]');
-            if (categoryBtn && this.controller) {
-                this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
-            }
-            
-            // Featured Tabs Pill Buttons
-            const featuredTabBtn = event.target.closest('[data-featured-tab]');
-            if (featuredTabBtn && this.controller) {
-                event.preventDefault();
-                this.controller.handleFeaturedTab(featuredTabBtn.getAttribute('data-featured-tab'));
-            }
-            
-            // Pagination Click Triggers
-            const pageBtn = event.target.closest('[data-page]');
-            if (pageBtn && this.controller) {
-                event.preventDefault();
-                const pageNum = parseInt(pageBtn.getAttribute('data-page'), 10);
-                if (!isNaN(pageNum)) {
-                    this.controller.handlePageChange(pageNum);
-                    window.scrollTo({ top: document.getElementById('main-divider').offsetTop - 80, behavior: 'smooth' });
+        // 1. Categories Container Events
+        const categoriesContainer = document.getElementById('categories-container');
+        if (categoriesContainer) {
+            categoriesContainer.addEventListener('click', (event) => {
+                const categoryBtn = event.target.closest('[data-category]');
+                if (categoryBtn && this.controller) {
+                    this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
                 }
-            }
+            });
+        }
+
+        // 2. Featured Section Events
+        const featuredSection = document.getElementById('featured-section');
+        if (featuredSection) {
+            featuredSection.addEventListener('click', (event) => {
+                const toggleFeaturedBtn = event.target.closest('[data-action="toggle-featured"]');
+                if (toggleFeaturedBtn && this.controller) {
+                    event.preventDefault();
+                    this.controller.handleToggleFeatured();
+                    return;
+                }
+                
+                const featuredTabBtn = event.target.closest('[data-featured-tab]');
+                if (featuredTabBtn && this.controller) {
+                    event.preventDefault();
+                    this.controller.handleFeaturedTab(featuredTabBtn.getAttribute('data-featured-tab'));
+                    return;
+                }
+                
+                const card = event.target.closest('[data-extension-id]');
+                if (card) {
+                    this.handleCardClick(card);
+                }
+            });
             
-            // General Extension Cards Open Details
-            const card = event.target.closest('[data-extension-id]');
-            if (card && this.controller) {
-                // Ensure clicks on pagination elements inside body don't misfire card detail views
-                if (event.target.closest('#pagination-container') || event.target.closest('#featured-section button')) return;
-                
-                const extId = card.getAttribute('data-extension-id');
-                
-                // Add unfolding animation class
-                card.classList.add('card-unfold-active');
-                
-                // Wait for the CSS animation to complete before switching views
-                setTimeout(() => {
-                    this.controller.handleOpenExtension(extId);
-                    // Clean up to ensure state is reset if navigating back
-                    card.classList.remove('card-unfold-active');
-                }, 350);
-            }
-        });
+            featuredSection.addEventListener('change', (event) => {
+                const itemsPerPageSelect = event.target.closest('[data-action="change-items-per-page"]');
+                if (itemsPerPageSelect && this.controller) {
+                    this.controller.handleItemsPerPage(itemsPerPageSelect.value);
+                }
+            });
+        }
+
+        // 3. Extensions Grid Events (Search & Filter Results)
+        const extensionsGrid = document.getElementById('extensions-grid');
+        if (extensionsGrid) {
+            extensionsGrid.addEventListener('click', (event) => {
+                const card = event.target.closest('[data-extension-id]');
+                if (card) {
+                    this.handleCardClick(card);
+                }
+            });
+        }
+
+        // 4. Pagination Events
+        const paginationContainer = document.getElementById('pagination-container');
+        if (paginationContainer) {
+            paginationContainer.addEventListener('click', (event) => {
+                const pageBtn = event.target.closest('[data-page]');
+                if (pageBtn && this.controller) {
+                    event.preventDefault();
+                    const pageNum = parseInt(pageBtn.getAttribute('data-page'), 10);
+                    if (!isNaN(pageNum)) {
+                        this.controller.handlePageChange(pageNum);
+                        window.scrollTo({ top: document.getElementById('main-divider').offsetTop - 80, behavior: 'smooth' });
+                    }
+                }
+            });
+        }
+        
+        // 5. Results Header Events (For items-per-page select when searching/filtering)
+        const resultsHeader = document.getElementById('results-header');
+        if (resultsHeader) {
+            resultsHeader.addEventListener('change', (event) => {
+                const itemsPerPageSelect = event.target.closest('[data-action="change-items-per-page"]');
+                if (itemsPerPageSelect && this.controller) {
+                    this.controller.handleItemsPerPage(itemsPerPageSelect.value);
+                }
+            });
+        }
     }
+    
     bindScrollEvents() {
         const catContainer = document.getElementById('categories-container');
         const scrollLeftBtn = document.getElementById('cat-scroll-left');
@@ -109,10 +155,11 @@ class StoreView {
             });
         }
     }
+
     update(data) {
         this.renderCategories(data.categories, data.state.selectedCategory);
-        this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden);
-        this.renderExtensions(data.filtered, data.state.selectedCategory);
+        this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden, data.state.itemsPerPage);
+        this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems);
         this.renderPagination(data.pagination);
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
@@ -148,6 +195,7 @@ class StoreView {
             }
         }
     }
+
     renderCategories(categories, selectedCategory) {
         const container = document.getElementById('categories-container');
         if (!container) return;
@@ -167,7 +215,8 @@ class StoreView {
         
         container.innerHTML = buttons;
     }
-    renderFeatured(featured, activeTab, isHidden) {
+
+    renderFeatured(featured, activeTab, isHidden, itemsPerPage) {
         const featuredSection = document.getElementById('featured-section');
         if (!featuredSection) return;
         
@@ -177,8 +226,14 @@ class StoreView {
             featuredSection.classList.add('mb-2');
             
             featuredSection.innerHTML = `
-                <div class="flex justify-end animate-fade-in">
-                    <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-2 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm">
+                <div class="flex justify-end items-center gap-3 animate-fade-in">
+                    <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                        <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                        <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
+                        <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
+                        <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
+                    </select>
+                    <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                         Show Featured
                     </button>
@@ -207,11 +262,19 @@ class StoreView {
             `;
         }).join('');
         
-        const hideBtnHtml = `
-            <button type="button" data-action="toggle-featured" class="ml-auto text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-[#deddda] dark:hover:bg-[#3d3846]" title="Hide Featured">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
-                Hide
-            </button>
+        const controlsHtml = `
+            <div class="ml-auto flex items-center gap-3">
+                <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                    <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                    <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
+                    <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
+                    <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
+                </select>
+                <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]" title="Hide Featured">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                    Hide
+                </button>
+            </div>
         `;
         
         const extensionsToShow = featured[activeTab] || [];
@@ -220,7 +283,7 @@ class StoreView {
             <div class="flex flex-col gap-6 animate-fade-in">
                 <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
                     ${tabsHtml}
-                    ${hideBtnHtml}
+                    ${controlsHtml}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     ${extensionsToShow.map(ext => this.generateCardHTML(ext)).join('')}
@@ -228,7 +291,8 @@ class StoreView {
             </div>
         `;
     }
-    renderExtensions(visible, selectedCategory) {
+
+    renderExtensions(visible, selectedCategory, itemsPerPage, totalItems) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
         const resultsHeader = document.getElementById('results-header');
@@ -243,15 +307,25 @@ class StoreView {
         }
         
         emptyState.classList.add('hidden');
+
         resultsHeader.innerHTML = `
             <div class="animate-fade-in">
-                <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Showing extensions ${visible.length}</h3>
+                <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
                 <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
+            </div>
+            <div class="animate-fade-in flex items-center">
+                <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                    <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                    <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
+                    <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
+                    <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
+                </select>
             </div>
         `;
         
         grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
     }
+
     renderPagination(pagination) {
         const container = document.getElementById('pagination-container');
         if (!container) return;
@@ -291,6 +365,16 @@ class StoreView {
         
         container.innerHTML = paginationHtml;
     }
+
+    formatDownloads(downloads) {
+        if (downloads >= 1000000) {
+            return (Math.floor(downloads / 100000) / 10) + 'mln';
+        } else if (downloads >= 1000) {
+            return (Math.floor(downloads / 100) / 10) + 'k';
+        }
+        return downloads.toString();
+    }
+
     generateCardHTML(extension) {
         return `
             <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}">
@@ -306,8 +390,8 @@ class StoreView {
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <div class="text-sm font-semibold text-gnome-blue">  ${extension.rating.toFixed(1)}</div>
-                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${extension.downloads.toLocaleString()} dls</div>
+                            <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
+                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
                         </div>
                     </div>
                     <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3">${this.escapeHtml(extension.description)}</p>
@@ -320,6 +404,7 @@ class StoreView {
             </article>
         `;
     }
+
     escapeHtml(value) {
         return String(value)
             .replace(/&/g, '&amp;')
@@ -329,4 +414,5 @@ class StoreView {
             .replace(/'/g, '&#39;');
     }
 }
+
 window.StoreView = StoreView;
