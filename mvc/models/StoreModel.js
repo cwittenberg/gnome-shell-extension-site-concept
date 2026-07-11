@@ -5,6 +5,9 @@ class StoreModel {
         this.extensions = [];
         this.categories = [];
         
+        // Persist layout mode preference across reloads
+        const savedLayout = localStorage.getItem('gnome_ext_layout') || 'grid';
+        
         this.state = {
             selectedCategory: 'All',
             sortBy: 'downloads',
@@ -12,15 +15,19 @@ class StoreModel {
             featuredTab: 'trending',
             currentPage: 1,
             itemsPerPage: 8,
-            isFeaturedHidden: false
+            isFeaturedHidden: false,
+            layoutMode: savedLayout
         };
     }
+
     addObserver(observer) {
         this.observers.push(observer);
     }
+
     removeObserver(observer) {
         this.observers = this.observers.filter(obs => obs !== observer);
     }
+
     notifyObservers() {
         const allExtensions = [...this.extensions];
         const filtered = this.getFilteredExtensions();
@@ -56,43 +63,58 @@ class StoreModel {
             observer.update(data);
         }
     }
+
     setData(extensions, categories) {
         this.extensions = extensions;
         this.categories = categories;
         this.notifyObservers();
     }
+
     setSearchTerm(term) {
         this.state.searchTerm = term.toLowerCase();
         this.state.currentPage = 1;
         this.notifyObservers();
     }
+
     setCategory(category) {
         this.state.selectedCategory = category;
         this.state.currentPage = 1;
         this.notifyObservers();
     }
+
     setSortBy(sortBy) {
         this.state.sortBy = sortBy;
         this.state.currentPage = 1;
         this.notifyObservers();
     }
+
     setFeaturedTab(tab) {
         this.state.featuredTab = tab;
         this.notifyObservers();
     }
+
     setPage(page) {
         this.state.currentPage = page;
         this.notifyObservers();
     }
+
     setItemsPerPage(limit) {
         this.state.itemsPerPage = parseInt(limit, 10);
         this.state.currentPage = 1;
         this.notifyObservers();
     }
+
     toggleFeatured() {
         this.state.isFeaturedHidden = !this.state.isFeaturedHidden;
         this.notifyObservers();
     }
+
+    setLayoutMode(mode) {
+        this.state.layoutMode = mode;
+        localStorage.setItem('gnome_ext_layout', mode);
+        this.notifyObservers();
+    }
+
     getFilteredExtensions() {
         return this.extensions.filter((extension) => {
             const matchesCategory = this.state.selectedCategory === 'All' || extension.category === this.state.selectedCategory;
@@ -112,4 +134,5 @@ class StoreModel {
         });
     }
 }
+
 window.StoreModel = StoreModel;

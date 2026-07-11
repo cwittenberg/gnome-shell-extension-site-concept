@@ -48,7 +48,7 @@
 </head>
 <body class="bg-[#f6f5f4] dark:bg-gnome-black text-gnome-black dark:text-gnome-white transition-colors duration-300 min-h-screen">
   <!-- Exhaustive Tailwind Safelist (Forces CDN to generate classes injected by JS) -->
-  <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100"></div>
+  <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100 flex-col sm:flex-row sm:items-center"></div>
   
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#c0bfbc] dark:border-[#3d3846] transition-colors duration-300">
@@ -157,12 +157,20 @@
           </button>
         </div>
         
-        <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-4 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer flex-shrink-0 h-[44px]">
-          <option value="downloads">Most Downloaded</option>
-          <option value="rating">Highest Rated</option>
-          <option value="newest">Newest</option>
-          <option value="name">Name A-Z</option>
-        </select>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <div class="flex items-center bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl overflow-hidden shadow-sm h-[44px]">
+            <button id="layout-grid-btn" class="px-3 h-full text-gnome-blue bg-[#f6f5f4] dark:bg-[#3d3846]" title="Grid view"><i class="fa-solid fa-border-all"></i></button>
+            <div class="w-px h-full bg-[#c0bfbc] dark:bg-[#3d3846]"></div>
+            <button id="layout-row-btn" class="px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="List view"><i class="fa-solid fa-list"></i></button>
+          </div>
+
+          <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-4 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[44px]">
+            <option value="downloads">Most Downloaded</option>
+            <option value="rating">Highest Rated</option>
+            <option value="newest">Newest</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
       </div>
 
       <!-- Results Header -->

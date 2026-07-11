@@ -3,6 +3,14 @@ class StoreView {
     constructor() {
         this.controller = null;
         this.defaultExtensionSvg = `<i class="fa-solid fa-puzzle-piece text-4xl"></i>`;
+        
+        // Cache state variables to prevent unnecessary DOM redraws and flashing
+        this._lastFeaturedTab = null;
+        this._lastIsFeaturedHidden = null;
+        this._lastItemsPerPage = null;
+        this._lastSelectedCategory = null;
+        this._categoriesRendered = false;
+
         this.bindEvents();
         this.bindScrollEvents();
     }
@@ -30,6 +38,8 @@ class StoreView {
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
+        const gridBtn = document.getElementById('layout-grid-btn');
+        const rowBtn = document.getElementById('layout-row-btn');
         
         if (searchInput) {
             searchInput.addEventListener('input', (event) => {
@@ -40,6 +50,26 @@ class StoreView {
         if (sortSelect) {
             sortSelect.addEventListener('change', (event) => {
                 if (this.controller) this.controller.handleSort(event.target.value);
+            });
+        }
+        
+        if (gridBtn) {
+            gridBtn.addEventListener('click', () => {
+                if (this.controller && typeof this.controller.handleLayoutMode === 'function') {
+                    this.controller.handleLayoutMode('grid');
+                } else {
+                    console.error('StoreController is missing handleLayoutMode. Please update mvc/controllers/StoreController.js');
+                }
+            });
+        }
+        
+        if (rowBtn) {
+            rowBtn.addEventListener('click', () => {
+                if (this.controller && typeof this.controller.handleLayoutMode === 'function') {
+                    this.controller.handleLayoutMode('row');
+                } else {
+                    console.error('StoreController is missing handleLayoutMode. Please update mvc/controllers/StoreController.js');
+                }
             });
         }
         
@@ -154,9 +184,30 @@ class StoreView {
     }
 
     update(data) {
-        this.renderCategories(data.categories, data.state.selectedCategory);
-        this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden, data.state.itemsPerPage);
-        this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems);
+        this.updateLayoutToggleUI(data.state.layoutMode);
+        
+        // Only render categories if they actually changed to preserve scroll position
+        if (this._lastSelectedCategory !== data.state.selectedCategory || !this._categoriesRendered) {
+            this.renderCategories(data.categories, data.state.selectedCategory);
+            this._lastSelectedCategory = data.state.selectedCategory;
+            this._categoriesRendered = true;
+        }
+        
+        // Check if featured section actually needs an update to prevent animation flashing
+        const featuredNeedsUpdate = 
+            this._lastFeaturedTab !== data.state.featuredTab || 
+            this._lastIsFeaturedHidden !== data.state.isFeaturedHidden ||
+            this._lastItemsPerPage !== data.state.itemsPerPage;
+
+        if (featuredNeedsUpdate) {
+            this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden, data.state.itemsPerPage);
+            this._lastFeaturedTab = data.state.featuredTab;
+            this._lastIsFeaturedHidden = data.state.isFeaturedHidden;
+            this._lastItemsPerPage = data.state.itemsPerPage;
+        }
+        
+        // Grid elements always update based on pagination/filtering
+        this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode);
         this.renderPagination(data.pagination);
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
@@ -189,6 +240,21 @@ class StoreView {
                 featuredSection.classList.remove('hidden');
                 mainDivider.classList.remove('hidden');
                 resultsHeader.classList.add('hidden');
+            }
+        }
+    }
+
+    updateLayoutToggleUI(layoutMode) {
+        const gridBtn = document.getElementById('layout-grid-btn');
+        const rowBtn = document.getElementById('layout-row-btn');
+        
+        if (gridBtn && rowBtn) {
+            if (layoutMode === 'grid' || !layoutMode) {
+                gridBtn.className = 'px-3 h-full text-gnome-blue bg-[#f6f5f4] dark:bg-[#3d3846]';
+                rowBtn.className = 'px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors';
+            } else {
+                rowBtn.className = 'px-3 h-full text-gnome-blue bg-[#f6f5f4] dark:bg-[#3d3846]';
+                gridBtn.className = 'px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors';
             }
         }
     }
@@ -226,6 +292,7 @@ class StoreView {
                 <div class="flex justify-end items-center gap-3 animate-fade-in">
                     <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                         <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                        <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                         <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
                         <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                         <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
@@ -263,6 +330,7 @@ class StoreView {
             <div class="ml-auto flex items-center gap-3">
                 <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                     <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                    <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                     <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
                     <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
@@ -276,6 +344,7 @@ class StoreView {
         
         const extensionsToShow = featured[activeTab] || [];
         
+        // Changed: Featured section always uses a grid layout and generateCardHTML
         featuredSection.innerHTML = `
             <div class="flex flex-col gap-6 animate-fade-in">
                 <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
@@ -289,7 +358,7 @@ class StoreView {
         `;
     }
 
-    renderExtensions(visible, selectedCategory, itemsPerPage, totalItems) {
+    renderExtensions(visible, selectedCategory, itemsPerPage, totalItems, layoutMode) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
         const resultsHeader = document.getElementById('results-header');
@@ -313,6 +382,7 @@ class StoreView {
             <div class="animate-fade-in flex items-center">
                 <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                     <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                    <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                     <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
                     <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
@@ -320,7 +390,13 @@ class StoreView {
             </div>
         `;
         
-        grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
+        if (layoutMode === 'row') {
+            grid.className = 'flex flex-col gap-3';
+            grid.innerHTML = visible.map(ext => this.generateRowHTML(ext)).join('');
+        } else {
+            grid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
+            grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
+        }
     }
 
     renderPagination(pagination) {
@@ -372,9 +448,47 @@ class StoreView {
         return downloads.toString();
     }
 
+    generateRowHTML(extension) {
+        return `
+            <article class="group bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-3 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md dark:hover:bg-[#322b47] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                        <div class="scale-[0.8] flex items-center justify-center">
+                            ${extension.icon || '<i class="fa-solid fa-puzzle-piece text-2xl"></i>'}
+                        </div>
+                    </div>
+                    <div class="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-4">
+                        <div class="col-span-1 sm:col-span-4 lg:col-span-3 min-w-0">
+                            <h3 class="font-bold text-sm text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
+                            <p class="text-xs text-gnome-grey truncate mt-0.5">${this.escapeHtml(extension.author)}</p>
+                        </div>
+                        <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] truncate hidden lg:block lg:col-span-6" title="${this.escapeHtml(extension.description)}">
+                            ${this.escapeHtml(extension.description)}
+                        </p>
+                        <div class="hidden sm:flex col-span-8 lg:col-span-3 items-center justify-end gap-3 shrink-0">
+                            <span class="text-[10px] font-semibold bg-[#f6f5f4] dark:bg-[#3d3846] group-hover:bg-gnome-white dark:group-hover:bg-[#2d2640] transition-colors text-gnome-grey px-2 py-1 rounded-full truncate max-w-[100px] text-center">${this.escapeHtml(extension.category)}</span>
+                            <div class="text-sm font-semibold text-gnome-blue w-12 text-right">★ ${extension.rating.toFixed(1)}</div>
+                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey w-12 text-right">${this.formatDownloads(extension.downloads)}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0 sm:ml-4 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
+                    <div class="flex sm:hidden items-center gap-3">
+                        <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
+                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
+                    </div>
+                    <button type="button" class="text-gnome-grey group-hover:text-gnome-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent sm:group-hover:bg-gnome-blue" title="View details">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </article>
+        `;
+    }
+
     generateCardHTML(extension) {
         return `
-            <article class="extension-card bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}">
+            <article class="extension-card group bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}" title="${this.escapeHtml(extension.description)}">
                 <div>
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-start gap-3 min-w-0">
@@ -396,7 +510,9 @@ class StoreView {
                 
                 <div class="mt-4 flex items-center justify-between pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
                     <span class="text-xs font-semibold bg-[#f6f5f4] dark:bg-[#3d3846] text-gnome-grey px-2.5 py-1 rounded-full">${this.escapeHtml(extension.category)}</span>
-                    <button type="button" class="text-sm font-semibold text-gnome-blue hover:underline">View details</button>
+                    <button type="button" class="text-gnome-grey group-hover:text-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="View details">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
             </article>
         `;
