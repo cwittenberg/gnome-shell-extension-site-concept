@@ -2,15 +2,52 @@
 class DetailView {
     constructor() {
         this.mapInstance = null;
+        this.currentMediaItems = [];
         this.defaultExtensionSvg = `
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
             <path d="M16 11V7a2 2 0 00-2-2h-1V3.5a2.5 2.5 0 00-5 0V5H7a2 2 0 00-2 2v1H3.5a2.5 2.5 0 000 5H5v3a2 2 0 002 2h1v1.5a2.5 2.5 0 005 0V19h3a2 2 0 002-2v-1h1.5a2.5 2.5 0 000-5H16z" />
           </svg>`;
+          
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        const thumbnailsContainer = document.getElementById('carousel-thumbnails');
+        if (thumbnailsContainer) {
+            thumbnailsContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-media-index]');
+                if (btn) {
+                    const index = parseInt(btn.getAttribute('data-media-index'), 10);
+                    if (!isNaN(index) && this.currentMediaItems[index]) {
+                        this.renderMainMedia(this.currentMediaItems[index]);
+                        
+                        // Update active state visual
+                        thumbnailsContainer.querySelectorAll('button').forEach(b => {
+                            b.classList.remove('border-gnome-blue');
+                            b.classList.add('border-[#c0bfbc]', 'dark:border-[#3d3846]');
+                        });
+                        btn.classList.remove('border-[#c0bfbc]', 'dark:border-[#3d3846]');
+                        btn.classList.add('border-gnome-blue');
+                    }
+                }
+            });
+        }
     }
 
     update(extension) {
-        if (!extension) return;
+        if (!extension) {
+            this.clearDetails();
+            return;
+        }
         this.renderDetails(extension);
+    }
+
+    clearDetails() {
+        const carouselMain = document.getElementById('carousel-main');
+        if (carouselMain) {
+            // Unload the DOM content to stop iframe audio/video leaks
+            carouselMain.innerHTML = '';
+        }
     }
 
     renderDetails(extension) {
@@ -75,7 +112,6 @@ class DetailView {
         if (reviewsContainer) {
             const reviews = extension.reviews || [];
             if (reviews.length === 0) {
-                // FIX: Implemented clear empty states for extensions lacking reviews.
                 reviewsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No reviews have been submitted for this extension yet.</p>';
             } else {
                 reviewsContainer.innerHTML = reviews.map((review) => `
@@ -98,34 +134,76 @@ class DetailView {
         this.renderAnalyticsMap(extension);
     }
 
+    getYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    renderMainMedia(media) {
+        const carouselMain = document.getElementById('carousel-main');
+        if (!carouselMain) return;
+
+        if (media.type === 'video') {
+            const ytId = this.getYoutubeId(media.url);
+            if (ytId) {
+                carouselMain.innerHTML = `
+                  <iframe class="w-full h-full object-cover rounded-xl"
+                    src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                  </iframe>
+                `;
+            } else {
+                carouselMain.innerHTML = `
+                  <video class="w-full h-full object-cover rounded-xl" controls autoplay muted loop playsinline poster="${this.escapeHtml(media.poster || '')}">
+                    <source src="${this.escapeHtml(media.url)}" type="video/mp4">
+                  </video>
+                `;
+            }
+        } else {
+            carouselMain.innerHTML = `<img src="${this.escapeHtml(media.url)}" alt="Extension preview" class="w-full h-full object-cover rounded-xl">`;
+        }
+    }
+
     renderMedia(mediaItems) {
+        this.currentMediaItems = mediaItems || [];
         const carouselMain = document.getElementById('carousel-main');
         const carouselThumbnails = document.getElementById('carousel-thumbnails');
         
         if (!carouselMain || !carouselThumbnails) return;
 
-        if (!mediaItems.length) {
+        if (!this.currentMediaItems.length) {
             carouselMain.innerHTML = '<p class="text-sm text-gnome-grey">No media available</p>';
             carouselThumbnails.innerHTML = '';
             return;
         }
 
-        const firstMedia = mediaItems[0];
-        if (firstMedia.type === 'video') {
-            carouselMain.innerHTML = `
-              <video class="w-full h-full object-cover rounded-xl" controls autoplay muted loop playsinline poster="${this.escapeHtml(firstMedia.poster || '')}">
-                <source src="${this.escapeHtml(firstMedia.url)}" type="video/mp4">
-              </video>
-            `;
-        } else {
-            carouselMain.innerHTML = `<img src="${this.escapeHtml(firstMedia.url)}" alt="Extension preview" class="w-full h-full object-cover rounded-xl">`;
-        }
+        // Render the first item by default
+        this.renderMainMedia(this.currentMediaItems[0]);
 
-        carouselThumbnails.innerHTML = mediaItems.map((media) => `
-          <button type="button" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border border-[#c0bfbc] dark:border-[#3d3846]">
-            ${media.type === 'video' ? `<img src="${this.escapeHtml(media.poster || '')}" alt="Preview" class="w-full h-full object-cover">` : `<img src="${this.escapeHtml(media.url)}" alt="Preview" class="w-full h-full object-cover">`}
-          </button>
-        `).join('');
+        // Render thumbnails
+        carouselThumbnails.innerHTML = this.currentMediaItems.map((media, index) => {
+            let thumbUrl = media.url;
+            if (media.type === 'video') {
+                const ytId = this.getYoutubeId(media.url);
+                if (ytId) {
+                    thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                } else {
+                    thumbUrl = media.poster || '';
+                }
+            }
+            
+            const borderClass = index === 0 ? 'border-gnome-blue' : 'border-[#c0bfbc] dark:border-[#3d3846]';
+            
+            return `
+              <button type="button" data-media-index="${index}" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 ${borderClass} hover:border-gnome-blue transition-colors focus:outline-none">
+                <img src="${this.escapeHtml(thumbUrl)}" alt="Preview ${index + 1}" class="w-full h-full object-cover">
+              </button>
+            `;
+        }).join('');
     }
 
     renderLinks(extension) {

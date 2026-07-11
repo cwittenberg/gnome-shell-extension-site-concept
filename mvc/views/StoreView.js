@@ -1,4 +1,4 @@
-// GoF Pattern: Observer (Observer Participant)
+// GoF Pattern: Observer (Observer Participant) 
 class StoreView {
     constructor() {
         this.controller = null;
@@ -17,19 +17,19 @@ class StoreView {
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
-
+        
         if (searchInput) {
             searchInput.addEventListener('input', (event) => {
                 if (this.controller) this.controller.handleSearch(event.target.value.trim());
             });
         }
-
+        
         if (sortSelect) {
             sortSelect.addEventListener('change', (event) => {
                 if (this.controller) this.controller.handleSort(event.target.value);
             });
         }
-
+        
         // Global Event Delegation for dynamic structural components
         document.body.addEventListener('click', (event) => {
             // Pill Categories Filter
@@ -37,18 +37,28 @@ class StoreView {
             if (categoryBtn && this.controller) {
                 this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
             }
-
+            
             // Featured Tabs Pill Buttons
             const featuredTabBtn = event.target.closest('[data-featured-tab]');
             if (featuredTabBtn && this.controller) {
                 event.preventDefault();
                 this.controller.handleFeaturedTab(featuredTabBtn.getAttribute('data-featured-tab'));
             }
-
+            
             // General Extension Cards Open Details
             const card = event.target.closest('[data-extension-id]');
             if (card && this.controller) {
-                this.controller.handleOpenExtension(card.getAttribute('data-extension-id'));
+                const extId = card.getAttribute('data-extension-id');
+                
+                // Add unfolding animation class
+                card.classList.add('card-unfold-active');
+                
+                // Wait for the CSS animation to complete before switching views
+                setTimeout(() => {
+                    this.controller.handleOpenExtension(extId);
+                    // Clean up to ensure state is reset if navigating back
+                    card.classList.remove('card-unfold-active');
+                }, 350); 
             }
         });
     }
@@ -57,23 +67,24 @@ class StoreView {
         const catContainer = document.getElementById('categories-container');
         const scrollLeftBtn = document.getElementById('cat-scroll-left');
         const scrollRightBtn = document.getElementById('cat-scroll-right');
-
+        
         if (catContainer && scrollLeftBtn && scrollRightBtn) {
             const updateScrollButtons = () => {
                 scrollLeftBtn.classList.toggle('hidden', catContainer.scrollLeft <= 0);
                 scrollRightBtn.classList.toggle('hidden', catContainer.scrollLeft + catContainer.clientWidth >= catContainer.scrollWidth - 1);
             };
-
+            
             catContainer.addEventListener('scroll', updateScrollButtons);
             window.addEventListener('resize', updateScrollButtons);
             
             // Re-verify sizing anytime new nodes get injected
             const observer = new MutationObserver(() => updateScrollButtons());
             observer.observe(catContainer, { childList: true, subtree: true });
-
+            
             scrollLeftBtn.addEventListener('click', () => {
                 catContainer.scrollBy({ left: -200, behavior: 'smooth' });
             });
+            
             scrollRightBtn.addEventListener('click', () => {
                 catContainer.scrollBy({ left: 200, behavior: 'smooth' });
             });
@@ -84,7 +95,7 @@ class StoreView {
         this.renderCategories(data.categories, data.state.selectedCategory);
         this.renderFeatured(data.featured, data.state.featuredTab);
         this.renderExtensions(data.filtered, data.state.selectedCategory);
-
+        
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
         
         // Element Hooks
@@ -93,7 +104,7 @@ class StoreView {
         const featuredSection = document.getElementById('featured-section');
         const mainDivider = document.getElementById('main-divider');
         const resultsHeader = document.getElementById('results-header');
-
+        
         // Smooth Auto-hide Hero section logic
         if (heroSection && heroContent) {
             if (isFiltering) {
@@ -104,7 +115,7 @@ class StoreView {
                 heroContent.classList.remove('opacity-0', 'scale-95');
             }
         }
-
+        
         // Hide Featured components when searching/filtering
         if (featuredSection && mainDivider && resultsHeader) {
             if (isFiltering) {
@@ -135,21 +146,21 @@ class StoreView {
                 </button>
             `;
         }).join('');
-
+        
         container.innerHTML = buttons;
     }
 
     renderFeatured(featured, activeTab) {
         const featuredSection = document.getElementById('featured-section');
         if (!featuredSection) return;
-
+        
         const tabs = [
             { id: 'trending', label: 'Trending' },
             { id: 'popular', label: 'Popular' },
             { id: 'newest', label: 'New' },
             { id: 'updated', label: 'Updated' }
         ];
-
+        
         const tabsHtml = tabs.map(tab => {
             const isActive = tab.id === activeTab;
             return `
@@ -158,9 +169,9 @@ class StoreView {
                 </button>
             `;
         }).join('');
-
+        
         const extensionsToShow = featured[activeTab] || [];
-
+        
         featuredSection.innerHTML = `
             <div class="flex flex-col gap-6 animate-fade-in">
                 <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide">
@@ -186,7 +197,7 @@ class StoreView {
             resultsHeader.innerHTML = '';
             return;
         }
-
+        
         emptyState.classList.add('hidden');
         resultsHeader.innerHTML = `
             <div class="animate-fade-in">
@@ -194,7 +205,7 @@ class StoreView {
                 <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
             </div>
         `;
-
+        
         grid.innerHTML = visible.map(ext => this.generateCardHTML(ext)).join('');
     }
 
@@ -213,7 +224,7 @@ class StoreView {
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
+                            <div class="text-sm font-semibold text-gnome-blue">  ${extension.rating.toFixed(1)}</div>
                             <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${extension.downloads.toLocaleString()} dls</div>
                         </div>
                     </div>
@@ -237,5 +248,4 @@ class StoreView {
             .replace(/'/g, '&#39;');
     }
 }
-
 window.StoreView = StoreView;

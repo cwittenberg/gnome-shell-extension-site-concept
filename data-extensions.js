@@ -1,5 +1,32 @@
 const EXTENSIONS = [
-     {
+    {
+        id: 3843,
+        uuid: 'just-perfection-desktop@just-perfection',
+        name: 'Just Perfection',
+        author: 'JustPerfection',
+        maintainers: ['JustPerfection'],
+        description: 'Tweak Tool to customize GNOME Shell, change the behavior and disable UI elements. Hide top panel, dash, workspace switcher and more.',
+        version: '30',
+        downloads: 2154300,
+        rating: 4.9,
+        ratingCount: 3120,
+        category: 'Customization',
+        featured: true,
+        homepage: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection',
+        bugTracker: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/issues',
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M38.83 41.53l-3.32-.55a11.13 11.13 0 01-3.51-1.45l-2.61 2.11a1.44 1.44 0 01-1.92-.12l-2.47-2.47a1.44 1.44 0 01-.12-1.92l2.11-2.61a11.13 11.13 0 01-1.45-3.51l-.55-3.32A1.44 1.44 0 0123.57 26h3.49a1.44 1.44 0 011.42 1.21l.55 3.32a11.13 11.13 0 013.51 1.45l2.61-2.11a1.44 1.44 0 011.92.12l2.47 2.47a1.44 1.44 0 01.12 1.92l-2.11 2.61a11.13 11.13 0 011.45 3.51l.55 3.32a1.44 1.44 0 01-1.42 1.63h-3.49a1.44 1.44 0 01-1.42-1.21zM32 37.33A5.33 5.33 0 1026.67 32 5.33 5.33 0 0032 37.33z" fill="#ffffff"/></svg>`,
+        mdDescription: '## Just Perfection\n\nTweak Tool to customize GNOME Shell, change the behavior and disable UI elements.\n\n### Features\n* **Minimalist Desktop:** Hide the Top Panel, Dash, Search, Workspace Switcher, and more.\n* **Behavior Tweaks:** Change notification banner positions, disable window demands attention, and control startup status.\n* **Profile System:** Quickly switch between Minimal, Super Minimal, and Default profiles.\n* **Compatibility:** Always updated quickly for the latest GNOME Shell releases.',
+        reviews: [
+            { user: "GnomeUser", date: "10 Jan 2026", rating: 5, text: "The best extension to make GNOME truly yours. I use it to hide everything for a distraction-free environment." },
+            { user: "LinuxFan", date: "15 Dec 2025", rating: 5, text: "Just Perfection is exactly what it says on the tin. Always works, no bugs." }
+        ],
+        versions: mockVersions
+    },
+    {
         id: 10209,
         uuid: 'snaptext@cwittenberg',
         name: 'Snap Text Extractor',
@@ -14,16 +41,19 @@ const EXTENSIONS = [
         new: true,
         homepage: 'https://github.com/cwittenberg/snaptext',
         bugTracker: 'https://github.com/cwittenberg/snaptext/issues',
-        media: mockMedia,
+        media: [
+            { type: 'video', url: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.720p.vp9.webm', poster: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M20 24H28V40H20V24ZM36 24H44V40H36V24Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Snap Text Extractor\n\nGNOME Extension enabling the user to select an area of the screen to instantly extract and copy text to the clipboard using native Optical Character Recognition (OCR). Similar to how it works on MacOS.\n\n### Features\n* **Instant Text Extraction:** Select any part of your screen, and the text within that area is instantly processed and copied to your clipboard.\n* **Smart OCR Preprocessing:** Utilizes ImageMagick to maximize Text Recognition accuracy by automatically converting to grayscale, maximizing contrast, upscaling small screen snips, and smartly negating colors for Dark Mode UIs.\n* **Multi-Pass OCR Routing:** Dynamically adjusts Page Segmentation Modes (PSM) based on aspect ratio.\n* **Seamless GNOME Integration:** Built exclusively for GNOME Shell versions 45 through 50 using modern standard APIs.\n\n### System Dependencies\nThis extension relies on standard native system tools to capture the screen, decode QR codes, preprocess images, and perform OCR extraction. Please refer to the GitHub repository for full instructions.',
         reviews: [
-         { user: "callpaul.eu", date: "21 June 2026", rating: 5, text: "Hi and welcome to our site. Thanks you for your contribution i look forward to the reaction from fellow members to your tool." },
-         { user: "nevj", date: "21 June 2026", rating: 4, text: "I have used Tesseract - it is a good piece of software. Now I see it extracts text from graphic elements on the screen which were not originally text, using OCR. You might make this clearer in your documentation." }
-       ],
-       versions: mockVersions
-     },
-     {
+            { user: "callpaul.eu", date: "21 June 2026", rating: 5, text: "Hi and welcome to our site. Thanks you for your contribution i look forward to the reaction from fellow members to your tool." },
+            { user: "nevj", date: "21 June 2026", rating: 4, text: "I have used Tesseract - it is a good piece of software. Now I see it extracts text from graphic elements on the screen which were not originally text, using OCR. You might make this clearer in your documentation." }
+        ],
+        versions: mockVersions
+    },
+    {
         id: 5368,
         uuid: 'show-external-ip@cwittenberg.example.com',
         name: 'Show External IP',
@@ -37,18 +67,21 @@ const EXTENSIONS = [
         category: 'System Monitor',
         homepage: 'https://github.com/cwittenberg/thisipcan.cyou',
         bugTracker: 'https://github.com/cwittenberg/thisipcan.cyou/issues',
-        media: mockMedia,
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M32 16C23.1634 16 16 23.1634 16 32C16 40.8366 23.1634 48 32 48C40.8366 48 48 40.8366 48 32C48 23.1634 40.8366 16 32 16ZM32 40C27.5817 40 24 36.4183 24 32C24 27.5817 27.5817 24 32 24C36.4183 24 40 27.5817 40 32C40 36.4183 36.4183 40 32 40Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Show External IP\n\nKeep track of your public IP address directly from the top panel.\n\n### Features\n* **Live Updates:** Automatically refreshes your IP address.\n* **One-Click Copy:** Click the panel icon to copy the IP to your clipboard.\n* **Multiple Providers:** Configure which service to use for IP checking to ensure uptime and accuracy.',
         reviews: [
-         { user: "cwittenberg", date: "June 20, 2026", rating: 5, text: "Updated to work on Gnome 50. Also added history feature and updated the design.", isAuthor: true },
-         { user: "3Qn", date: "June 9, 2023", rating: 5, text: "Really nice and useful plugin." },
-         { user: "vmsman", date: "March 8, 2023", rating: 4, text: "I run a network with both IPv4 and IPv6. I am interested in the WAN address for IPv4. This extension starts out that way, but when you connect to a VPN and then disconnect, this extension lists the IPv6 address only. We could use a settings option to select which address the user wants." },
-         { user: "BjornR1989", date: "January 15, 2023", rating: 4, text: "It seems to work just fine, but it refreshes the data everytime it's clicked, and momentarily freezes my desktop whilst it's gathering the data. Perhaps caching the result and adding a \"refresh now\" button isn't a bad idea?" }
-       ],
-       versions: mockVersions
-     },
-     {
+            { user: "cwittenberg", date: "June 20, 2026", rating: 5, text: "Updated to work on Gnome 50. Also added history feature and updated the design.", isAuthor: true },
+            { user: "3Qn", date: "June 9, 2023", rating: 5, text: "Really nice and useful plugin." },
+            { user: "vmsman", date: "March 8, 2023", rating: 4, text: "I run a network with both IPv4 and IPv6. I am interested in the WAN address for IPv4. This extension starts out that way, but when you connect to a VPN and then disconnect, this extension lists the IPv6 address only. We could use a settings option to select which address the user wants." },
+            { user: "BjornR1989", date: "January 15, 2023", rating: 4, text: "It seems to work just fine, but it refreshes the data everytime it's clicked, and momentarily freezes my desktop whilst it's gathering the data. Perhaps caching the result and adding a \"refresh now\" button isn't a bad idea?" }
+        ],
+        versions: mockVersions
+    },
+    {
         id: 1,
         uuid: 'dash-to-dock@micxgx.gmail.com',
         name: 'Dash to Dock',
@@ -63,13 +96,16 @@ const EXTENSIONS = [
         featured: true,
         homepage: 'https://github.com/micheleg/dash-to-dock',
         bugTracker: 'https://github.com/micheleg/dash-to-dock/issues',
-        media: mockMedia,
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><rect x="12" y="44" width="40" height="12" rx="4" fill="#ffffff"/><circle cx="20" cy="50" r="3" fill="#3584e4"/><circle cx="32" cy="50" r="3" fill="#3584e4"/><circle cx="44" cy="50" r="3" fill="#3584e4"/><rect x="12" y="12" width="40" height="24" rx="4" fill="#ffffff" opacity="0.3"/></svg>`,
         mdDescription: mockMarkdown,
         reviews: mockReviews,
-       versions: mockVersions
-     },
-     {
+        versions: mockVersions
+    },
+    {
         id: 2,
         uuid: 'user-theme@gnome-shell-extensions.gcampax.github.com',
         name: 'User Themes',
@@ -84,13 +120,16 @@ const EXTENSIONS = [
         featured: true,
         homepage: '#',
         bugTracker: '#',
-        media: mockMedia,
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M48 24C48 15.1634 40.8366 8 32 8C23.1634 8 16 15.1634 16 24C16 32.8366 23.1634 40 32 40V56H40V40C44.4183 40 48 36.4183 48 32V24ZM32 32C27.5817 32 24 28.4183 24 24C24 19.5817 27.5817 16 32 16C36.4183 16 40 19.5817 40 24C40 28.4183 36.4183 32 32 32Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
         reviews: [],
-       versions: mockVersions
-     },
-     {
+        versions: mockVersions
+    },
+    {
         id: 3,
         uuid: 'blur-my-shell@aunetx',
         name: 'Blur my Shell',
@@ -105,13 +144,16 @@ const EXTENSIONS = [
         featured: true,
         homepage: '#',
         bugTracker: '#',
-        media: mockMedia,
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M32 12C32 12 16 28.4183 16 40C16 48.8366 23.1634 56 32 56C40.8366 56 48 48.8366 48 40C48 28.4183 32 12 32 12ZM32 48C27.5817 48 24 44.4183 24 40C24 37.1129 25.5398 34.2573 28.1636 31.429C30.3475 33.7844 32 36.7825 32 40C32 42.2091 33.7909 44 36 44C37.4988 44 38.8021 43.176 39.5255 41.9363C39.832 43.166 40 44.4534 40 45.7538C40 48.0945 39.1171 50.2289 37.6569 51.7538C36.1966 53.2788 34.1818 54 32 54C28.8182 54 26 51.9055 26 48Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
         reviews: [],
-       versions: mockVersions
-     },
-     {
+        versions: mockVersions
+    },
+    {
         id: 4,
         uuid: 'appindicatorsupport@rgcjonas.gmail.com',
         name: 'AppIndicator Support',
@@ -125,12 +167,15 @@ const EXTENSIONS = [
         category: 'System Integration',
         homepage: '#',
         bugTracker: '#',
-        media: mockMedia,
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><path d="M48 20V44C48 48.4183 44.4183 52 40 52H24C19.5817 52 16 48.4183 16 44V20C16 15.5817 19.5817 12 24 12H40C44.4183 12 48 15.5817 48 20ZM40 20H24V44H40V20ZM32 40C30.8954 40 30 39.1046 30 38C30 36.8954 30.8954 36 32 36C33.1046 36 34 36.8954 34 38C34 39.1046 33.1046 40 32 40Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
         reviews: [],
-       versions: mockVersions
-     }
-]
+        versions: mockVersions
+    }
+];
 
 const CATEGORIES = ['All', 'Dock & Panel', 'Theming', 'Visual Effects', 'System Integration', 'Integration', 'Utilities', 'Window Management', 'Customization', 'System Monitor'];
