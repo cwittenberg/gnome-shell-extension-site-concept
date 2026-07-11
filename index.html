@@ -6,9 +6,10 @@
   <meta name="referrer" content="no-referrer">
   <link rel="icon" type="image/svg+xml" href="/favicon.png">
   <title>GNOME Extensions Store</title>
+
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
-  
+
   <!-- Tailwind Configuration for Dark Mode & Animations -->
   <script>
     tailwind.config = {
@@ -40,7 +41,7 @@
       }
     }
   </script>
-  
+
   <!-- External Stylesheets -->
   <link rel="stylesheet" href="stylesheet.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
@@ -48,7 +49,7 @@
 <body class="bg-[#f6f5f4] dark:bg-gnome-black text-gnome-black dark:text-gnome-white transition-colors duration-300 min-h-screen">
 
   <!-- Exhaustive Tailwind Safelist (Forces CDN to generate classes injected by JS) -->
-  <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in"></div>
+  <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100"></div>
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#c0bfbc] dark:border-[#3d3846] transition-colors duration-300">
@@ -110,7 +111,6 @@
             <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.78a1 1 0 011.42 1.42l-.71.7a1 1 0 11-1.41-1.41l.7-.71zM18 9a1 1 0 110 2h-1a1 1 0 110-2h1zM5.64 16.36a1 1 0 001.41-1.41l-.7-.71a1 1 0 00-1.42 1.42l.71.7zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-5.66-2.34l-.71.71a1 1 0 001.42 1.42l.7-.71a1 1 0 00-1.41-1.42zM3 10a1 1 0 110 2H2a1 1 0 110-2h1zm1.22-5.78l.7.71a1 1 0 001.41-1.42l-.7-.71A1 1 0 004.22 4.22zM10 6a4 4 0 100 8 4 4 0 000-8z" clip-rule="evenodd" />
           </svg>
         </button>
-
         <button class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-[#1c71d8] transition-colors shadow-sm">
           Log in
         </button>
@@ -196,12 +196,19 @@
         <h3 class="text-lg font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions found</h3>
         <p class="text-sm text-gnome-grey max-w-sm">Try adjusting your search or category filter to find what you're looking for.</p>
       </div>
-
     </main>
   </div>
 
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
+    
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top-btn" class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+      </svg>
+    </button>
+
     <!-- Back Header -->
     <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4">
@@ -317,7 +324,6 @@
             </dl>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -375,7 +381,6 @@
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
-  
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>

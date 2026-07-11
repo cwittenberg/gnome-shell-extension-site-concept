@@ -74,6 +74,22 @@
                 }
             });
         });
+
+        // Handle Scroll to Top Button Visibility
+        window.addEventListener('scroll', () => {
+            const scrollTopBtn = document.getElementById('scroll-to-top-btn');
+            if (scrollTopBtn) {
+                const detailsView = document.getElementById('details-view');
+                // Show when details view is open and we scrolled down past 300px
+                if (detailsView && !detailsView.classList.contains('hidden') && window.scrollY > 300) {
+                    scrollTopBtn.classList.remove('scale-0', 'opacity-0');
+                    scrollTopBtn.classList.add('scale-100', 'opacity-100');
+                } else {
+                    scrollTopBtn.classList.add('scale-0', 'opacity-0');
+                    scrollTopBtn.classList.remove('scale-100', 'opacity-100');
+                }
+            }
+        });
     }
 
     function toggleTheme() {
@@ -81,7 +97,7 @@
     }
 
     function openExtension(extensionId) {
-        showView('details'); 
+        showView('details');
         
         const extData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
         detailController.openExtension(extensionId, extData);
@@ -95,6 +111,7 @@
 
     function showView(view) {
         const views = ['store', 'details', 'upload', 'local', 'about'];
+
         views.forEach(v => {
             const el = document.getElementById(`${v}-view`);
             if (el) {
