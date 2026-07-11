@@ -3,11 +3,8 @@ class DetailView {
     constructor() {
         this.mapInstance = null;
         this.currentMediaItems = [];
-        this.defaultExtensionSvg = `
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-            <path d="M16 11V7a2 2 0 00-2-2h-1V3.5a2.5 2.5 0 00-5 0V5H7a2 2 0 00-2 2v1H3.5a2.5 2.5 0 000 5H5v3a2 2 0 002 2h1v1.5a2.5 2.5 0 005 0V19h3a2 2 0 002-2v-1h1.5a2.5 2.5 0 000-5H16z" />
-          </svg>`;
-          
+        this.defaultExtensionSvg = `<i class="fa-solid fa-puzzle-piece text-4xl"></i>`;
+        
         this.bindEvents();
     }
 
@@ -244,7 +241,6 @@ class DetailView {
         ];
 
         const maxInstalls = Math.max(...markerData.map(m => m.installs));
-
         const bubbleMarkers = markerData.map(data => {
             const radius = 4 + (data.installs / maxInstalls) * 12;
             return {

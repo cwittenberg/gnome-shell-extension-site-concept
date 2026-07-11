@@ -2,10 +2,7 @@
 class StoreView {
     constructor() {
         this.controller = null;
-        this.defaultExtensionSvg = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-                <path d="M16 11V7a2 2 0 00-2-2h-1V3.5a2.5 2.5 0 00-5 0V5H7a2 2 0 00-2 2v1H3.5a2.5 2.5 0 000 5H5v3a2 2 0 002 2h1v1.5a2.5 2.5 0 005 0V19h3a2 2 0 002-2v-1h1.5a2.5 2.5 0 000-5H16z" />
-            </svg>`;
+        this.defaultExtensionSvg = `<i class="fa-solid fa-puzzle-piece text-4xl"></i>`;
         this.bindEvents();
         this.bindScrollEvents();
     }
@@ -234,7 +231,7 @@ class StoreView {
                         <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                     </select>
                     <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        <i class="fa-solid fa-chevron-down"></i>
                         Show Featured
                     </button>
                 </div>
@@ -271,7 +268,7 @@ class StoreView {
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                 </select>
                 <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]" title="Hide Featured">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                    <i class="fa-solid fa-chevron-up"></i>
                     Hide
                 </button>
             </div>
@@ -341,7 +338,7 @@ class StoreView {
         const isPrevDisabled = pagination.currentPage === 1;
         paginationHtml += `
             <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isPrevDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Previous page">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                <i class="fa-solid fa-chevron-left"></i>
             </button>
         `;
         
@@ -359,7 +356,7 @@ class StoreView {
         const isNextDisabled = pagination.currentPage === pagination.totalPages;
         paginationHtml += `
             <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isNextDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Next page">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
         `;
         

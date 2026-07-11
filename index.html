@@ -6,8 +6,11 @@
   <meta name="referrer" content="no-referrer">
   <link class="favicon" rel="icon" type="image/svg+xml" href="/favicon.png">
   <title>GNOME Extensions Store</title>
+  
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  
   <!-- Tailwind Configuration for Dark Mode & Animations -->
   <script>
     tailwind.config = {
@@ -46,35 +49,29 @@
 <body class="bg-[#f6f5f4] dark:bg-gnome-black text-gnome-black dark:text-gnome-white transition-colors duration-300 min-h-screen">
   <!-- Exhaustive Tailwind Safelist (Forces CDN to generate classes injected by JS) -->
   <div class="hidden bg-gnome-white dark:bg-[#2d2640] border-[#c0bfbc] border-[#deddda] dark:border-[#3d3846] rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-[#f6f5f4] dark:bg-[#241F31] font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3 bg-[#f6f5f4] dark:bg-[#3d3846] hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-[#deddda] dark:hover:bg-[#3d3846] border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100"></div>
+  
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-[#c0bfbc] dark:border-[#3d3846] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center justify-between gap-y-3 gap-x-4">
-             <!-- Logo (Order 1 on all sizes) -->
+      
+      <!-- Logo (Order 1 on all sizes) -->
       <div class="flex items-center gap-3 flex-shrink-0 cursor-pointer order-1" onclick="window.closeExtension()">
-        <svg class="w-8 h-8 fill-gnome-black dark:fill-gnome-white" viewBox="-10 -5 125 130" xmlns="http://www.w3.org/2000/svg" aria-label="GNOME">
-          <path d="M 86.068,0 C 61.466,0 56.851,35.041 70.691,35.041 C 84.529,35.041 110.671,0 86.068,0 z" />
-          <path d="M 45.217,30.699 C 52.586,31.149 60.671,2.577 46.821,4.374 C 32.976,6.171 37.845,30.249 45.217,30.699 z" />
-          <path d="M 26.212,36.642 C 32.451,35.37 32.793,9.778 21.667,14.369 C 10.539,18.961 19.978,37.916 26.212,36.642 z" />
-          <path d="M 11.445,48.453 C 16.686,46.146 12.12,23.581 3.208,29.735 C -5.7,35.89 6.204,50.759 11.445,48.453 z" />
-          <path d="M 58.791,93.913 C 59.898,102.367 52.589,106.542 45.431,101.092 C 22.644,83.743 83.16,75.088 79.171,51.386 C 75.86,31.712 15.495,37.769 8.621,68.553 C 3.968,89.374 27.774,118.26 52.614,118.26 C 64.834,118.26 78.929,107.226 81.566,93.248 C 83.58,82.589 57.867,86.86 58.791,93.913 z" />
-        </svg>
+        <img src="img/logo.svg" class="w-8 h-8 dark:invert" alt="GNOME" />
         <div>
           <span class="font-extrabold text-gnome-black dark:text-gnome-white text-base tracking-tight">Extensions</span>
         </div>
       </div>
+      
       <!-- Mobile Menu Toggle (Order 2 on mobile, hidden on Desktop) -->
       <div class="sm:hidden flex items-center gap-1 order-2">
         <button id="theme-toggle-mobile" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey" aria-label="Toggle theme">
-          <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-          </svg>
+          <i class="fa-solid fa-circle-half-stroke text-lg"></i>
         </button>
         <button id="mobile-menu-btn" class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors font-bold text-gnome-grey" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
-          </svg>
+          <i class="fa-solid fa-bars text-lg"></i>
         </button>
       </div>
+      
       <!-- Search (Order 3 on mobile taking full width, Order 2 on desktop sharing row) -->
       <div id="search-container" class="w-full sm:w-auto sm:flex-1 sm:max-w-xl relative order-3 sm:order-2">
         <input
@@ -84,6 +81,7 @@
           class="w-full bg-gnome-white dark:bg-[#2d2640] text-gnome-black dark:text-gnome-white border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl px-4 py-2 text-sm placeholder:text-gnome-grey focus:outline-none focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-sm"
         />
       </div>
+      
       <!-- Desktop Nav (Hidden on mobile, Order 3 on desktop) -->
       <nav class="hidden sm:flex items-center gap-1 order-4 sm:order-3">
         <a href="#" data-nav="store" class="text-sm text-gnome-black dark:text-gnome-white px-3 py-1.5 rounded-lg bg-[#f6f5f4] dark:bg-[#2d2640] transition-all font-semibold">Extensions</a>
@@ -93,20 +91,16 @@
         
         <!-- Theme Toggle -->
         <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey ml-1">
-          <svg id="theme-icon-dark" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 hidden">
-            <!-- Moon icon -->
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-          </svg>
-          <svg id="theme-icon-light" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-            <!-- Sun icon -->
-            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.78a1 1 0 011.42 1.42l-.71.7a1 1 0 11-1.41-1.41l.7-.71zM18 9a1 1 0 110 2h-1a1 1 0 110-2h1zM5.64 16.36a1 1 0 001.41-1.41l-.7-.71a1 1 0 00-1.42 1.42l.71.7zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-5.66-2.34l-.71.71a1 1 0 001.42 1.42l.7-.71a1 1 0 00-1.41-1.42zM3 10a1 1 0 110 2H2a1 1 0 110-2h1zm1.22-5.78l.7.71a1 1 0 001.41-1.42l-.7-.71A1 1 0 004.22 4.22zM10 6a4 4 0 100 8 4 4 0 000-8z" clip-rule="evenodd" />
-          </svg>
+          <i id="theme-icon-dark" class="fa-solid fa-moon text-lg hidden"></i>
+          <i id="theme-icon-light" class="fa-solid fa-sun text-lg"></i>
         </button>
+        
         <button class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-[#1c71d8] transition-colors shadow-sm">
           Log in
         </button>
       </nav>
     </div>
+    
     <!-- Mobile Menu (Drops down) -->
     <div id="mobile-menu" class="hidden sm:hidden border-t border-[#c0bfbc] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
       <a href="#" data-nav="store" class="text-sm font-semibold text-[#5e5c64] dark:text-[#c0bfbc] py-2">Extensions</a>
@@ -116,6 +110,7 @@
       <button class="text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-2 rounded-lg w-full mt-2">Log in</button>
     </div>
   </header>
+
   <!-- STORE VIEW -->
   <div id="store-view">
     <!-- Hero Section -->
@@ -129,89 +124,106 @@
         </p>
       </div>
     </section>
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-             <!-- Featured Extensions Section -->
+      
+      <!-- Featured Extensions Section -->
       <div id="featured-section" class="mb-12 animate-fade-in">
         <!-- Rendered by JS -->
       </div>
+
       <!-- Main Visual Separator -->
       <div id="main-divider" class="flex items-center gap-4 mb-8 transition-opacity duration-300">
         <hr class="flex-1 border-[#c0bfbc] dark:border-[#3d3846]">
         <span class="text-sm font-bold text-gnome-grey uppercase tracking-wider">All Extensions</span>
         <hr class="flex-1 border-[#c0bfbc] dark:border-[#3d3846]">
       </div>
+
       <!-- Filters Bar with Scrollable Categories -->
       <div class="flex flex-col md:flex-row gap-3 mb-8">
         <div class="relative flex-1 flex items-center overflow-hidden border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl bg-[#f6f5f4] dark:bg-[#2d2640] p-1 shadow-sm">
-                     <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          
+          <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <i class="fa-solid fa-chevron-left text-lg"></i>
           </button>
-                     <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full relative z-0 px-1">
+          
+          <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full relative z-0 px-1">
             <!-- Rendered by JS -->
           </div>
-                     <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          
+          <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <i class="fa-solid fa-chevron-right text-lg"></i>
           </button>
         </div>
-                 <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-4 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer flex-shrink-0 h-[44px]">
+        
+        <select id="sort-select" class="text-sm font-semibold text-[#5e5c64] bg-gnome-white border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-4 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer flex-shrink-0 h-[44px]">
           <option value="downloads">Most Downloaded</option>
           <option value="rating">Highest Rated</option>
           <option value="newest">Newest</option>
           <option value="name">Name A-Z</option>
         </select>
       </div>
+
       <!-- Results Header -->
       <div id="results-header" class="flex items-center justify-between mb-4 animate-fade-in">
         <!-- Rendered by JS -->
       </div>
+
       <!-- Main Extensions Grid -->
       <div id="extensions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <!-- Rendered by JS -->
       </div>
+
       <!-- Pagination Controls Container -->
       <div id="pagination-container" class="mt-10 flex justify-center items-center gap-2 animate-fade-in">
         <!-- Dynamic pagination node injection -->
       </div>
+
       <!-- Empty State -->
       <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-center animate-fade-in">
         <h3 class="text-lg font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions found</h3>
         <p class="text-sm text-gnome-grey max-w-sm">Try adjusting your search or category filter to find what you're looking for.</p>
       </div>
+
     </main>
   </div>
+
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
-         <!-- Scroll to Top Button -->
+    
+    <!-- Scroll to Top Button -->
     <button id="scroll-to-top-btn" class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-      </svg>
+      <i class="fa-solid fa-arrow-up text-xl"></i>
     </button>
+
     <!-- Back Header -->
     <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4">
         <button onclick="window.closeExtension()" class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
+          <i class="fa-solid fa-arrow-left"></i>
           Back to Store
         </button>
       </div>
     </div>
-         <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
+    
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
       <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
+        
         <div id="detail-icon" class="w-32 h-32 rounded-3xl bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden text-gnome-blue animate-fade-in">
           <!-- JS injected SVG -->
         </div>
-                 <div class="flex-1 w-full animate-fade-in">
+        
+        <div class="flex-1 w-full animate-fade-in">
           <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
             <div>
               <h1 id="detail-title" class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight"></h1>
               <p id="detail-author" class="text-lg text-gnome-grey font-semibold mb-4"></p>
+              
               <div id="detail-rating-container" class="mb-4"></div>
             </div>
-                         <div class="flex-shrink-0 w-full md:w-auto flex flex-col gap-2">
+            
+            <div class="flex-shrink-0 w-full md:w-auto flex flex-col gap-2">
               <button id="detail-install-btn" class="detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-md">
                 <!-- JS injected -->
               </button>
@@ -222,6 +234,7 @@
           </div>
         </div>
       </div>
+
       <!-- Carousel Section -->
       <div class="mb-12 bg-gnome-white dark:bg-[#2d2640] rounded-2xl border border-[#c0bfbc] dark:border-[#3d3846] p-4 shadow-md animate-fade-in">
         <div id="carousel-main" class="w-full aspect-video bg-[#f6f5f4] dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
@@ -231,6 +244,7 @@
            <!-- JS injected -->
         </div>
       </div>
+
       <!-- Description & Metadata Split -->
       <div class="flex flex-col md:flex-row gap-12">
         <div class="flex-1 min-w-0">
@@ -239,12 +253,14 @@
               <!-- Rendered by marked.js -->
             </div>
           </div>
+
           <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mb-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">User Reviews</h3>
             <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
               <!-- JS Injected Reviews -->
             </div>
           </div>
+
           <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mt-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">Global Installations</h3>
             <p class="text-sm text-gnome-grey mb-4">See where this extension is being utilized around the world.</p>
@@ -252,6 +268,7 @@
               <!-- DetailView Injected Actual JS Vector Map -->
             </div>
           </div>
+
           <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-10 mt-10">
             <h3 class="text-2xl font-extrabold text-gnome-black dark:text-gnome-white mb-6">Version History</h3>
             <div id="detail-versions-container" class="space-y-4 animate-fade-in">
@@ -259,9 +276,11 @@
             </div>
           </div>
         </div>
-                 <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
+        
+        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
           <div class="bg-gnome-white dark:bg-[#2d2640] rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] p-6 shadow-md sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
             <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white uppercase tracking-wider mb-4 border-b border-[#c0bfbc] dark:border-[#3d3846] pb-2">Information</h3>
+            
             <dl class="space-y-4 text-sm">
               <div>
                 <dt class="text-gnome-grey font-semibold">UUID</dt>
@@ -297,12 +316,16 @@
       </div>
     </div>
   </div>
+
   <!-- UPLOAD VIEW (Managed by UploadView.js) -->
   <div id="upload-view" class="hidden relative pb-16"></div>
+
   <!-- LOCAL VIEW (Managed by LocalView.js) -->
   <div id="local-view" class="hidden relative pb-16"></div>
+
   <!-- ABOUT VIEW (Managed by AboutView.js) -->
   <div id="about-view" class="hidden relative pb-16"></div>
+
   <!-- Footer -->
   <footer class="border-t border-[#c0bfbc] dark:border-[#3d3846] mt-16 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
@@ -333,25 +356,30 @@
         </div>
       </div>
       <div class="pt-6 border-t border-[#c0bfbc] dark:border-[#3d3846] flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-xs font-medium text-gnome-grey">  2026 The GNOME Project | Licensed under <a href="#" class="text-gnome-blue hover:underline">GPL-2.0-or-later</a></p>
-        <p class="text-xs font-medium text-gnome-grey">Made with <span class="text-gnome-red"> </span> by the GNOME community</p>
+        <p class="text-xs font-medium text-gnome-grey">© 2026 The GNOME Project | Licensed under <a href="#" class="text-gnome-blue hover:underline">GPL-2.0-or-later</a></p>
+        <p class="text-xs font-medium text-gnome-grey">Made with <span class="text-gnome-red">♥</span> by the GNOME community</p>
       </div>
     </div>
   </footer>
+
   <!-- App Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+  
   <!-- MVC Logic (Order matters) -->
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
+
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
+
   <!-- New Static Views -->
   <script src="mvc/views/UploadView.js"></script>
   <script src="mvc/views/LocalView.js"></script>
   <script src="mvc/views/AboutView.js"></script>
+
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>
