@@ -25,6 +25,7 @@ class DetailView {
         const carouselMain = document.getElementById('carousel-main');
         if (carouselMain) {
             // Unload the DOM content to stop iframe audio/video leaks
+            // Otherwise it keeps playing in the background when switching extensions :)
             carouselMain.innerHTML = '';
         }
     }
@@ -56,6 +57,8 @@ class DetailView {
             `;
         }
 
+        // Might make this a cooler switch perhaps.
+        // (a bit more Apple style :) )
         const installButton = document.getElementById('detail-install-btn');
         if (installButton) {
             installButton.textContent = 'Install';
@@ -156,7 +159,7 @@ class DetailView {
             return `<button type="button" data-dot-index="${index}" class="carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${activeClasses} focus:outline-none" aria-label="Go to slide ${index + 1}"></button>`;
         }).join('');
 
-        // Apply Apple-style track, arrows, and pill indicators to the main container
+        // Apply track, arrows, and pill indicators to the main container
         carouselMain.className = "w-full aspect-video bg-black rounded-xl overflow-hidden mb-3 relative group shadow-inner";
         carouselMain.innerHTML = `
             <div id="carousel-track" class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth">
@@ -175,7 +178,9 @@ class DetailView {
             </div>
         `;
 
-        // Generate Thumbnails underneath
+        // Generate Thumbnails underneath.
+        // Helpful becaues it tells the user we got images. Pill icons alone
+        // are not enough to indicate that there are images/videos available.
         carouselThumbnails.className = "flex gap-2.5 overflow-x-auto scrollbar-hide py-1 w-full";
         carouselThumbnails.innerHTML = this.currentMediaItems.map((media, index) => {
             let thumbUrl = media.url;
