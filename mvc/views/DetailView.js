@@ -1,8 +1,6 @@
 // GoF Pattern: Observer (Observer Participant)
-
 class DetailView {
     constructor() {
-        this.mapInstance = null;
         this.currentMediaItems = [];
         this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
         
@@ -150,7 +148,6 @@ class DetailView {
 
         this.renderMedia(extension.media || []);
         this.renderLinks(extension);
-        this.renderAnalyticsMap(extension);
     }
 
     renderHostConnectorControls(extension) {
@@ -502,12 +499,14 @@ class DetailView {
             if (!onlyPictures || dots.length <= 1) return;
             
             stopAutoplay(); // clear existing to prevent duplicates
+
             autoplayTimer = setInterval(() => {
                 const width = track.clientWidth;
                 if (width === 0) return; // Wait if DOM is hidden
                 
                 const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
                 const nextIndex = (activeIndex + 1) % dots.length;
+
                 track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
             }, 4000); // 4 second interval
         };
@@ -542,76 +541,6 @@ class DetailView {
         linksContainer.innerHTML = links.map((link) => `
           <a href="${this.escapeHtml(link.href)}" target="_blank" rel="noreferrer" class="text-sm font-semibold text-gnome-blue hover:underline">${this.escapeHtml(link.label)}</a>
         `).join('');
-    }
-
-    renderAnalyticsMap(extension) {
-        const mapContainer = document.getElementById('detail-analytics-map');
-        if (!mapContainer) return;
-
-        mapContainer.innerHTML = '<div id="actual-world-map" style="width: 100%; height: 280px; margin: 0 auto;"></div>';
-
-        if (this.mapInstance) {
-            try { this.mapInstance.destroy(); } catch(e) {}
-        }
-
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        const fillBaseColor = isDarkMode ? '#3d3846' : '#c0bfbc';
-
-        const markerData = [
-            { name: "United States", coords: [37.0902, -95.7129], installs: 45200 },
-            { name: "Germany", coords: [51.1657, 10.4515], installs: 31000 },
-            { name: "Brazil", coords: [-14.2350, -51.9253], installs: 18400 },
-            { name: "Japan", coords: [36.2048, 138.2529], installs: 12100 },
-            { name: "India", coords: [20.5937, 78.9629], installs: 25600 },
-            { name: "United Kingdom", coords: [55.3781, -3.4360], installs: 19800 },
-            { name: "France", coords: [46.2276, 2.2137], installs: 21500 }
-        ];
-
-        const maxInstalls = Math.max(...markerData.map(m => m.installs));
-
-        const bubbleMarkers = markerData.map(data => {
-            const radius = 4 + (data.installs / maxInstalls) * 12;
-            return {
-                name: `${data.name} - ${data.installs.toLocaleString()} installs`,
-                coords: data.coords,
-                style: {
-                    initial: {
-                        r: radius,
-                        fill: 'rgba(53, 132, 228, 0.5)',
-                        stroke: '#3584e4',
-                        strokeWidth: 1.5,
-                        strokeOpacity: 1
-                    },
-                    hover: {
-                        fill: 'rgba(255, 120, 0, 0.6)',
-                        stroke: '#ff7800',
-                        strokeWidth: 2
-                    }
-                }
-            };
-        });
-
-        this.mapInstance = new jsVectorMap({
-            selector: '#actual-world-map',
-            map: 'world',
-            zoomButtons: false,
-            zoomOnScroll: false,
-            backgroundColor: 'transparent',
-            regionStyle: {
-                initial: {
-                    fill: fillBaseColor,
-                    stroke: 'none',
-                    strokeWidth: 0,
-                    fillOpacity: 1
-                },
-                hover: {
-                    fill: '#1c71d8',
-                    fillOpacity: 0.8,
-                    cursor: 'pointer'
-                }
-            },
-            markers: bubbleMarkers
-        });
     }
 
     renderMarkdown(markdown) {

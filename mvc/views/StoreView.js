@@ -8,11 +8,8 @@ class StoreView {
         this._lastFeaturedTab = null;
         this._lastIsFeaturedHidden = null;
         this._lastItemsPerPage = null;
-        this._lastSelectedCategory = null;
-        this._categoriesRendered = false;
 
         this.bindEvents();
-        this.bindScrollEvents();
     }
 
     setController(controller) {
@@ -80,18 +77,7 @@ class StoreView {
             });
         }
         
-        // 1. Categories Container Events
-        const categoriesContainer = document.getElementById('categories-container');
-        if (categoriesContainer) {
-            categoriesContainer.addEventListener('click', (event) => {
-                const categoryBtn = event.target.closest('[data-category]');
-                if (categoryBtn && this.controller) {
-                    this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
-                }
-            });
-        }
-
-        // 2. Featured Section Events
+        // 1. Featured Section Events
         const featuredSection = document.getElementById('featured-section');
         if (featuredSection) {
             featuredSection.addEventListener('click', (event) => {
@@ -123,7 +109,7 @@ class StoreView {
             });
         }
 
-        // 3. Extensions Grid Events (Search & Filter Results)
+        // 2. Extensions Grid Events (Search & Filter Results)
         const extensionsGrid = document.getElementById('extensions-grid');
         if (extensionsGrid) {
             extensionsGrid.addEventListener('click', (event) => {
@@ -134,7 +120,7 @@ class StoreView {
             });
         }
 
-        // 4. Pagination Events
+        // 3. Pagination Events
         const paginationContainer = document.getElementById('pagination-container');
         if (paginationContainer) {
             paginationContainer.addEventListener('click', (event) => {
@@ -150,7 +136,7 @@ class StoreView {
             });
         }
         
-        // 5. Results Header Events (For items-per-page select when searching/filtering)
+        // 4. Results Header Events (For items-per-page select when searching/filtering)
         const resultsHeader = document.getElementById('results-header');
         if (resultsHeader) {
             resultsHeader.addEventListener('change', (event) => {
@@ -162,57 +148,24 @@ class StoreView {
         }
     }
     
-    bindScrollEvents() {
-        const catContainer = document.getElementById('categories-container');
-        const scrollLeftBtn = document.getElementById('cat-scroll-left');
-        const scrollRightBtn = document.getElementById('cat-scroll-right');
-        
-        if (catContainer && scrollLeftBtn && scrollRightBtn) {
-            const updateScrollButtons = () => {
-                scrollLeftBtn.classList.toggle('hidden', catContainer.scrollLeft <= 0);
-                scrollRightBtn.classList.toggle('hidden', catContainer.scrollLeft + catContainer.clientWidth >= catContainer.scrollWidth - 1);
-            };
-            
-            catContainer.addEventListener('scroll', updateScrollButtons);
-            window.addEventListener('resize', updateScrollButtons);
-            
-            // Re-verify sizing anytime new nodes get injected
-            const observer = new MutationObserver(() => updateScrollButtons());
-            observer.observe(catContainer, { childList: true, subtree: true });
-            
-            scrollLeftBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: -200, behavior: 'smooth' });
-            });
-            
-            scrollRightBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: 200, behavior: 'smooth' });
-            });
-        }
-    }
-
     update(data) {
         // Sync DOM inputs with state to handle external resets (like clicking the logo)
         const searchInput = document.getElementById('search-input');
         if (searchInput && searchInput.value !== data.state.searchTerm) {
             searchInput.value = data.state.searchTerm;
         }
+
         const sortSelect = document.getElementById('sort-select');
         if (sortSelect && sortSelect.value !== data.state.sortBy) {
             sortSelect.value = data.state.sortBy;
         }
+
         const shellVersionSelect = document.getElementById('shell-version-select');
         if (shellVersionSelect && shellVersionSelect.value !== data.state.shellVersion) {
             shellVersionSelect.value = data.state.shellVersion;
         }
         
         this.updateLayoutToggleUI(data.state.layoutMode);
-        
-        // Only render categories if they actually changed to preserve scroll position
-        if (this._lastSelectedCategory !== data.state.selectedCategory || !this._categoriesRendered) {
-            this.renderCategories(data.categories, data.state.selectedCategory);
-            this._lastSelectedCategory = data.state.selectedCategory;
-            this._categoriesRendered = true;
-        }
         
         // Check if featured section actually needs an update to prevent animation flashing
         const featuredNeedsUpdate = 
@@ -228,10 +181,10 @@ class StoreView {
         }
         
         // Grid elements always update based on pagination/filtering
-        this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode);
+        this.renderExtensions(data.filtered, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode);
         this.renderPagination(data.pagination);
         
-        const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
+        const isFiltering = data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         
         // Element Hooks
         const heroSection = document.getElementById('hero-section');
@@ -278,26 +231,6 @@ class StoreView {
                 gridBtn.className = 'px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors';
             }
         }
-    }
-
-    renderCategories(categories, selectedCategory) {
-        const container = document.getElementById('categories-container');
-        if (!container) return;
-        
-        const buttons = categories.map((category) => {
-            const active = category === selectedCategory;
-            return `
-                <button
-                    type="button"
-                    data-category="${this.escapeHtml(category)}"
-                    class="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 ${active ? 'bg-gnome-blue text-white shadow-sm' : 'text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}"
-                >
-                    ${this.escapeHtml(category)}
-                </button>
-            `;
-        }).join('');
-        
-        container.innerHTML = buttons;
     }
 
     renderFeatured(featured, activeTab, isHidden, itemsPerPage) {
@@ -378,7 +311,7 @@ class StoreView {
         `;
     }
 
-    renderExtensions(visible, selectedCategory, itemsPerPage, totalItems, layoutMode) {
+    renderExtensions(visible, itemsPerPage, totalItems, layoutMode) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
         const resultsHeader = document.getElementById('results-header');
@@ -397,7 +330,6 @@ class StoreView {
         resultsHeader.innerHTML = `
             <div class="animate-fade-in">
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
-                <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
             </div>
             <div class="animate-fade-in flex items-center">
                 <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
@@ -470,6 +402,7 @@ class StoreView {
 
     renderIcon(extension) {
         if (!extension.icon) return this.defaultExtensionSvg;
+        
         if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
             const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
             return `<img src="${this.escapeHtml(extension.icon)}" alt="" class="w-full h-full object-cover" onerror="this.outerHTML='${safeSvg}'">`;
@@ -495,8 +428,7 @@ class StoreView {
                             ${this.escapeHtml(extension.description)}
                         </p>
                         <div class="hidden sm:flex col-span-8 lg:col-span-3 items-center justify-end gap-3 shrink-0">
-                            <span class="text-[10px] font-semibold bg-[#f6f5f4] dark:bg-[#3d3846] group-hover:bg-gnome-white dark:group-hover:bg-[#2d2640] transition-colors text-gnome-grey px-2 py-1 rounded-full truncate max-w-[100px] text-center">${this.escapeHtml(extension.category)}</span>
-                            <div class="text-sm font-semibold text-gnome-blue w-12 text-right">★ ${extension.rating.toFixed(1)}</div>
+                            <div class="text-sm font-semibold text-gnome-blue w-12 text-right"><i class="fa-solid fa-star text-[10px] mr-1"></i>${extension.rating.toFixed(1)}</div>
                             <div class="text-[10px] uppercase tracking-wider text-gnome-grey w-12 text-right">${this.formatDownloads(extension.downloads)}</div>
                         </div>
                     </div>
@@ -504,7 +436,7 @@ class StoreView {
                 
                 <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0 sm:ml-4 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
                     <div class="flex sm:hidden items-center gap-3">
-                        <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
+                        <div class="text-sm font-semibold text-gnome-blue"><i class="fa-solid fa-star text-[10px] mr-1"></i>${extension.rating.toFixed(1)}</div>
                         <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
                     </div>
                     <button type="button" class="text-gnome-grey group-hover:text-gnome-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent sm:group-hover:bg-gnome-blue" title="View details">
@@ -530,15 +462,14 @@ class StoreView {
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <div class="text-sm font-semibold text-gnome-blue">★ ${extension.rating.toFixed(1)}</div>
+                            <div class="text-sm font-semibold text-gnome-blue"><i class="fa-solid fa-star text-[10px] mr-1"></i>${extension.rating.toFixed(1)}</div>
                             <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
                         </div>
                     </div>
                     <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3">${this.escapeHtml(extension.description)}</p>
                 </div>
                 
-                <div class="mt-4 flex items-center justify-between pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
-                    <span class="text-xs font-semibold bg-[#f6f5f4] dark:bg-[#3d3846] text-gnome-grey px-2.5 py-1 rounded-full">${this.escapeHtml(extension.category)}</span>
+                <div class="mt-4 flex items-center justify-end pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
                     <button type="button" class="text-gnome-grey group-hover:text-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="View details">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -556,5 +487,4 @@ class StoreView {
             .replace(/'/g, '&#39;');
     }
 }
-
 window.StoreView = StoreView;

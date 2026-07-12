@@ -3,13 +3,11 @@ class StoreModel {
     constructor() {
         this.observers = [];
         this.extensions = [];
-        this.categories = [];
         
         // Persist layout mode preference across reloads
         const savedLayout = localStorage.getItem('gnome_ext_layout') || 'grid';
         
         this.state = {
-            selectedCategory: 'All',
             sortBy: 'downloads',
             shellVersion: 'all',
             searchTerm: '',
@@ -44,7 +42,6 @@ class StoreModel {
         
         const data = {
             state: this.state,
-            categories: this.categories,
             // Pre-process sorted categories for the Featured tab view
             featured: {
                 trending: [...allExtensions].sort((a, b) => b.ratingCount - a.ratingCount).slice(0, 4),
@@ -65,20 +62,13 @@ class StoreModel {
         }
     }
 
-    setData(extensions, categories) {
+    setData(extensions) {
         this.extensions = extensions;
-        this.categories = categories;
         this.notifyObservers();
     }
 
     setSearchTerm(term) {
         this.state.searchTerm = term.toLowerCase();
-        this.state.currentPage = 1;
-        this.notifyObservers();
-    }
-
-    setCategory(category) {
-        this.state.selectedCategory = category;
         this.state.currentPage = 1;
         this.notifyObservers();
     }
@@ -123,7 +113,6 @@ class StoreModel {
     }
 
     resetFilters() {
-        this.state.selectedCategory = 'All';
         this.state.sortBy = 'downloads';
         this.state.shellVersion = 'all';
         this.state.searchTerm = '';
@@ -134,7 +123,6 @@ class StoreModel {
 
     getFilteredExtensions() {
         return this.extensions.filter((extension) => {
-            const matchesCategory = this.state.selectedCategory === 'All' || extension.category === this.state.selectedCategory;
             const matchesSearch = !this.state.searchTerm || [extension.name, extension.author, extension.description, extension.category].join(' ').toLowerCase().includes(this.state.searchTerm);
             
             let matchesVersion = true;
@@ -143,8 +131,7 @@ class StoreModel {
                 const extText = JSON.stringify(extension).toLowerCase();
                 matchesVersion = extText.includes('gnome ' + versionStr) || extText.includes('gnome' + versionStr) || extText.includes('gnome shell ' + versionStr);
             }
-
-            return matchesCategory && matchesSearch && matchesVersion;
+            return matchesSearch && matchesVersion;
         }).sort((a, b) => {
             switch (this.state.sortBy) {
                 case 'rating':
@@ -159,5 +146,4 @@ class StoreModel {
         });
     }
 }
-
 window.StoreModel = StoreModel;
