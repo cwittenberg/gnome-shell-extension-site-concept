@@ -65,7 +65,8 @@
       <!-- Mobile Menu Toggle (Order 2 on mobile, hidden on Desktop) -->
       <div class="sm:hidden flex items-center gap-1 order-2">
         <button id="theme-toggle-mobile" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey" aria-label="Toggle theme">
-          <i class="fa-solid fa-circle-half-stroke text-lg"></i>
+          <i class="fa-solid fa-moon text-xl hidden dark:block"></i>
+          <i class="fa-solid fa-cloud-sun text-xl block dark:hidden"></i>
         </button>
         <button id="mobile-menu-btn" class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors font-bold text-gnome-grey" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
           <i class="fa-solid fa-bars text-lg"></i>
@@ -90,9 +91,9 @@
         <a href="#" data-nav="about" class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white px-3 py-1.5 rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-all font-semibold">About</a>
         
         <!-- Theme Toggle -->
-        <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey ml-1">
-          <i id="theme-icon-dark" class="fa-solid fa-moon text-lg hidden"></i>
-          <i id="theme-icon-light" class="fa-solid fa-sun text-lg"></i>
+        <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[#f6f5f4] dark:hover:bg-[#2d2640] transition-colors text-gnome-grey ml-1" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon text-xl hidden dark:block"></i>
+          <i class="fa-solid fa-cloud-sun text-xl block dark:hidden"></i>
         </button>
         
         <button class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-[#1c71d8] transition-colors shadow-sm">
