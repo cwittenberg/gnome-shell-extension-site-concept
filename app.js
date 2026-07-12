@@ -20,10 +20,8 @@
         // Initialize static views and generate their HTML
         const uploadView = new window.UploadView();
         uploadView.render();
-
         const localView = new window.LocalView();
         localView.render();
-
         const aboutView = new window.AboutView();
         aboutView.render();
 
@@ -165,11 +163,11 @@
             const isActive = navTarget === view || (view === 'details' && navTarget === 'store');
             
             if (isActive) {
-                link.classList.add('bg-[#f6f5f4]', 'dark:bg-[#2d2640]', 'text-gnome-black', 'dark:text-gnome-white');
-                link.classList.remove('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'hover:bg-[#f6f5f4]', 'dark:hover:bg-[#2d2640]');
+                link.classList.add('bg-gnome-page-bg', 'dark:bg-gnome-card-dark', 'text-gnome-black', 'dark:text-gnome-white');
+                link.classList.remove('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'hover:bg-gnome-page-bg', 'dark:hover:bg-gnome-card-dark');
             } else {
-                link.classList.remove('bg-[#f6f5f4]', 'dark:bg-[#2d2640]', 'text-gnome-black', 'dark:text-gnome-white');
-                link.classList.add('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'hover:bg-[#f6f5f4]', 'dark:hover:bg-[#2d2640]');
+                link.classList.remove('bg-gnome-page-bg', 'dark:bg-gnome-card-dark', 'text-gnome-black', 'dark:text-gnome-white');
+                link.classList.add('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'hover:bg-gnome-page-bg', 'dark:hover:bg-gnome-card-dark');
             }
         });
     }
@@ -179,5 +177,4 @@
     } else {
         init();
     }
-
 })();

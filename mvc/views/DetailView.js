@@ -82,7 +82,7 @@ class DetailView {
                 }
             }
             detailIcon.innerHTML = `
-              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
+              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-gnome-card-dark text-gnome-blue overflow-hidden rounded-3xl">
                 ${iconHtml}
               </div>
             `;
@@ -109,10 +109,10 @@ class DetailView {
         if (versionsContainer) {
             const versions = extension.versions || [];
             if (versions.length === 0) {
-                versionsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No version history available.</p>';
+                versionsContainer.innerHTML = '<p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark italic">No version history available.</p>';
             } else {
                 versionsContainer.innerHTML = versions.map((version) => `
-                  <div class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-[#f6f5f4] dark:bg-[#2d2640]">
+                  <div class="border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 bg-gnome-page-bg dark:bg-gnome-card-dark">
                     <div class="flex items-center justify-between gap-3">
                       <div>
                         <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">Version ${this.escapeHtml(version.version)}</p>
@@ -129,10 +129,10 @@ class DetailView {
         if (reviewsContainer) {
             const reviews = extension.reviews || [];
             if (reviews.length === 0) {
-                reviewsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No reviews have been submitted for this extension yet.</p>';
+                reviewsContainer.innerHTML = '<p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark italic">No reviews have been submitted for this extension yet.</p>';
             } else {
                 reviewsContainer.innerHTML = reviews.map((review) => `
-                  <div class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-gnome-white dark:bg-[#2d2640]">
+                  <div class="border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 bg-gnome-white dark:bg-gnome-card-dark">
                     <div class="flex items-center justify-between gap-3">
                       <div>
                         <p class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(review.user)}</p>
@@ -140,7 +140,7 @@ class DetailView {
                       </div>
                       <div class="text-gnome-orange font-semibold text-lg"><i class="fa-solid fa-star"></i> ${review.rating}</div>
                     </div>
-                    <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-4 leading-relaxed">${this.escapeHtml(review.text)}</p>
+                    <p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark mt-4 leading-relaxed">${this.escapeHtml(review.text)}</p>
                   </div>
                 `).join('');
             }
@@ -175,13 +175,9 @@ class DetailView {
 
         const newUpdateContainer = updateContainer.cloneNode(true);
         updateContainer.parentNode.replaceChild(newUpdateContainer, updateContainer);
-
-        // State Check variables
-        const isInstalled = extension.installed === true;
-        let isEnabled = extension.enabled === true;
         
         // Render Error State
-        if (extension.hasError && isInstalled) {
+        if (extension.hasError && extension.installed) {
             errorBanner.classList.remove('hidden');
             errorMessage.textContent = extension.errorMessage || "Unknown exception occurred.";
         } else {
@@ -195,28 +191,28 @@ class DetailView {
             newUninstallBtn.classList.add('hidden'); // Cannot uninstall system extensions via web
         } else {
             systemBadge.classList.add('hidden');
-            if (isInstalled) newUninstallBtn.classList.remove('hidden');
+            if (extension.installed) newUninstallBtn.classList.remove('hidden');
         }
 
         // Render Updates
-        if (extension.hasUpdate && isInstalled && !extension.isSystem) {
+        if (extension.hasUpdate && extension.installed && !extension.isSystem) {
             newUpdateContainer.classList.remove('hidden');
         } else {
             newUpdateContainer.classList.add('hidden');
         }
 
         // Setup base toggle styling based on installed/enabled state
-        if (isInstalled && isEnabled) {
+        if (extension.installed && extension.enabled) {
             newBtn.setAttribute('aria-checked', 'true');
-            newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
             newBtn.classList.add('bg-gnome-blue');
             newKnob.classList.remove('translate-x-1');
             newKnob.classList.add('translate-x-6');
             newLabel.textContent = 'ENABLED';
             newLabel.classList.add('text-gnome-blue');
-        } else if (isInstalled && !isEnabled) {
+        } else if (extension.installed && !extension.enabled) {
             newBtn.setAttribute('aria-checked', 'false');
-            newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
             newBtn.classList.remove('bg-gnome-blue');
             newKnob.classList.add('translate-x-1');
             newKnob.classList.remove('translate-x-6');
@@ -224,7 +220,7 @@ class DetailView {
             newLabel.classList.remove('text-gnome-blue');
         } else {
             newBtn.setAttribute('aria-checked', 'false');
-            newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
             newBtn.classList.remove('bg-gnome-blue');
             newKnob.classList.add('translate-x-1');
             newKnob.classList.remove('translate-x-6');
@@ -235,22 +231,25 @@ class DetailView {
         // Handle Toggle / Install interactions
         newInstallContainer.addEventListener('click', () => {
             if (window.GnomeConnector && window.GnomeConnector.isConnected) {
-                if (!isInstalled) {
+                if (!extension.installed) {
                     window.GnomeConnector.install(extension.uuid);
-                    // Visual mock state change for install
+                    extension.installed = true;
+                    extension.enabled = true;
+                    
+                    newBtn.setAttribute('aria-checked', 'true');
                     newLabel.textContent = 'ENABLED';
                     newLabel.classList.add('text-gnome-blue');
-                    newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                     newBtn.classList.add('bg-gnome-blue');
                     newKnob.classList.remove('translate-x-1');
                     newKnob.classList.add('translate-x-6');
                     newUninstallBtn.classList.remove('hidden');
                 } else {
-                    isEnabled = !isEnabled;
-                    if (isEnabled) {
+                    extension.enabled = !extension.enabled;
+                    if (extension.enabled) {
                         window.GnomeConnector.enable(extension.uuid);
                         newBtn.setAttribute('aria-checked', 'true');
-                        newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                         newBtn.classList.add('bg-gnome-blue');
                         newKnob.classList.remove('translate-x-1');
                         newKnob.classList.add('translate-x-6');
@@ -259,7 +258,7 @@ class DetailView {
                     } else {
                         window.GnomeConnector.disable(extension.uuid);
                         newBtn.setAttribute('aria-checked', 'false');
-                        newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                         newBtn.classList.remove('bg-gnome-blue');
                         newKnob.classList.add('translate-x-1');
                         newKnob.classList.remove('translate-x-6');
@@ -277,12 +276,15 @@ class DetailView {
             if (window.GnomeConnector && window.GnomeConnector.isConnected) {
                 if (confirm(`Are you sure you want to uninstall ${extension.name}?`)) {
                     window.GnomeConnector.uninstall(extension.uuid);
+                    extension.installed = false;
+                    extension.enabled = false;
+                    
                     // Reset UI Mock State
                     newUninstallBtn.classList.add('hidden');
                     newUpdateContainer.classList.add('hidden');
                     newLabel.textContent = 'INSTALL';
                     newLabel.classList.remove('text-gnome-blue');
-                    newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                     newBtn.classList.remove('bg-gnome-blue');
                     newKnob.classList.add('translate-x-1');
                     newKnob.classList.remove('translate-x-6');
@@ -499,14 +501,12 @@ class DetailView {
             if (!onlyPictures || dots.length <= 1) return;
             
             stopAutoplay(); // clear existing to prevent duplicates
-
             autoplayTimer = setInterval(() => {
                 const width = track.clientWidth;
                 if (width === 0) return; // Wait if DOM is hidden
                 
                 const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
                 const nextIndex = (activeIndex + 1) % dots.length;
-
                 track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
             }, 4000); // 4 second interval
         };

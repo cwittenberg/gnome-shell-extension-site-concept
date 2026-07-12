@@ -102,33 +102,33 @@ class UploadView {
 
     render() {
         if (!this.container) return;
-        
+
         this.container.innerHTML = `
             <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16">
-                                
+                
                 <div class="mb-8">
                     <h1 class="text-[24pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight">Developer Dashboard</h1>
                     <p class="text-[12pt] font-medium text-gnome-grey">Manage your extensions and track their review process.</p>
                 </div>
 
                 <!-- Dev Tabs UI -->
-                <div class="flex gap-6 border-b border-[#c0bfbc] dark:border-[#3d3846] mb-8 overflow-x-auto scrollbar-hide">
+                <div class="flex gap-6 border-b border-gnome-border-light dark:border-gnome-border-dark mb-8 overflow-x-auto scrollbar-hide">
                     <button id="tab-my-extensions" class="upload-tab-btn active pb-3 font-bold text-[12pt] text-gnome-blue border-b-2 border-gnome-blue whitespace-nowrap focus:outline-none">
                         My Extensions
                     </button>
-                    <button id="tab-upload-new" class="upload-tab-btn pb-3 font-bold text-[12pt] text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white border-b-2 border-transparent transition-colors whitespace-nowrap focus:outline-none">
+                    <button id="tab-upload-new" class="upload-tab-btn pb-3 font-bold text-[12pt] text-gnome-text-muted-light dark:text-gnome-text-muted-dark hover:text-gnome-black dark:hover:text-gnome-white border-b-2 border-transparent transition-colors whitespace-nowrap focus:outline-none">
                         Add New
                     </button>
                 </div>
-                                
+                
                 <!-- Tab 1: My Extensions List & Reviewer Split Pane -->
                 <div id="view-my-extensions" class="upload-view-pane block animate-fade-in">
                     <div class="space-y-8">
                         <!-- GNOME Boxed List Container -->
-                        <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl shadow-sm overflow-hidden flex flex-col">
-                                                        
+                        <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-xl shadow-sm overflow-hidden flex flex-col">
+                            
                             <!-- Boxed List Item 1 -->
-                            <div class="flex items-center justify-between p-4 border-b border-[#c0bfbc] dark:border-[#3d3846] hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors cursor-pointer" data-action="view-review" data-target="snaptext">
+                            <div class="flex items-center justify-between p-4 border-b border-gnome-border-light dark:border-gnome-border-dark hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark-hover transition-colors cursor-pointer" data-action="view-review" data-target="snaptext">
                                 <div class="flex items-center gap-4 sm:gap-6 w-full">
                                     <div class="flex-1 min-w-0">
                                         <p class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">Snap Text Extractor</p>
@@ -142,14 +142,14 @@ class UploadView {
                                         <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Active</span>
                                     </div>
                                     <div class="flex items-center justify-end gap-1.5 shrink-0" onclick="event.stopPropagation();">
-                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
-                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
+                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
                                     </div>
                                 </div>
                             </div>
-                                                        
+                            
                             <!-- Boxed List Item 2 -->
-                            <div class="flex items-center justify-between p-4 hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors cursor-pointer" data-action="view-review" data-target="omnipanel">
+                            <div class="flex items-center justify-between p-4 hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark-hover transition-colors cursor-pointer" data-action="view-review" data-target="omnipanel">
                                 <div class="flex items-center gap-4 sm:gap-6 w-full">
                                     <div class="flex-1 min-w-0">
                                         <p class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">OmniPanel</p>
@@ -163,18 +163,20 @@ class UploadView {
                                         <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Pending</span>
                                     </div>
                                     <div class="flex items-center justify-end gap-1.5 shrink-0" onclick="event.stopPropagation();">
-                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
-                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
+                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <!-- Integrated EGO Code Review Panel -->
                         <div id="review-details-panel" class="hidden space-y-8 animate-fade-in pb-16">
-                            <div class="flex items-center justify-between border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8">
+                            
+                            <div class="flex items-center justify-between border-t border-gnome-border-light dark:border-gnome-border-dark pt-8">
                                 <h3 id="review-panel-title" class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white tracking-tight">Review Context</h3>
-                                <button id="close-review-btn" class="text-[12pt] font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1.5 bg-[#f6f5f4] dark:bg-[#3d3846] px-3 py-1.5 rounded-lg border border-[#c0bfbc] dark:border-[#5e5c64]">
+                                <button id="close-review-btn" class="text-[12pt] font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1.5 bg-gnome-page-bg dark:bg-gnome-border-dark px-3 py-1.5 rounded-lg border border-gnome-border-light dark:border-gnome-text-muted-light">
                                     <i class="fa-solid fa-xmark"></i> Hide Review
                                 </button>
                             </div>
@@ -182,11 +184,11 @@ class UploadView {
                             <!-- Structural Source Code Diff Engine Output Layout -->
                             <div class="space-y-3">
                                 <h4 class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Source Code Comparison</h4>
-                                <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row">
-                                                                        
+                                <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row">
+                                    
                                     <!-- File List Navigation (Sidebar) -->
-                                    <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-[#241F31]">
-                                        <div class="p-3 border-b border-[#c0bfbc] dark:border-[#3d3846]">
+                                    <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gnome-border-light dark:border-gnome-border-dark bg-gnome-page-bg dark:bg-gnome-black">
+                                        <div class="p-3 border-b border-gnome-border-light dark:border-gnome-border-dark">
                                             <span class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Files</span>
                                         </div>
                                         <ul class="flex flex-col h-64 overflow-y-auto scrollbar-hide" id="review-file-list">
@@ -196,53 +198,55 @@ class UploadView {
 
                                     <!-- Diff View (Main) -->
                                     <div class="w-full md:w-2/3 bg-gnome-white dark:bg-gnome-black flex flex-col">
-                                        <div class="p-3 border-b border-[#c0bfbc] dark:border-[#3d3846] flex justify-between items-center bg-[#f6f5f4] dark:bg-[#2d2640]">
+                                        <div class="p-3 border-b border-gnome-border-light dark:border-gnome-border-dark flex justify-between items-center bg-gnome-page-bg dark:bg-gnome-card-dark">
                                             <span id="diff-file-badge" class="font-mono text-[12pt] font-bold text-gnome-black dark:text-gnome-white"></span>
                                         </div>
                                         <div class="overflow-x-auto overflow-y-auto h-64 font-mono text-[12pt] leading-relaxed p-0">
-                                            <div class="w-full table border-collapse divide-y divide-[#c0bfbc]/20 dark:divide-[#3d3846]/40" id="diff-lines-container">
+                                            <div class="w-full table border-collapse divide-y divide-gnome-border-light/20 dark:divide-gnome-border-dark/40" id="diff-lines-container">
                                                 <!-- Unified line rows will be dynamically drawn here -->
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
                             <!-- EGO Feedback Section & Interaction -->
                             <div class="space-y-3">
                                 <h4 class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Review Log</h4>
-                                                                
+                                
                                 <div id="ego-comments-container" class="space-y-3">
                                     <!-- Dynamic EGO Threads will appear here -->
                                 </div>
 
                                 <!-- Add Comment / Reply Box -->
-                                <div class="mt-4 border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-gnome-white dark:bg-[#2d2640] shadow-sm">
-                                    <textarea id="review-comment-textarea" class="w-full bg-[#f6f5f4] dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#3d3846] rounded-lg p-3 text-[12pt] text-gnome-black dark:text-gnome-white focus:outline-none focus:border-gnome-blue focus:ring-1 focus:ring-gnome-blue resize-y" rows="3" placeholder="Add a comment or reply to the reviewer..."></textarea>
+                                <div class="mt-4 border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 bg-gnome-white dark:bg-gnome-card-dark shadow-sm">
+                                    <textarea id="review-comment-textarea" class="w-full bg-gnome-page-bg dark:bg-gnome-black border border-gnome-border-light dark:border-gnome-border-dark rounded-lg p-3 text-[12pt] text-gnome-black dark:text-gnome-white focus:outline-none focus:border-gnome-blue focus:ring-1 focus:ring-gnome-blue resize-y" rows="3" placeholder="Add a comment or reply to the reviewer..."></textarea>
                                     <div class="flex justify-between items-center mt-3">
                                         <span class="text-[12pt] text-gnome-grey"><i class="fa-solid fa-circle-info mr-1"></i> Comments are public.</span>
-                                        <button id="submit-review-comment-btn" class="bg-gnome-blue text-white px-5 py-2.5 rounded-lg text-[12pt] font-bold hover:bg-[#1c71d8] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640]">Submit Comment</button>
+                                        <button id="submit-review-comment-btn" class="bg-gnome-blue text-white px-5 py-2.5 rounded-lg text-[12pt] font-bold hover:bg-gnome-blue-hover transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-gnome-card-dark">Submit Comment</button>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
 
                 <!-- Tab 2: Add New (Upload Form) -->
                 <div id="view-upload-new" class="upload-view-pane hidden animate-fade-in">
-                    <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-8 sm:p-12 shadow-sm max-w-2xl mx-auto">
+                    <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-8 sm:p-12 shadow-sm max-w-2xl mx-auto">
                       <h3 class="font-extrabold text-[18pt] text-gnome-black dark:text-gnome-white mb-2 text-center">Submit an Extension</h3>
                       <p class="text-[12pt] text-gnome-grey text-center mb-8">Upload your GNOME Shell extension archive containing your metadata.json and source code.</p>
-                                            
+                      
                       <form id="upload-form" class="space-y-6">
-                        <div id="upload-dropzone" class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-[#241F31] hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
+                        <div id="upload-dropzone" class="border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-12 flex flex-col items-center justify-center bg-gnome-page-bg dark:bg-gnome-black hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
                           <i class="fa-solid fa-file-zipper text-4xl text-gnome-grey group-hover:text-gnome-blue transition-colors mb-4"></i>
                           <span class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-1">Select or drop your .zip here</span>
                           <input type="file" id="upload-file-input" class="hidden" accept=".zip" />
                         </div>
 
-                        <div id="upload-file-info" class="hidden flex items-center justify-between bg-[#f6f5f4] dark:bg-[#3d3846] p-4 rounded-xl border border-[#c0bfbc] dark:border-[#5e5c64]">
+                        <div id="upload-file-info" class="hidden flex items-center justify-between bg-gnome-page-bg dark:bg-gnome-border-dark p-4 rounded-xl border border-gnome-border-light dark:border-gnome-text-muted-light">
                             <div class="flex items-center gap-4 overflow-hidden">
                                 <i class="fa-solid fa-file-zipper text-gnome-blue text-2xl"></i>
                                 <div class="min-w-0">
@@ -255,15 +259,16 @@ class UploadView {
                             </button>
                         </div>
 
-                        <button type="button" id="upload-submit-btn" class="bg-gnome-blue text-white px-6 py-3 rounded-lg text-[12pt] font-bold hover:bg-[#1c71d8] transition-colors w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640] opacity-50 cursor-not-allowed" disabled>
+                        <button type="button" id="upload-submit-btn" class="bg-gnome-blue text-white px-6 py-3 rounded-lg text-[12pt] font-bold hover:bg-gnome-blue-hover transition-colors w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-gnome-card-dark opacity-50 cursor-not-allowed" disabled>
                           Submit Extension
                         </button>
                       </form>
                     </div>
                 </div>
+
             </div>
         `;
-        
+
         this.bindEvents();
     }
 
@@ -276,10 +281,10 @@ class UploadView {
         if (tabMyExt && tabUpload) {
             tabMyExt.addEventListener('click', () => {
                 tabMyExt.classList.add('text-gnome-blue', 'border-gnome-blue');
-                tabMyExt.classList.remove('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'border-transparent');
+                tabMyExt.classList.remove('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'border-transparent');
                 
                 tabUpload.classList.remove('text-gnome-blue', 'border-gnome-blue');
-                tabUpload.classList.add('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'border-transparent');
+                tabUpload.classList.add('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'border-transparent');
 
                 viewMyExt.classList.remove('hidden');
                 viewMyExt.classList.add('block');
@@ -290,10 +295,10 @@ class UploadView {
 
             tabUpload.addEventListener('click', () => {
                 tabUpload.classList.add('text-gnome-blue', 'border-gnome-blue');
-                tabUpload.classList.remove('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'border-transparent');
+                tabUpload.classList.remove('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'border-transparent');
                 
                 tabMyExt.classList.remove('text-gnome-blue', 'border-gnome-blue');
-                tabMyExt.classList.add('text-[#5e5c64]', 'dark:text-[#c0bfbc]', 'border-transparent');
+                tabMyExt.classList.add('text-gnome-text-muted-light', 'dark:text-gnome-text-muted-dark', 'border-transparent');
 
                 viewUpload.classList.remove('hidden');
                 viewUpload.classList.add('block');
@@ -430,14 +435,14 @@ class UploadView {
                 setTimeout(() => {
                     submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Successfully Uploaded';
                     submitBtn.classList.replace('bg-gnome-blue', 'bg-gnome-green');
-                    submitBtn.classList.replace('hover:bg-[#1c71d8]', 'hover:bg-[#2ebc6c]');
+                    submitBtn.classList.replace('hover:bg-gnome-blue-hover', 'hover:bg-gnome-green-hover');
                     
                     setTimeout(() => {
                         fileInput.value = '';
                         updateFileUI(null);
                         submitBtn.innerHTML = 'Submit Extension';
                         submitBtn.classList.replace('bg-gnome-green', 'bg-gnome-blue');
-                        submitBtn.classList.replace('hover:bg-[#2ebc6c]', 'hover:bg-[#1c71d8]');
+                        submitBtn.classList.replace('hover:bg-gnome-green-hover', 'hover:bg-gnome-blue-hover');
                         
                         // Switch back to "My Extensions" view
                         if (tabMyExt) tabMyExt.click();
@@ -482,7 +487,7 @@ class UploadView {
         // Render Sidebar Navigation
         fileListContainer.innerHTML = data.files.map(file => {
             const isActive = file.name === filename;
-            const bgClass = isActive ? 'bg-[#deddda] dark:bg-[#3d3846] border-l-gnome-blue' : 'border-l-transparent hover:bg-[#deddda] dark:hover:bg-[#3d3846]';
+            const bgClass = isActive ? 'bg-gnome-hover-light dark:bg-gnome-border-dark border-l-gnome-blue' : 'border-l-transparent hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark';
             const textClass = file.status === 'unchanged' && !isActive ? 'text-gnome-grey' : 'text-gnome-black dark:text-gnome-white';
             
             let statsHtml = '';
@@ -496,7 +501,7 @@ class UploadView {
             }
 
             return `
-                <li class="cursor-pointer px-4 py-3 border-b border-[#c0bfbc] dark:border-[#3d3846] flex justify-between items-center transition-colors border-l-4 ${bgClass}" data-filename="${this.escapeHtml(file.name)}" data-target="${targetExtension}">
+                <li class="cursor-pointer px-4 py-3 border-b border-gnome-border-light dark:border-gnome-border-dark flex justify-between items-center transition-colors border-l-4 ${bgClass}" data-filename="${this.escapeHtml(file.name)}" data-target="${targetExtension}">
                     <span class="font-mono text-[12pt] ${textClass} truncate pr-2">${this.escapeHtml(file.name)}</span>
                     ${statsHtml}
                 </li>
@@ -533,8 +538,8 @@ class UploadView {
 
             return `
                 <div class="table-row ${rowBg}">
-                    <div class="table-cell w-10 sm:w-12 text-right select-none pr-2 sm:pr-3 py-0.5 border-r border-[#c0bfbc]/20 dark:border-[#3d3846]/40 ${numBg}">${line.oldLine}</div>
-                    <div class="table-cell w-10 sm:w-12 text-right select-none px-2 sm:px-3 py-0.5 border-r border-[#c0bfbc]/20 dark:border-[#3d3846]/40 ${numBg}">${line.newLine}</div>
+                    <div class="table-cell w-10 sm:w-12 text-right select-none pr-2 sm:pr-3 py-0.5 border-r border-gnome-border-light/20 dark:border-gnome-border-dark/40 ${numBg}">${line.oldLine}</div>
+                    <div class="table-cell w-10 sm:w-12 text-right select-none px-2 sm:px-3 py-0.5 border-r border-gnome-border-light/20 dark:border-gnome-border-dark/40 ${numBg}">${line.newLine}</div>
                     <div class="table-cell pl-3 sm:pl-4 pr-4 py-0.5 whitespace-pre ${textStyle}">${this.escapeHtml(line.text)}</div>
                 </div>
             `;
@@ -542,21 +547,21 @@ class UploadView {
     }
 
     generateCommentHtml(comment) {
-        let dotColor = 'bg-[#c0bfbc] dark:bg-[#5e5c64]';
+        let dotColor = 'bg-gnome-border-light dark:bg-gnome-text-muted-light';
         if (comment.type === 'approved') dotColor = 'bg-gnome-green';
         if (comment.type === 'rejected') dotColor = 'bg-gnome-red';
         if (comment.type === 'author') dotColor = 'bg-gnome-blue';
 
         return `
-            <div class="bg-[#f6f5f4] dark:bg-[#241F31] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 shadow-sm animate-fade-in">
-                <div class="flex items-center gap-3 justify-between mb-3 border-b border-[#c0bfbc]/50 dark:border-[#3d3846]/50 pb-2">
+            <div class="bg-gnome-page-bg dark:bg-gnome-black border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 shadow-sm animate-fade-in">
+                <div class="flex items-center gap-3 justify-between mb-3 border-b border-gnome-border-light/50 dark:border-gnome-border-dark/50 pb-2">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full ${dotColor}"></span>
                         <span class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white">${this.escapeHtml(comment.author)}</span>
                     </div>
                     <span class="text-[12pt] font-semibold text-gnome-grey">${this.escapeHtml(comment.date)}</span>
                 </div>
-                <p class="text-[12pt] text-gnome-black dark:text-[#c0bfbc] leading-relaxed">
+                <p class="text-[12pt] text-gnome-black dark:text-gnome-text-muted-dark leading-relaxed">
                     ${this.escapeHtml(comment.text)}
                 </p>
             </div>

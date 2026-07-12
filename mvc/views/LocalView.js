@@ -25,8 +25,8 @@ class LocalView {
                    </p>
                  </div>
                </div>
-
-               <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+               
+               <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-2xl p-10 sm:p-16 shadow-md text-center">
                  <i class="fa-solid fa-plug-circle-xmark text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                  <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No extensions detected</h3>
                  <p class="text-[12pt] text-gnome-grey">GNOME Shell Extensions cannot list your installed extensions without the host connector.</p>
@@ -39,11 +39,11 @@ class LocalView {
 
             if (localExtensions.length === 0) {
                 contentHtml = `
-                   <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+                   <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-2xl p-10 sm:p-16 shadow-md text-center">
                      <i class="fa-regular fa-folder-open text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                      <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No Extensions Installed</h3>
                      <p class="text-[12pt] text-gnome-grey mb-6">You don't have any GNOME Shell extensions installed on your system.</p>
-                     <a href="#" data-nav="store" class="bg-gnome-blue text-white px-6 py-2.5 rounded-lg text-[12pt] font-bold shadow-sm hover:bg-[#1c71d8] transition-colors inline-block">Explore Store</a>
+                     <a href="#" data-nav="store" class="bg-gnome-blue text-white px-6 py-2.5 rounded-lg text-[12pt] font-bold shadow-sm hover:bg-gnome-blue-hover transition-colors inline-block">Explore Store</a>
                    </div>
                  `;
             } else {
@@ -67,7 +67,7 @@ class LocalView {
 
     bindEvents() {
         const rows = this.container.querySelectorAll('article[data-extension-id]');
-
+        
         rows.forEach(row => {
             const uuid = row.getAttribute('data-extension-uuid');
 
@@ -77,18 +77,18 @@ class LocalView {
                 toggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const isEnabled = toggleBtn.getAttribute('aria-checked') === 'true';
-
+                    
                     if (isEnabled) {
                         window.GnomeConnector.disable(uuid);
                         toggleBtn.setAttribute('aria-checked', 'false');
-                        toggleBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        toggleBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                         toggleBtn.classList.remove('bg-gnome-blue');
                         toggleBtn.querySelector('span').classList.add('translate-x-1');
                         toggleBtn.querySelector('span').classList.remove('translate-x-6');
                     } else {
                         window.GnomeConnector.enable(uuid);
                         toggleBtn.setAttribute('aria-checked', 'true');
-                        toggleBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        toggleBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
                         toggleBtn.classList.add('bg-gnome-blue');
                         toggleBtn.querySelector('span').classList.remove('translate-x-1');
                         toggleBtn.querySelector('span').classList.remove('translate-x-6');
@@ -145,6 +145,7 @@ class LocalView {
 
     renderIcon(extension) {
         if (!extension.icon) return this.defaultExtensionSvg;
+        
         if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
             const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
             return `<img src="${this.escapeHtml(extension.icon)}" alt="" class="w-full h-full object-cover" onerror="this.outerHTML='${safeSvg}'">`;
@@ -169,7 +170,7 @@ class LocalView {
 
         if (extension.hasUpdate && !isSystem) {
             actionsHtml += `
-                 <button type="button" class="local-update-btn text-white bg-gnome-green hover:bg-[#2ebc6c] transition-colors flex items-center justify-center w-8 h-8 rounded-full shadow-sm" title="Update Available">
+                 <button type="button" class="local-update-btn text-white bg-gnome-green hover:bg-gnome-green-hover transition-colors flex items-center justify-center w-8 h-8 rounded-full shadow-sm" title="Update Available">
                      <i class="fa-solid fa-download text-sm"></i>
                  </button>
              `;
@@ -177,12 +178,12 @@ class LocalView {
 
         if (!isSystem) {
             actionsHtml += `
-                 <button type="button" class="local-uninstall-btn text-gnome-grey hover:text-gnome-red transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="Uninstall">
+                 <button type="button" class="local-uninstall-btn text-gnome-grey hover:text-gnome-red transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-gnome-page-bg dark:bg-gnome-border-dark" title="Uninstall">
                      <i class="fa-solid fa-trash"></i>
                  </button>
              `;
-        } else { 
-            actionsHtml += `
+        } else {
+             actionsHtml += `
                  <div class="text-gnome-grey flex items-center justify-center w-8 h-8" title="System extensions cannot be uninstalled here">
                      <i class="fa-solid fa-lock text-sm opacity-50"></i>
                  </div>
@@ -191,7 +192,7 @@ class LocalView {
 
         const isEnabled = extension.enabled === true;
         actionsHtml += `
-             <button type="button" class="local-install-toggle ml-2 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isEnabled ? 'bg-gnome-blue' : 'bg-[#c0bfbc] dark:bg-[#3d3846]'}" role="switch" aria-checked="${isEnabled}">
+             <button type="button" class="local-install-toggle ml-2 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isEnabled ? 'bg-gnome-blue' : 'bg-gnome-border-light dark:bg-gnome-border-dark'}" role="switch" aria-checked="${isEnabled}">
                  <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-1'}"></span>
              </button>
          `;
@@ -210,10 +211,10 @@ class LocalView {
         }
 
         return `
-             <article class="group bg-gnome-white dark:bg-[#2d2640] border ${hasError ? 'border-gnome-red' : 'border-[#c0bfbc] dark:border-[#3d3846]'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
+             <article class="group bg-gnome-white dark:bg-gnome-card-dark border ${hasError ? 'border-gnome-red' : 'border-gnome-border-light dark:border-gnome-border-dark'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                      <div class="flex items-center gap-4 min-w-0 flex-1">
-                         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gnome-page-bg dark:bg-gnome-black overflow-hidden text-gnome-blue">
                              <div class="scale-[0.8] flex items-center justify-center w-full h-full">
                                  ${this.renderIcon(extension)}
                              </div>
@@ -221,13 +222,13 @@ class LocalView {
                          <div class="min-w-0 flex-1">
                              <div class="flex items-center gap-2">
                                  <h3 class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
-                                 ${isSystem ? `<span class="bg-[#deddda] dark:bg-[#3d3846] text-gnome-grey dark:text-[#c0bfbc] text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-[#c0bfbc] dark:border-[#5e5c64] shrink-0">System</span>` : ''}
+                                 ${isSystem ? `<span class="bg-gnome-hover-light dark:bg-gnome-border-dark text-gnome-grey dark:text-gnome-text-muted-dark text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-gnome-border-light dark:border-gnome-text-muted-light shrink-0">System</span>` : ''}
                              </div>
                              <p class="text-xs text-gnome-grey mt-0.5 truncate">${this.escapeHtml(extension.uuid)}</p>
                          </div>
                      </div>
                      
-                     <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
+                     <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t border-gnome-border-light sm:border-t-0 dark:border-gnome-border-dark pt-3 sm:pt-0 mt-2 sm:mt-0">
                          ${actionsHtml}
                      </div>
                  </div>

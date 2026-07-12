@@ -224,10 +224,10 @@ class StoreView {
         
         if (gridBtn && rowBtn) {
             if (layoutMode === 'grid' || !layoutMode) {
-                gridBtn.className = 'px-3 h-full text-gnome-blue bg-[#f6f5f4] dark:bg-[#3d3846]';
+                gridBtn.className = 'px-3 h-full text-gnome-blue bg-gnome-page-bg dark:bg-gnome-border-dark';
                 rowBtn.className = 'px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors';
             } else {
-                rowBtn.className = 'px-3 h-full text-gnome-blue bg-[#f6f5f4] dark:bg-[#3d3846]';
+                rowBtn.className = 'px-3 h-full text-gnome-blue bg-gnome-page-bg dark:bg-gnome-border-dark';
                 gridBtn.className = 'px-3 h-full text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors';
             }
         }
@@ -244,14 +244,14 @@ class StoreView {
             
             featuredSection.innerHTML = `
                 <div class="flex justify-end items-center gap-3 animate-fade-in">
-                    <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                    <select data-action="change-items-per-page" class="text-sm font-semibold text-gnome-text-muted-light bg-gnome-page-bg border-gnome-border-light dark:text-gnome-text-muted-dark dark:bg-gnome-card-dark dark:border-gnome-border-dark border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                         <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
                         <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                         <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
                         <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                         <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                     </select>
-                    <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]">
+                    <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-gnome-page-bg dark:bg-gnome-card-dark px-4 py-1.5 rounded-xl border border-gnome-border-light dark:border-gnome-border-dark shadow-sm h-[38px]">
                         <i class="fa-solid fa-chevron-down"></i>
                         Show Featured
                     </button>
@@ -274,7 +274,7 @@ class StoreView {
         const tabsHtml = tabs.map(tab => {
             const isActive = tab.id === activeTab;
             return `
-                <button type="button" data-featured-tab="${tab.id}" class="px-5 py-1.5 rounded-full text-sm font-bold transition-all ${isActive ? 'bg-gnome-blue text-white shadow-sm scale-105' : 'bg-transparent text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white'}">
+                <button type="button" data-featured-tab="${tab.id}" class="px-5 py-1.5 rounded-full text-sm font-bold transition-all ${isActive ? 'bg-gnome-blue text-white shadow-sm scale-105' : 'bg-transparent text-gnome-text-muted-light dark:text-gnome-text-muted-dark hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark hover:text-gnome-black dark:hover:text-gnome-white'}">
                     ${this.escapeHtml(tab.label)}
                 </button>
             `;
@@ -282,14 +282,14 @@ class StoreView {
         
         const controlsHtml = `
             <div class="ml-auto flex items-center gap-3">
-                <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                <select data-action="change-items-per-page" class="text-sm font-semibold text-gnome-text-muted-light bg-gnome-page-bg border-gnome-border-light dark:text-gnome-text-muted-dark dark:bg-gnome-card-dark dark:border-gnome-border-dark border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                     <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
                     <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                     <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
                     <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                 </select>
-                <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-[#f6f5f4] dark:bg-[#2d2640] px-4 py-1.5 rounded-xl border border-[#c0bfbc] dark:border-[#3d3846] shadow-sm h-[38px]" title="Hide Featured">
+                <button type="button" data-action="toggle-featured" class="text-sm font-semibold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 bg-gnome-page-bg dark:bg-gnome-card-dark px-4 py-1.5 rounded-xl border border-gnome-border-light dark:border-gnome-border-dark shadow-sm h-[38px]" title="Hide Featured">
                     <i class="fa-solid fa-chevron-up"></i>
                     Hide
                 </button>
@@ -332,7 +332,7 @@ class StoreView {
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
             </div>
             <div class="animate-fade-in flex items-center">
-                <select data-action="change-items-per-page" class="text-sm font-semibold text-[#5e5c64] bg-[#f6f5f4] border-[#c0bfbc] dark:text-[#c0bfbc] dark:bg-[#2d2640] dark:border-[#3d3846] border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
+                <select data-action="change-items-per-page" class="text-sm font-semibold text-gnome-text-muted-light bg-gnome-page-bg border-gnome-border-light dark:text-gnome-text-muted-dark dark:bg-gnome-card-dark dark:border-gnome-border-dark border rounded-xl px-3 py-1.5 shadow-sm hover:border-gnome-blue transition-all focus:outline-none focus:border-gnome-blue cursor-pointer h-[38px]">
                     <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
                     <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
                     <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
@@ -365,7 +365,7 @@ class StoreView {
         // Previous page button
         const isPrevDisabled = pagination.currentPage === 1;
         paginationHtml += `
-            <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isPrevDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Previous page">
+            <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-gnome-border-light dark:border-gnome-border-dark ${isPrevDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark'}" aria-label="Previous page">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
         `;
@@ -374,7 +374,7 @@ class StoreView {
         for (let i = 1; i <= pagination.totalPages; i++) {
             const isCurrent = i === pagination.currentPage;
             paginationHtml += `
-                <button type="button" data-page="${i}" class="px-4 py-2 rounded-xl text-sm font-bold transition-all ${isCurrent ? 'bg-gnome-blue text-white shadow-md scale-105' : 'border border-[#c0bfbc] dark:border-[#3d3846] text-[#5e5c64] dark:text-[#c0bfbc] hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Page ${i}">
+                <button type="button" data-page="${i}" class="px-4 py-2 rounded-xl text-sm font-bold transition-all ${isCurrent ? 'bg-gnome-blue text-white shadow-md scale-105' : 'border border-gnome-border-light dark:border-gnome-border-dark text-gnome-text-muted-light dark:text-gnome-text-muted-dark hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark'}" aria-label="Page ${i}">
                     ${i}
                 </button>
             `;
@@ -383,7 +383,7 @@ class StoreView {
         // Next page button
         const isNextDisabled = pagination.currentPage === pagination.totalPages;
         paginationHtml += `
-            <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-[#c0bfbc] dark:border-[#3d3846] ${isNextDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-[#deddda] dark:hover:bg-[#3d3846]'}" aria-label="Next page">
+            <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all border border-gnome-border-light dark:border-gnome-border-dark ${isNextDisabled ? 'opacity-30 cursor-not-allowed' : 'text-gnome-black dark:text-gnome-white hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark'}" aria-label="Next page">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         `;
@@ -412,9 +412,9 @@ class StoreView {
 
     generateRowHTML(extension) {
         return `
-            <article class="group bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-3 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md dark:hover:bg-[#322b47] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
+            <article class="group bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-3 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md dark:hover:bg-gnome-card-dark-hover transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gnome-page-bg dark:bg-gnome-black overflow-hidden text-gnome-blue">
                         <div class="scale-[0.8] flex items-center justify-center w-full h-full">
                             ${this.renderIcon(extension)}
                         </div>
@@ -424,7 +424,7 @@ class StoreView {
                             <h3 class="font-bold text-sm text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
                             <p class="text-xs text-gnome-grey truncate mt-0.5">${this.escapeHtml(extension.author)}</p>
                         </div>
-                        <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] truncate hidden lg:block lg:col-span-6" title="${this.escapeHtml(extension.description)}">
+                        <p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark truncate hidden lg:block lg:col-span-6" title="${this.escapeHtml(extension.description)}">
                             ${this.escapeHtml(extension.description)}
                         </p>
                         <div class="hidden sm:flex col-span-8 lg:col-span-3 items-center justify-end gap-3 shrink-0">
@@ -434,12 +434,12 @@ class StoreView {
                     </div>
                 </div>
                 
-                <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0 sm:ml-4 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
+                <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0 sm:ml-4 border-t border-gnome-border-light sm:border-t-0 dark:border-gnome-border-dark pt-3 sm:pt-0 mt-2 sm:mt-0">
                     <div class="flex sm:hidden items-center gap-3">
                         <div class="text-sm font-semibold text-gnome-blue"><i class="fa-solid fa-star text-[10px] mr-1"></i>${extension.rating.toFixed(1)}</div>
                         <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
                     </div>
-                    <button type="button" class="text-gnome-grey group-hover:text-gnome-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent sm:group-hover:bg-gnome-blue" title="View details">
+                    <button type="button" class="text-gnome-grey group-hover:text-gnome-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-gnome-page-bg dark:bg-gnome-border-dark sm:bg-transparent sm:dark:bg-transparent sm:group-hover:bg-gnome-blue" title="View details">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -449,11 +449,11 @@ class StoreView {
 
     generateCardHTML(extension) {
         return `
-            <article class="extension-card group bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}" title="${this.escapeHtml(extension.description)}">
+            <article class="extension-card group bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-2xl p-4 shadow-md cursor-pointer hover:border-gnome-blue transition-all duration-300 flex flex-col justify-between animate-fade-in" data-extension-id="${extension.id}" title="${this.escapeHtml(extension.description)}">
                 <div>
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-start gap-3 min-w-0">
-                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gnome-page-bg dark:bg-gnome-black overflow-hidden text-gnome-blue">
                                 ${this.renderIcon(extension)}
                             </div>
                             <div class="min-w-0">
@@ -466,11 +466,11 @@ class StoreView {
                             <div class="text-[10px] uppercase tracking-wider text-gnome-grey">${this.formatDownloads(extension.downloads)}</div>
                         </div>
                     </div>
-                    <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-3 line-clamp-3">${this.escapeHtml(extension.description)}</p>
+                    <p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark mt-3 line-clamp-3">${this.escapeHtml(extension.description)}</p>
                 </div>
                 
-                <div class="mt-4 flex items-center justify-end pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
-                    <button type="button" class="text-gnome-grey group-hover:text-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="View details">
+                <div class="mt-4 flex items-center justify-end pt-4 border-t border-gnome-border-light dark:border-gnome-border-dark">
+                    <button type="button" class="text-gnome-grey group-hover:text-white group-hover:bg-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-gnome-page-bg dark:bg-gnome-border-dark" title="View details">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -487,4 +487,5 @@ class StoreView {
             .replace(/'/g, '&#39;');
     }
 }
+
 window.StoreView = StoreView;
