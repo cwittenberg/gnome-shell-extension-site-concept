@@ -2,7 +2,7 @@
 class StoreView {
     constructor() {
         this.controller = null;
-        this.defaultExtensionSvg = `<i class="fa-solid fa-puzzle-piece text-4xl"></i>`;
+        this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
         
         // Cache state variables to prevent unnecessary DOM redraws and flashing
         this._lastFeaturedTab = null;
@@ -365,7 +365,6 @@ class StoreView {
         
         const extensionsToShow = featured[activeTab] || [];
         
-        // Changed: Featured section always uses a grid layout and generateCardHTML
         featuredSection.innerHTML = `
             <div class="flex flex-col gap-6 animate-fade-in">
                 <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
@@ -469,13 +468,22 @@ class StoreView {
         return downloads.toString();
     }
 
+    renderIcon(extension) {
+        if (!extension.icon) return this.defaultExtensionSvg;
+        if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
+            const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
+            return `<img src="${this.escapeHtml(extension.icon)}" alt="" class="w-full h-full object-cover" onerror="this.outerHTML='${safeSvg}'">`;
+        }
+        return extension.icon; // Standard inline SVG if passed
+    }
+
     generateRowHTML(extension) {
         return `
             <article class="group bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-3 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md dark:hover:bg-[#322b47] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
-                        <div class="scale-[0.8] flex items-center justify-center">
-                            ${extension.icon || '<i class="fa-solid fa-puzzle-piece text-2xl"></i>'}
+                        <div class="scale-[0.8] flex items-center justify-center w-full h-full">
+                            ${this.renderIcon(extension)}
                         </div>
                     </div>
                     <div class="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-4">
@@ -513,8 +521,8 @@ class StoreView {
                 <div>
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-start gap-3 min-w-0">
-                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f6f5f4] dark:bg-[#241F31]">
-                                ${extension.icon || this.defaultExtensionSvg}
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                                ${this.renderIcon(extension)}
                             </div>
                             <div class="min-w-0">
                                 <h3 class="font-bold text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>

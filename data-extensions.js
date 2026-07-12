@@ -15,16 +15,44 @@ const EXTENSIONS = [
         homepage: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection',
         bugTracker: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Customizing standard behaviors' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Minimalist desktop view' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Profile configuration menu' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification placement overrides' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M38.83 41.53l-3.32-.55a11.13 11.13 0 01-3.51-1.45l-2.61 2.11a1.44 1.44 0 01-1.92-.12l-2.47-2.47a1.44 1.44 0 01-.12-1.92l2.11-2.61a11.13 11.13 0 01-1.45-3.51l-.55-3.32A1.44 1.44 0 0123.57 26h3.49a1.44 1.44 0 011.42 1.21l.55 3.32a11.13 11.13 0 013.51 1.45l2.61-2.11a1.44 1.44 0 011.92.12l2.47 2.47a1.44 1.44 0 01.12 1.92l-2.11 2.61a11.13 11.13 0 011.45 3.51l.55 3.32a1.44 1.44 0 01-1.42 1.63h-3.49a1.44 1.44 0 01-1.42-1.21zM32 37.33A5.33 5.33 0 1026.67 32 5.33 5.33 0 0032 37.33z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_3843.png',
         mdDescription: '## Just Perfection\n\nTweak Tool to customize GNOME Shell, change the behavior and disable UI elements.\n\n### Features\n* **Minimalist Desktop:** Hide the Top Panel, Dash, Search, Workspace Switcher, and more.\n* **Behavior Tweaks:** Change notification banner positions, disable window demands attention, and control startup status.\n* **Profile System:** Quickly switch between Minimal, Super Minimal, and Default profiles.\n* **Compatibility:** Always updated quickly for the latest GNOME Shell releases.',
         reviews: [
             { user: "GnomeUser", date: "10 Jan 2026", rating: 5, text: "The best extension to make GNOME truly yours. I use it to hide everything for a distraction-free environment." },
             { user: "LinuxFan", date: "15 Dec 2025", rating: 5, text: "Just Perfection is exactly what it says on the tin. Always works, no bugs." }
+        ],
+        versions: mockVersions
+    },
+    {
+        id: 10049,
+        uuid: 'omnipanel@christian',
+        name: 'OmniPanel',
+        author: 'cwittenberg',
+        maintainers: ['cwittenberg'],
+        description: 'Multi-monitor productivity with configurable window layouts and a top bar that seamlessly follows your focus.',
+        version: '10',
+        downloads: 88,
+        rating: 4.8,
+        ratingCount: 15,
+        category: 'Window Management',
+        new: true,
+        homepage: 'https://github.com/cwittenberg/omnipanel',
+        bugTracker: 'https://github.com/cwittenberg/omnipanel/issues',
+        media: [
+                    { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s' },
+                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620529767-565295f9-ac78-4599-9dcc-f264dc389d2f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NDg4NTEsIm5iZiI6MTc4Mzg0ODU1MSwicGF0aCI6Ii80ODI1MjExLzYyMDUyOTc2Ny01NjUyOTVmOS1hYzc4LTQ1OTktOWRjYy1mMjY0ZGMzODlkMmYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDkyOTExWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9M2QxY2I1Mjc3ZTQ4NDUwZDZiM2UxMzZhZWMyMmY5NmEzOWFkNGU0OGEzMmUwNzhmMzA0N2VkODQ5Nzc3YTJlMyZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.gRH0FHz40HeEPLcxQflaL2KByEF7voJ2RYjQSjRFX_E' },
+                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620530029-3a94f0b8-d7ae-42d5-8752-457bf34c1595.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NDg4NTEsIm5iZiI6MTc4Mzg0ODU1MSwicGF0aCI6Ii80ODI1MjExLzYyMDUzMDAyOS0zYTk0ZjBiOC1kN2FlLTQyZDUtODc1Mi00NTdiZjM0YzE1OTUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDkyOTExWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9YjNmYzM0ODRlOGFiN2RhYzU1MGNlZjNjMWI1OGU3ZDk0NTA0MjRhODk5MTMyNjA0N2ZmYjc4MDBkMGRkYWVmMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.YsaB4FiTkCvYMJQHk70bBL1LT1RpYdMw8xVeoBCpnio' }
+                ],
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_10049_d7PgALE.png',
+        mdDescription: '## OmniPanel\n\nOmniPanel is a true multi-monitor panel extension and advanced window management system for GNOME Shell (versions 46, 47, and 50).\n\n### Features\n* **Advanced Window Management:** Zone Designer Mode to visually draw and configure custom rectangular drop zones across your screens.\n* **Smart Auto-Placement:** Automatically assigns new windows to zones matching their application name or desktop metadata category.\n* **Active Toolbar Movement:** Your true GNOME panel, including all system tray indicators and extensions, seamlessly follows your mouse to the active screen.\n* **Pure Automatic Tiling:** Master auto-tiling override to dynamically arrange all workspace windows using BSP or Cascading algorithms.\n* **Quick Tiler:** Instantly spawn an 8x8 interactive grid (Default: `<Super>g`) on the active monitor to reshape the active window by clicking and dragging across cells.',
+        reviews: [
+            { user: "ClixTW", date: "10 July 2026", rating: 5, text: "This is hands down the most 'GNOME-ish' window manager out there. You don't have to fuss with setting up window rules or any of the usual WM configurations, yet it naturally boosts your workflow and desktop efficiency." },
+            { user: "4aaa_batteries", date: "11 July 2026", rating: 4, text: "Looks great, wish it didn't require Gnome 50 though." }
         ],
         versions: mockVersions
     },
@@ -44,12 +72,12 @@ const EXTENSIONS = [
         homepage: 'https://github.com/cwittenberg/snaptext',
         bugTracker: 'https://github.com/cwittenberg/snaptext/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How OCR text grabbing works' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Extracting text from a YouTube video' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Scanning code snippets instantly' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Clipboard notification confirmation' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M20 24H28V40H20V24ZM36 24H44V40H36V24Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_10209.png',
         mdDescription: '## Snap Text Extractor\n\nGNOME Extension enabling the user to select an area of the screen to instantly extract and copy text to the clipboard using native Optical Character Recognition (OCR). Similar to how it works on MacOS.\n\n### Features\n* **Instant Text Extraction:** Select any part of your screen, and the text within that area is instantly processed and copied to your clipboard.\n* **Smart OCR Preprocessing:** Utilizes ImageMagick to maximize Text Recognition accuracy by automatically converting to grayscale, maximizing contrast, upscaling small screen snips, and smartly negating colors for Dark Mode UIs.\n* **Multi-Pass OCR Routing:** Dynamically adjusts Page Segmentation Modes (PSM) based on aspect ratio.\n* **Seamless GNOME Integration:** Built exclusively for GNOME Shell versions 45 through 50 using modern standard APIs.',
         reviews: [
             { user: "callpaul.eu", date: "21 June 2026", rating: 5, text: "Hi and welcome to our site. Thanks you for your contribution i look forward to the reaction from fellow members to your tool." },
@@ -72,12 +100,12 @@ const EXTENSIONS = [
         homepage: 'https://github.com/cwittenberg/thisipcan.cyou',
         bugTracker: 'https://github.com/cwittenberg/thisipcan.cyou/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Tracking VPN node jumps automatically' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Top panel address indicator' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'IP Geolocation integration' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification banner on network change' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M32 16C23.1634 16 16 23.1634 16 32C16 40.8366 23.1634 48 32 48C40.8366 48 48 40.8366 48 32C48 23.1634 40.8366 16 32 16ZM32 40C27.5817 40 24 36.4183 24 32C24 27.5817 27.5817 24 32 24C36.4183 24 40 27.5817 40 32C40 36.4183 36.4183 40 32 40Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_5368.png',
         mdDescription: '## Show External IP\n\nKeep track of your public IP address directly from the top panel.\n\n### Features\n* **Live Updates:** Automatically refreshes your IP address.\n* **One-Click Copy:** Click the panel icon to copy the IP to your clipboard.\n* **Multiple Providers:** Configure which service to use for IP checking to ensure uptime and accuracy.',
         reviews: [
             { user: "cwittenberg", date: "June 20, 2026", rating: 5, text: "Updated to work on Gnome 50. Also added history feature and updated the design.", isAuthor: true }
@@ -85,7 +113,7 @@ const EXTENSIONS = [
         versions: mockVersions
     },
     {
-        id: 1,
+        id: 307,
         uuid: 'dash-to-dock@micxgx.gmail.com',
         name: 'Dash to Dock',
         author: 'micheleg',
@@ -100,18 +128,18 @@ const EXTENSIONS = [
         homepage: 'https://github.com/micheleg/dash-to-dock',
         bugTracker: 'https://github.com/micheleg/dash-to-dock/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Overview of Dash configuration' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Bottom orientation setting' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dash appearance tuning' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Intellihide behavior enabled' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><rect x="12" y="44" width="40" height="12" rx="4" fill="#ffffff"/><circle cx="20" cy="50" r="3" fill="#3584e4"/><circle cx="32" cy="50" r="3" fill="#3584e4"/><circle cx="44" cy="50" r="3" fill="#3584e4"/><rect x="12" y="12" width="40" height="24" rx="4" fill="#ffffff" opacity="0.3"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_307.png',
         mdDescription: mockMarkdown,
         reviews: mockReviews,
         versions: mockVersions
     },
     {
-        id: 2,
+        id: 19,
         uuid: 'user-theme@gnome-shell-extensions.gcampax.github.com',
         name: 'User Themes',
         author: 'gcampax',
@@ -126,18 +154,18 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Installing a shell theme manually' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Adwaita dark theme active' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Theme selector dropdown menu' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Custom CSS injected properly' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M48 24C48 15.1634 40.8366 8 32 8C23.1634 8 16 15.1634 16 24C16 32.8366 23.1634 40 32 40V56H40V40C44.4183 40 48 36.4183 48 32V24ZM32 32C27.5817 32 24 28.4183 24 24C24 19.5817 27.5817 16 32 16C36.4183 16 40 19.5817 40 24C40 28.4183 36.4183 32 32 32Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_19.png',
         mdDescription: mockMarkdown,
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 3,
+        id: 3193,
         uuid: 'blur-my-shell@aunetx',
         name: 'Blur my Shell',
         author: 'aunetx',
@@ -152,18 +180,18 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Blur configurations in action' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Blurred overview background' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dash to dock blurring' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dynamic window blurs' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M32 12C32 12 16 28.4183 16 40C16 48.8366 23.1634 56 32 56C40.8366 56 48 48.8366 48 40C48 28.4183 32 12 32 12ZM32 48C27.5817 48 24 44.4183 24 40C24 37.1129 25.5398 34.2573 28.1636 31.429C30.3475 33.7844 32 36.7825 32 40C32 42.2091 33.7909 44 36 44C37.4988 44 38.8021 43.176 39.5255 41.9363C39.832 43.166 40 44.4534 40 45.7538C40 48.0945 39.1171 50.2289 37.6569 51.7538C36.1966 53.2788 34.1818 54 32 54C28.8182 54 26 51.9055 26 48Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_3193.png',
         mdDescription: mockMarkdown,
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 4,
+        id: 615,
         uuid: 'appindicatorsupport@rgcjonas.gmail.com',
         name: 'AppIndicator Support',
         author: 'rgcjonas',
@@ -177,18 +205,18 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'How AppIndicator manages trays' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450', caption: 'KStatusNotifierItem rendering' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Legacy tray app support' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Standard GNOME integration' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><path d="M48 20V44C48 48.4183 44.4183 52 40 52H24C19.5817 52 16 48.4183 16 44V20C16 15.5817 19.5817 12 24 12H40C44.4183 12 48 15.5817 48 20ZM40 20H24V44H40V20ZM32 40C30.8954 40 30 39.1046 30 38C30 36.8954 30.8954 36 32 36C33.1046 36 34 36.8954 34 38C34 39.1046 33.1046 40 32 40Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_615.png',
         mdDescription: mockMarkdown,
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 5,
+        id: 1319,
         uuid: 'gsconnect@andyholmes.github.io',
         name: 'GSConnect',
         author: 'andyholmes',
@@ -200,18 +228,18 @@ const EXTENSIONS = [
         ratingCount: 1950,
         category: 'Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Syncing your phone notifications' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Sending SMS from GNOME' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Remote filesystem mapping' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Device security pairing' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><path d="M22 14H42V50H22V14ZM32 46C33.1 46 34 45.1 34 44C34 42.9 33.1 42 32 42C30.9 42 30 42.9 30 44C30 45.1 30.9 46 32 46Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_1319.png',
         mdDescription: '## GSConnect\n\nSeamless cellular integration built on top of the robust native KDE Connect framework.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 6,
+        id: 3628,
         uuid: 'arcmenu@arcmenu.com',
         name: 'Arc Menu',
         author: 'AndrewZaech',
@@ -223,18 +251,18 @@ const EXTENSIONS = [
         ratingCount: 1102,
         category: 'Dock & Panel',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Exploring Arc Menu presets' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Windows 11 style layout' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Custom search providers active' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Category navigation' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M16 16H30V30H16V16ZM34 16H48V30H34V16ZM16 34H30V48H16V34ZM34 34H48V48H34V34Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_3628.png',
         mdDescription: '## Arc Menu\n\nA customizable application launcher for power users.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 7,
+        id: 1160,
         uuid: 'dash-to-panel@jasonlg1979.github.io',
         name: 'Dash to Panel',
         author: 'jasonlg1979',
@@ -247,18 +275,18 @@ const EXTENSIONS = [
         category: 'Dock & Panel',
         new: true,
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Setting up a unified taskbar' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Clock formatting and indicators' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Fine window grouping settings' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Isolating workspace instances' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#241f31"/><rect x="8" y="48" width="48" height="8" fill="#3584e4"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_1160.png',
         mdDescription: '## Dash to Panel\n\nCombines the top bar and window dashboard elements together into a single master workflow panel.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 8,
+        id: 779,
         uuid: 'clipboard-indicator@tudmotu.com',
         name: 'Clipboard Indicator',
         author: 'tudmotu',
@@ -270,18 +298,18 @@ const EXTENSIONS = [
         ratingCount: 840,
         category: 'Utilities',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Browsing through clip history' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'History drop-down layout' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Pinning items permanently' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Private mode toggled' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M20 16H44V22H20V16ZM20 28H44V32H20V28ZM20 40H36V44H20V40Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_779.png',
         mdDescription: '## Clipboard Indicator\n\nMonitors and aggregates active system copying hooks for rapid desktop deployment.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 9,
+        id: 517,
         uuid: 'caffeine@eamodio',
         name: 'Caffeine',
         author: 'eamodio',
@@ -293,18 +321,18 @@ const EXTENSIONS = [
         ratingCount: 1621,
         category: 'Utilities',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How caffeine suppresses sleep' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Coffee cup icon in tray' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Configuring fullscreen override' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Manual toggle switch' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M44 24H20V38C20 42.4 23.6 46 28 46H36C40.4 46 44 42.4 44 38V24Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_517.png',
         mdDescription: '## Caffeine\n\nPrevents display dimming and operational timeouts.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 10,
+        id: 1460,
         uuid: 'vitals@corecoding.com',
         name: 'Vitals',
         author: 'corecoding',
@@ -316,18 +344,18 @@ const EXTENSIONS = [
         ratingCount: 914,
         category: 'System Monitor',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Vitals sensor arrays tracking' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'System dropdown graph' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Network flow speeds' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Temperature node selections' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><path d="M14 32H24L30 16L36 48L42 32H50" stroke="#ffffff" stroke-width="4" fill="none"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_1460.png',
         mdDescription: '## Vitals\n\nA deep overview telemetry asset displaying operational values clearly.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 11,
+        id: 750,
         uuid: 'openweather@jens',
         name: 'OpenWeather',
         author: 'jenslody',
@@ -339,18 +367,18 @@ const EXTENSIONS = [
         ratingCount: 520,
         category: 'Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Fetching real-time local forecasts' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Weekly prediction modal' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Panel numeric formatting' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multiple location tracking' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><circle cx="32" cy="32" r="12" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_750.png',
         mdDescription: '## OpenWeather\n\nSyncs with meteorology feeds to feed active local parameters into global toolbars.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 12,
+        id: 5090,
         uuid: 'spacebar@clemensg',
         name: 'Space Bar',
         author: 'clemensg',
@@ -362,18 +390,18 @@ const EXTENSIONS = [
         ratingCount: 390,
         category: 'Dock & Panel',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Switching workspaces via Space Bar' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Named workspace mapping' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dynamic node width expansion' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Active application indicators' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><rect x="16" y="28" width="32" height="8" rx="2" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_5090.png',
         mdDescription: '## Space Bar\n\nA streamlined status approach for workspace management.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 13,
+        id: 4679,
         uuid: 'burn-my-windows@schneegans',
         name: 'Burn My Windows',
         author: 'schneegans',
@@ -385,18 +413,18 @@ const EXTENSIONS = [
         ratingCount: 1720,
         category: 'Visual Effects',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'All physics effects running live' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'The fire termination effect' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Matrix data stream closing' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'T-Rex bite window break' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M32 12C22 24 16 32 16 42C16 50.8 23.2 56 32 56C40.8 56 48 50.8 48 42C48 32 42 24 32 12Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_4679.png',
         mdDescription: '## Burn My Windows\n\nFires up old school window events with full performance controls.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 14,
+        id: 3220,
         uuid: 'compiz-windows@schneegans',
         name: 'Compiz Wobbly Windows',
         author: 'schneegans',
@@ -408,18 +436,18 @@ const EXTENSIONS = [
         ratingCount: 612,
         category: 'Visual Effects',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Wobbly window snapping limits' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Drag elasticity setting configuration' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Spring friction parameters' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Edge snapping behavior' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M16 20C24 16 40 24 48 20V44C40 48 24 40 16 44V20Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_3220.png',
         mdDescription: '## Compiz Wobbly Windows\n\nRestores retro dynamic inertia metrics to active window canvas operations.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 15,
+        id: 858,
         uuid: 'sound-percentage@michaela',
         name: 'Sound Percentage',
         author: 'michaela',
@@ -431,18 +459,18 @@ const EXTENSIONS = [
         ratingCount: 211,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Adjusting sound reads live' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Inline panel rendering' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Quick mute threshold' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-device percent scaling' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M16 24V40H26L38 50V14L26 24H16Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_858.png',
         mdDescription: '## Sound Percentage\n\nSimple, lightweight volume percentage readout injection.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 16,
+        id: 97,
         uuid: 'coverflow@daniell',
         name: 'Coverflow Alt-Tab',
         author: 'daniell',
@@ -454,18 +482,18 @@ const EXTENSIONS = [
         ratingCount: 418,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: '3D rotation timeline' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Toggling application depth' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Setting coverflow perspective' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dark mode preview isolation' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M14 18H24V46H14V18ZM40 18H50V46H40V18ZM28 14H36V50H28V14Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_97.png',
         mdDescription: '## Coverflow Alt-Tab\n\nStunning 3D window rotation metrics mapping application switching behaviors.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 17,
+        id: 13,
         uuid: 'frippery-menu@frippery.org',
         name: 'Frippery Applications Menu',
         author: 'frippery',
@@ -477,18 +505,18 @@ const EXTENSIONS = [
         ratingCount: 310,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Navigating typical sub-menus' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Static nested categories' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Quick jump search feature' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Replacing activities label' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><circle cx="20" cy="32" r="4" fill="#ffffff"/><circle cx="32" cy="32" r="4" fill="#ffffff"/><circle cx="44" cy="32" r="4" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_13.png',
         mdDescription: '## Frippery Applications Menu\n\nA stable traditional menu structure mapping standard workflows without layout shifts.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 18,
+        id: 8,
         uuid: 'places-indicator@gnome.org',
         name: 'Places Status Indicator',
         author: 'gnome-shell-team',
@@ -500,18 +528,18 @@ const EXTENSIONS = [
         ratingCount: 1420,
         category: 'System Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Mounting logical drives from Places' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'User folder quick links' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Network mount mapping' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Remote server tree' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#241f31"/><path d="M14 18H26L32 24H50V48H14V18Z" fill="#3584e4"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_8.png',
         mdDescription: '## Places Status Indicator\n\nOfficial extension enabling clean desktop file mount mapping tracking loops.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 19,
+        id: 16,
         uuid: 'auto-move-windows@gnome.org',
         name: 'Auto Move Windows',
         author: 'gnome-shell-team',
@@ -523,18 +551,18 @@ const EXTENSIONS = [
         ratingCount: 1024,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Opening Firefox specifically on Workspace 2' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Configuring application routing lists' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Binding keys to routing IDs' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-screen awareness options' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M20 20H44V34H20V20ZM20 40H44V44H20V40Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_16.png',
         mdDescription: '## Auto Move Windows\n\nAutomates layout positions across displays based on targeting variables.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 20,
+        id: 7,
         uuid: 'removable-drive@gnome.org',
         name: 'Removable Drive Menu',
         author: 'gnome-shell-team',
@@ -546,18 +574,18 @@ const EXTENSIONS = [
         ratingCount: 1290,
         category: 'System Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Ejecting a USB block smoothly' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multiple nodes displayed inline' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Tracking internal LUKS partitions' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'System formatting modal trigger' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><path d="M16 40H48V48H16V40ZM20 20H44V36H20V20Z" fill="#ffffff" opacity="0.4"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_7.png',
         mdDescription: '## Removable Drive Menu\n\nKeeps discrete controls in top bars tracking block assets accurately.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 21,
+        id: 1007,
         uuid: 'window-ready@remover.com',
         name: 'Window Is Ready Remover',
         author: 'allan',
@@ -569,18 +597,18 @@ const EXTENSIONS = [
         ratingCount: 654,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Background apps focusing silently' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Before overlay structure' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'After modal removal structure' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Deep focus lock overrides' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M48 16L16 48M16 16L48 48" stroke="#ffffff" stroke-width="4" fill="none"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_1007.png',
         mdDescription: '## Window Is Ready Notification Remover\n\nEliminates intrusive workflow focus interruptions cleanly.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 22,
+        id: 545,
         uuid: 'hide-top-bar@tomasz',
         name: 'Hide Top Bar',
         author: 'tomasz',
@@ -592,18 +620,18 @@ const EXTENSIONS = [
         ratingCount: 720,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Intellihide avoiding overlapping windows' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Hover boundary mapping' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Animation timing constraints' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Excluding desktop modes' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M10 12H54V20H10V12Z" fill="#ffffff" opacity="0.2"/><rect x="10" y="24" width="44" height="28" rx="2" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_545.png',
         mdDescription: '## Hide Top Bar\n\nProvides visibility metrics to dynamically handle top toolbar elements.',
         reviews: [],
         versions: mockVersions
     },
     {
-        id: 23,
+        id: 104,
         uuid: 'net-speed@hedayaty',
         name: 'NetSpeed Monitor',
         author: 'hedayaty',
@@ -615,12 +643,12 @@ const EXTENSIONS = [
         ratingCount: 580,
         category: 'System Monitor',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Visualizing download speeds actively' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Formatting custom strings' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Aligning beside calendar' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Adapter selection UI' }
         ],
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M32 14L20 26H28V46H36V26H44L32 14Z" fill="#ffffff"/></svg>`,
+        icon: 'https://extensions.gnome.org/extension-data/icons/icon_104.png',
         mdDescription: '## NetSpeed Monitor\n\nRealtime tracking metric for incoming and outgoing throughput directly inside control lines.',
         reviews: [],
         versions: mockVersions

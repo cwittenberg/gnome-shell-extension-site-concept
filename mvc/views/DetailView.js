@@ -3,7 +3,7 @@ class DetailView {
     constructor() {
         this.mapInstance = null;
         this.currentMediaItems = [];
-        this.defaultExtensionSvg = `<i class="fa-solid fa-puzzle-piece text-4xl"></i>`;
+        this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
         
         this.bindEvents();
     }
@@ -40,9 +40,18 @@ class DetailView {
 
         const detailIcon = document.getElementById('detail-icon');
         if (detailIcon) {
+            let iconHtml = this.defaultExtensionSvg;
+            if (extension.icon) {
+                if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
+                    const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
+                    iconHtml = `<img src="${this.escapeHtml(extension.icon)}" alt="${this.escapeHtml(extension.name)} icon" class="w-full h-full object-contain p-2" onerror="this.outerHTML='${safeSvg}'">`;
+                } else {
+                    iconHtml = extension.icon; // fallback to inline svg if needed
+                }
+            }
             detailIcon.innerHTML = `
-              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] p-4 text-gnome-blue">
-                ${extension.icon || this.defaultExtensionSvg}
+              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
+                ${iconHtml}
               </div>
             `;
         }
@@ -74,14 +83,14 @@ class DetailView {
                     btn.classList.add('bg-gnome-blue');
                     knob.classList.remove('translate-x-1');
                     knob.classList.add('translate-x-6');
-                    label.textContent = 'ENABLED';
+                    label.textContent = 'ENABLE';
                     label.classList.add('text-gnome-blue');
                 } else {
                     btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
                     btn.classList.remove('bg-gnome-blue');
                     knob.classList.add('translate-x-1');
                     knob.classList.remove('translate-x-6');
-                    label.textContent = 'DISABLED';
+                    label.textContent = 'DISABLE';
                     label.classList.remove('text-gnome-blue');
                 }
             });
@@ -97,7 +106,7 @@ class DetailView {
             btn.classList.remove('bg-gnome-blue');
             knob.classList.add('translate-x-1');
             knob.classList.remove('translate-x-6');
-            label.textContent = 'DISABLED';
+            label.textContent = 'DISABLE';
             label.classList.remove('text-gnome-blue');
         }
 
@@ -186,7 +195,20 @@ class DetailView {
             } else {
                 content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-cover select-none">`;
             }
-            return `<div class="min-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black" data-index="${index}">${content}</div>`;
+            
+            // Generate the Caption Overlay
+            let captionHtml = '';
+            if (media.caption) {
+                captionHtml = `
+                    <div class="absolute bottom-10 left-0 right-0 flex justify-center z-10 pointer-events-none">
+                        <span class="bg-black/60 text-white text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg tracking-wide">
+                            ${this.escapeHtml(media.caption)}
+                        </span>
+                    </div>
+                `;
+            }
+            
+            return `<div class="min-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black" data-index="${index}">${content}${captionHtml}</div>`;
         }).join('');
 
         // Generate expanding pill indicators (overlayed)
@@ -215,8 +237,6 @@ class DetailView {
         `;
 
         // Generate Thumbnails underneath.
-        // Helpful becaues it tells the user we got images. Pill icons alone
-        // are not enough to indicate that there are images/videos available.
         carouselThumbnails.className = "flex gap-2.5 overflow-x-auto scrollbar-hide py-1 w-full";
         carouselThumbnails.innerHTML = this.currentMediaItems.map((media, index) => {
             let thumbUrl = media.url;

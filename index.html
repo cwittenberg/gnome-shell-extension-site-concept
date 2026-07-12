@@ -111,13 +111,13 @@
   </header>
 
   <!-- Native Connector Warning styled per GNOME Brand Guidelines -->
-  <div id="connector-warning" class="bg-gnome-blue text-gnome-white py-3 px-4 shadow-sm transition-colors duration-300 relative z-30">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm font-medium">
-      <div class="flex items-center gap-3">
-        <i class="fa-solid fa-circle-info text-lg shrink-0"></i>
+  <div id="connector-warning" class="bg-gnome-blue text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm font-medium">
+      <div class="flex items-center gap-3 text-center sm:text-left">
+        <i class="fa-solid fa-circle-info text-xl shrink-0 hidden sm:block"></i>
         <p>We cannot detect a running copy of GNOME on this system. You must install the GNOME Shell integration to enable extensions.</p>
       </div>
-      <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html" target="_blank" rel="noreferrer" class="shrink-0 bg-gnome-white text-gnome-blue hover:bg-[#f6f5f4] px-4 py-1.5 rounded-lg font-bold transition-colors shadow-sm whitespace-nowrap">
+      <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html" target="_blank" rel="noreferrer" class="shrink-0 bg-gnome-white text-gnome-blue hover:bg-[#f6f5f4] px-4 py-2 rounded-lg font-bold transition-colors shadow-sm whitespace-nowrap">
         Installation Guide
       </a>
     </div>
@@ -246,7 +246,7 @@
 
     <!-- Back Header -->
     <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
         <button onclick="window.closeExtension()" class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2">
           <i class="fa-solid fa-arrow-left"></i>
           Back to Store
@@ -254,7 +254,7 @@
       </div>
     </div>
     
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
       <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
         
         <div id="detail-icon" class="w-32 h-32 rounded-3xl bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden text-gnome-blue animate-fade-in">
@@ -377,39 +377,76 @@
   <!-- ABOUT VIEW (Managed by AboutView.js) -->
   <div id="about-view" class="hidden relative pb-16"></div>
 
-  <!-- Footer -->
-  <footer class="border-t border-[#c0bfbc] dark:border-[#3d3846] mt-16 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="font-extrabold text-gnome-black dark:text-gnome-white text-sm">GNOME Extensions</span>
+  <!-- Brand Site Styled Multi-Column Footer -->
+  <footer class="border-t border-[#c0bfbc] dark:border-[#3d3846] mt-16 py-16 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <!-- Top Section: Grid Links -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+        
+        <!-- Branding Logo/Title & Description -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-5">
+            <img src="img/logo.svg" class="w-8 h-8 dark:invert opacity-80" alt="GNOME Logo" />
+            <span class="text-lg font-extrabold text-gnome-black dark:text-gnome-white tracking-tight">GNOME Extensions</span>
           </div>
-          <p class="text-xs font-medium text-gnome-grey leading-relaxed">The official catalog for GNOME Shell extensions. Enhance your desktop experience with community-created tools.</p>
+          <p class="text-[12pt] font-medium text-gnome-grey leading-relaxed max-w-sm">
+            The official catalog for GNOME Shell extensions. Enhance your desktop experience with community-created tools.
+          </p>
         </div>
+        
+        <!-- Column 1: Extensions -->
         <div>
-          <h4 class="text-xs font-bold text-gnome-grey uppercase tracking-wider mb-3">Resources</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">Developer Docs</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">Extension Guidelines</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">Submit an Extension</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">GNOME Wiki</a></li>
+          <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Extensions</h4>
+          <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
+            <li><a href="#" data-nav="about" class="hover:text-gnome-blue transition-colors">About</a></li>
+            <li><a href="#" data-nav="local" class="hover:text-gnome-blue transition-colors">Installed extensions</a></li>
+            <li><a href="#" data-nav="upload" class="hover:text-gnome-blue transition-colors">Add yours</a></li>
           </ul>
         </div>
+
+        <!-- Column 2: Developers -->
         <div>
-          <h4 class="text-xs font-bold text-gnome-grey uppercase tracking-wider mb-3">Community</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">GNOME Discourse</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">Matrix Chat</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">Bug Reports</a></li>
-            <li><a href="#" class="text-xs font-medium text-gnome-grey hover:text-gnome-blue transition-colors">GNOME Foundation</a></li>
+          <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Developers</h4>
+          <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
+            <li><a href="https://gjs.guide/extensions/review-guidelines/review-guidelines.html" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">Extension Guidelines</a></li>
+            <li><a href="https://gjs.guide/extensions/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">Developer Docs</a></li>
+            <li><a href="https://gjs-docs.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">API</a></li>
+            <li><a href="https://gitlab.gnome.org/Infrastructure/extensions-web/-/issues" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">Bug Reports</a></li>
           </ul>
         </div>
+
+        <!-- Column 3: GNOME -->
+        <div>
+          <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">GNOME</h4>
+          <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
+            <li><a href="https://www.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">GNOME.org</a></li>
+            <li><a href="https://foundation.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">GNOME Foundation</a></li>
+            <li><a href="https://wiki.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">GNOME Wiki</a></li>
+            <li><a href="https://discourse.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors">GNOME Discourse</a></li>
+          </ul>
+        </div>
+
       </div>
-      <div class="pt-6 border-t border-[#c0bfbc] dark:border-[#3d3846] flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p class="text-xs font-medium text-gnome-grey">© 2026 The GNOME Project | Licensed under <a href="#" class="text-gnome-blue hover:underline">GPL-2.0-or-later</a></p>
-        <p class="text-xs font-medium text-gnome-grey">Made with <span class="text-gnome-red">♥</span> by the GNOME community</p>
+
+      <!-- Bottom Section: Copyright & Socials -->
+      <div class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
+        
+        <div>
+          <p>Copyright © 2005–2026 The GNOME Project.</p>
+          <p class="mt-1 text-sm text-[#5e5c64] dark:text-[#c0bfbc]">
+            Made with <span class="text-gnome-red">♥</span> by the GNOME community.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <a href="https://gitlab.gnome.org/" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors" aria-label="GitLab"><i class="fa-brands fa-gitlab text-xl"></i></a>
+          <a href="https://twitter.com/gnome" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors" aria-label="Twitter"><i class="fa-brands fa-twitter text-xl"></i></a>
+          <a href="https://floss.social/@gnome" target="_blank" rel="noreferrer" class="hover:text-gnome-blue transition-colors" aria-label="Mastodon"><i class="fa-brands fa-mastodon text-xl"></i></a>
+        </div>
+        
       </div>
+
     </div>
   </footer>
 
