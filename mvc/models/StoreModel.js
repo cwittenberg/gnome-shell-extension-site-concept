@@ -11,6 +11,7 @@ class StoreModel {
         this.state = {
             selectedCategory: 'All',
             sortBy: 'downloads',
+            shellVersion: 'all',
             searchTerm: '',
             featuredTab: 'trending',
             currentPage: 1,
@@ -88,6 +89,12 @@ class StoreModel {
         this.notifyObservers();
     }
 
+    setShellVersion(version) {
+        this.state.shellVersion = version;
+        this.state.currentPage = 1;
+        this.notifyObservers();
+    }
+
     setFeaturedTab(tab) {
         this.state.featuredTab = tab;
         this.notifyObservers();
@@ -118,6 +125,7 @@ class StoreModel {
     resetFilters() {
         this.state.selectedCategory = 'All';
         this.state.sortBy = 'downloads';
+        this.state.shellVersion = 'all';
         this.state.searchTerm = '';
         this.state.currentPage = 1;
         this.state.featuredTab = 'trending';
@@ -128,7 +136,15 @@ class StoreModel {
         return this.extensions.filter((extension) => {
             const matchesCategory = this.state.selectedCategory === 'All' || extension.category === this.state.selectedCategory;
             const matchesSearch = !this.state.searchTerm || [extension.name, extension.author, extension.description, extension.category].join(' ').toLowerCase().includes(this.state.searchTerm);
-            return matchesCategory && matchesSearch;
+            
+            let matchesVersion = true;
+            if (this.state.shellVersion !== 'all') {
+                const versionStr = this.state.shellVersion;
+                const extText = JSON.stringify(extension).toLowerCase();
+                matchesVersion = extText.includes('gnome ' + versionStr) || extText.includes('gnome' + versionStr) || extText.includes('gnome shell ' + versionStr);
+            }
+
+            return matchesCategory && matchesSearch && matchesVersion;
         }).sort((a, b) => {
             switch (this.state.sortBy) {
                 case 'rating':

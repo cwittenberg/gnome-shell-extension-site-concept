@@ -23,6 +23,10 @@ class StoreController {
         this.model.setSortBy(sortBy);
     }
 
+    handleShellVersion(version) {
+        this.model.setShellVersion(version);
+    }
+
     handleFeaturedTab(tab) {
         this.model.setFeaturedTab(tab);
     }

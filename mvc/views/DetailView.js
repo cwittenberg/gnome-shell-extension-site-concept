@@ -57,12 +57,48 @@ class DetailView {
             `;
         }
 
-        // Might make this a cooler switch perhaps.
-        // (a bit more Apple style :) )
-        const installButton = document.getElementById('detail-install-btn');
-        if (installButton) {
-            installButton.textContent = 'Install';
-            installButton.className = 'detail-action-btn w-full md:w-48 text-center text-sm font-bold px-6 py-3 rounded-lg transition-all shadow-md bg-gnome-blue text-gnome-white hover:bg-[#1c71d8]';
+        const installContainer = document.getElementById('detail-install-container');
+        if (installContainer && !installContainer.dataset.bound) {
+            installContainer.dataset.bound = 'true';
+            installContainer.addEventListener('click', () => {
+                const btn = document.getElementById('detail-install-toggle');
+                const label = document.getElementById('detail-toggle-label');
+                const knob = document.getElementById('detail-toggle-knob');
+                
+                const isInstalled = btn.getAttribute('aria-checked') === 'true';
+                const newState = !isInstalled;
+                
+                btn.setAttribute('aria-checked', newState.toString());
+                if (newState) {
+                    btn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    btn.classList.add('bg-gnome-blue');
+                    knob.classList.remove('translate-x-1');
+                    knob.classList.add('translate-x-6');
+                    label.textContent = 'ENABLED';
+                    label.classList.add('text-gnome-blue');
+                } else {
+                    btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    btn.classList.remove('bg-gnome-blue');
+                    knob.classList.add('translate-x-1');
+                    knob.classList.remove('translate-x-6');
+                    label.textContent = 'DISABLED';
+                    label.classList.remove('text-gnome-blue');
+                }
+            });
+        }
+        
+        // Reset toggle state when opening a new extension
+        const btn = document.getElementById('detail-install-toggle');
+        const label = document.getElementById('detail-toggle-label');
+        const knob = document.getElementById('detail-toggle-knob');
+        if (btn && label && knob) {
+            btn.setAttribute('aria-checked', 'false');
+            btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            btn.classList.remove('bg-gnome-blue');
+            knob.classList.add('translate-x-1');
+            knob.classList.remove('translate-x-6');
+            label.textContent = 'DISABLED';
+            label.classList.remove('text-gnome-blue');
         }
 
         const description = document.getElementById('detail-description');
@@ -251,7 +287,6 @@ class DetailView {
                     prevBtn.style.pointerEvents = 'auto';
                 }
             }
-
             if (nextBtn) {
                 if (activeIndex === dots.length - 1) {
                     nextBtn.style.opacity = '0';
@@ -336,6 +371,7 @@ class DetailView {
         ];
 
         const maxInstalls = Math.max(...markerData.map(m => m.installs));
+
         const bubbleMarkers = markerData.map(data => {
             const radius = 4 + (data.installs / maxInstalls) * 12;
             return {

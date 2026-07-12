@@ -38,6 +38,7 @@ class StoreView {
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
+        const shellVersionSelect = document.getElementById('shell-version-select');
         const gridBtn = document.getElementById('layout-grid-btn');
         const rowBtn = document.getElementById('layout-row-btn');
         
@@ -50,6 +51,12 @@ class StoreView {
         if (sortSelect) {
             sortSelect.addEventListener('change', (event) => {
                 if (this.controller) this.controller.handleSort(event.target.value);
+            });
+        }
+
+        if (shellVersionSelect) {
+            shellVersionSelect.addEventListener('change', (event) => {
+                if (this.controller) this.controller.handleShellVersion(event.target.value);
             });
         }
         
@@ -189,12 +196,15 @@ class StoreView {
         if (searchInput && searchInput.value !== data.state.searchTerm) {
             searchInput.value = data.state.searchTerm;
         }
-
         const sortSelect = document.getElementById('sort-select');
         if (sortSelect && sortSelect.value !== data.state.sortBy) {
             sortSelect.value = data.state.sortBy;
         }
-
+        const shellVersionSelect = document.getElementById('shell-version-select');
+        if (shellVersionSelect && shellVersionSelect.value !== data.state.shellVersion) {
+            shellVersionSelect.value = data.state.shellVersion;
+        }
+        
         this.updateLayoutToggleUI(data.state.layoutMode);
         
         // Only render categories if they actually changed to preserve scroll position
@@ -221,7 +231,7 @@ class StoreView {
         this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode);
         this.renderPagination(data.pagination);
         
-        const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '';
+        const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         
         // Element Hooks
         const heroSection = document.getElementById('hero-section');
