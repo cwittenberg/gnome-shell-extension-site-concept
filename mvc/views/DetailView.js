@@ -9,26 +9,8 @@ class DetailView {
     }
 
     bindEvents() {
-        const thumbnailsContainer = document.getElementById('carousel-thumbnails');
-        if (thumbnailsContainer) {
-            thumbnailsContainer.addEventListener('click', (e) => {
-                const btn = e.target.closest('button[data-media-index]');
-                if (btn) {
-                    const index = parseInt(btn.getAttribute('data-media-index'), 10);
-                    if (!isNaN(index) && this.currentMediaItems[index]) {
-                        this.renderMainMedia(this.currentMediaItems[index]);
-                        
-                        // Update active state visual
-                        thumbnailsContainer.querySelectorAll('button').forEach(b => {
-                            b.classList.remove('border-gnome-blue');
-                            b.classList.add('border-[#c0bfbc]', 'dark:border-[#3d3846]');
-                        });
-                        btn.classList.remove('border-[#c0bfbc]', 'dark:border-[#3d3846]');
-                        btn.classList.add('border-gnome-blue');
-                    }
-                }
-            });
-        }
+        // Global detail events can go here. 
+        // Media carousel events are dynamically bound in setupCarouselBehaviors()
     }
 
     update(extension) {
@@ -137,34 +119,6 @@ class DetailView {
         return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    renderMainMedia(media) {
-        const carouselMain = document.getElementById('carousel-main');
-        if (!carouselMain) return;
-
-        if (media.type === 'video') {
-            const ytId = this.getYoutubeId(media.url);
-            if (ytId) {
-                carouselMain.innerHTML = `
-                  <iframe class="w-full h-full object-cover rounded-xl"
-                    src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1"
-                    title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                  </iframe>
-                `;
-            } else {
-                carouselMain.innerHTML = `
-                  <video class="w-full h-full object-cover rounded-xl" controls autoplay muted loop playsinline poster="${this.escapeHtml(media.poster || '')}">
-                    <source src="${this.escapeHtml(media.url)}" type="video/mp4">
-                  </video>
-                `;
-            }
-        } else {
-            carouselMain.innerHTML = `<img src="${this.escapeHtml(media.url)}" alt="Extension preview" class="w-full h-full object-cover rounded-xl">`;
-        }
-    }
-
     renderMedia(mediaItems) {
         this.currentMediaItems = mediaItems || [];
         const carouselMain = document.getElementById('carousel-main');
@@ -178,10 +132,51 @@ class DetailView {
             return;
         }
 
-        // Render the first item by default
-        this.renderMainMedia(this.currentMediaItems[0]);
+        // Generate the native scroll-snap track
+        const trackHtml = this.currentMediaItems.map((media, index) => {
+            let content = '';
+            if (media.type === 'video') {
+                const ytId = this.getYoutubeId(media.url);
+                if (ytId) {
+                    content = `<iframe class="w-full h-full object-cover pointer-events-auto" src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+                } else {
+                    content = `<video class="w-full h-full object-cover" controls playsinline poster="${this.escapeHtml(media.poster || '')}">
+                                 <source src="${this.escapeHtml(media.url)}" type="video/mp4">
+                               </video>`;
+                }
+            } else {
+                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-cover select-none">`;
+            }
+            return `<div class="min-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black" data-index="${index}">${content}</div>`;
+        }).join('');
 
-        // Render thumbnails
+        // Generate expanding pill indicators (overlayed)
+        const dotsHtml = this.currentMediaItems.map((_, index) => {
+            const activeClasses = index === 0 ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/90';
+            return `<button type="button" data-dot-index="${index}" class="carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${activeClasses} focus:outline-none" aria-label="Go to slide ${index + 1}"></button>`;
+        }).join('');
+
+        // Apply Apple-style track, arrows, and pill indicators to the main container
+        carouselMain.className = "w-full aspect-video bg-black rounded-xl overflow-hidden mb-3 relative group shadow-inner";
+        carouselMain.innerHTML = `
+            <div id="carousel-track" class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth">
+                ${trackHtml}
+            </div>
+            
+            <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/50 hover:scale-105 hover:shadow-lg border border-white/20 z-10 hidden sm:flex pointer-events-none" aria-label="Previous image">
+                <i class="fa-solid fa-chevron-left text-lg pr-1"></i>
+            </button>
+            <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/50 hover:scale-105 hover:shadow-lg border border-white/20 z-10 hidden sm:flex pointer-events-none" aria-label="Next image">
+                <i class="fa-solid fa-chevron-right text-lg pl-1"></i>
+            </button>
+
+            <div class="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-1.5 z-20 pointer-events-auto">
+                ${dotsHtml}
+            </div>
+        `;
+
+        // Generate Thumbnails underneath
+        carouselThumbnails.className = "flex gap-2.5 overflow-x-auto scrollbar-hide py-1 w-full";
         carouselThumbnails.innerHTML = this.currentMediaItems.map((media, index) => {
             let thumbUrl = media.url;
             if (media.type === 'video') {
@@ -193,14 +188,109 @@ class DetailView {
                 }
             }
             
-            const borderClass = index === 0 ? 'border-gnome-blue' : 'border-[#c0bfbc] dark:border-[#3d3846]';
+            const activeClasses = index === 0 ? 'border-gnome-blue opacity-100 scale-100' : 'border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             
             return `
-              <button type="button" data-media-index="${index}" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 ${borderClass} hover:border-gnome-blue transition-colors focus:outline-none">
-                <img src="${this.escapeHtml(thumbUrl)}" alt="Preview ${index + 1}" class="w-full h-full object-cover">
+              <button type="button" data-thumb-index="${index}" class="carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none ${activeClasses}">
+                <img src="${this.escapeHtml(thumbUrl)}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover">
               </button>
             `;
         }).join('');
+
+        // Initialize interactivity
+        this.setupCarouselBehaviors();
+    }
+
+    setupCarouselBehaviors() {
+        const track = document.getElementById('carousel-track');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const thumbs = document.querySelectorAll('.carousel-thumb');
+
+        if (!track || dots.length === 0) return;
+
+        // UI update function synced to exact scroll layout
+        const updateUI = () => {
+            const width = track.clientWidth;
+            if (width === 0) return; // Prevent calc error on hidden views
+
+            // Add half a track width to accurately calculate the center item during snap
+            const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
+
+            // Update pills
+            dots.forEach((dot, idx) => {
+                if (idx === activeIndex) {
+                    dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-5 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
+                } else {
+                    dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-1.5 bg-white/50 hover:bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
+                }
+            });
+
+            // Update thumbnails
+            thumbs.forEach((thumb, idx) => {
+                if (idx === activeIndex) {
+                    thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-gnome-blue opacity-100 scale-100';
+                } else {
+                    thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
+                }
+            });
+
+            // Update directional arrow visibility
+            if (prevBtn) {
+                if (activeIndex === 0) {
+                    prevBtn.style.opacity = '0';
+                    prevBtn.style.pointerEvents = 'none';
+                } else {
+                    prevBtn.style.opacity = '';
+                    prevBtn.style.pointerEvents = 'auto';
+                }
+            }
+
+            if (nextBtn) {
+                if (activeIndex === dots.length - 1) {
+                    nextBtn.style.opacity = '0';
+                    nextBtn.style.pointerEvents = 'none';
+                } else {
+                    nextBtn.style.opacity = '';
+                    nextBtn.style.pointerEvents = 'auto';
+                }
+            }
+        };
+
+        // Bind scroll updates
+        let scrollTimeout;
+        track.addEventListener('scroll', () => {
+            window.clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateUI, 15); // Short debounce for buttery smooth rendering
+        });
+
+        // Initialize boundaries on load
+        updateUI();
+
+        // Arrow Controls
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+            });
+        }
+
+        // Indicator & Thumbnail Navigation
+        const navigateTo = (e) => {
+            const idx = parseInt(e.currentTarget.getAttribute('data-dot-index') || e.currentTarget.getAttribute('data-thumb-index'), 10);
+            track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+        };
+
+        dots.forEach(dot => dot.addEventListener('click', navigateTo));
+        thumbs.forEach(thumb => thumb.addEventListener('click', navigateTo));
+        
+        // Recalculate on browser resize
+        window.addEventListener('resize', updateUI);
     }
 
     renderLinks(extension) {
