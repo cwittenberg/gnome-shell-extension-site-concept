@@ -1,4 +1,5 @@
-// GoF Pattern: Observer (Observer Participant) 
+// GoF Pattern: Observer (Observer Participant)
+
 class DetailView {
     constructor() {
         this.mapInstance = null;
@@ -9,8 +10,43 @@ class DetailView {
     }
 
     bindEvents() {
-        // Global detail events can go here. 
-        // Media carousel events are dynamically bound in setupCarouselBehaviors()
+        // Interactive star rating mechanics for the review submission form
+        const starContainer = document.getElementById('interactive-star-rating');
+        if (starContainer) {
+            const stars = starContainer.querySelectorAll('i');
+            let selectedRating = 0;
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', (e) => {
+                    const hoverValue = parseInt(e.target.getAttribute('data-rating'));
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= hoverValue) {
+                            s.classList.replace('fa-regular', 'fa-solid');
+                            s.classList.add('text-gnome-orange');
+                        } else {
+                            s.classList.replace('fa-solid', 'fa-regular');
+                            s.classList.remove('text-gnome-orange');
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseout', () => {
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= selectedRating) {
+                            s.classList.replace('fa-regular', 'fa-solid');
+                            s.classList.add('text-gnome-orange');
+                        } else {
+                            s.classList.replace('fa-solid', 'fa-regular');
+                            s.classList.remove('text-gnome-orange');
+                        }
+                    });
+                });
+
+                star.addEventListener('click', (e) => {
+                    selectedRating = parseInt(e.target.getAttribute('data-rating'));
+                });
+            });
+        }
     }
 
     update(extension) {
@@ -24,8 +60,6 @@ class DetailView {
     clearDetails() {
         const carouselMain = document.getElementById('carousel-main');
         if (carouselMain) {
-            // Unload the DOM content to stop iframe audio/video leaks
-            // Otherwise it keeps playing in the background when switching extensions :)
             carouselMain.innerHTML = '';
         }
     }
@@ -66,49 +100,7 @@ class DetailView {
             `;
         }
 
-        const installContainer = document.getElementById('detail-install-container');
-        if (installContainer && !installContainer.dataset.bound) {
-            installContainer.dataset.bound = 'true';
-            installContainer.addEventListener('click', () => {
-                const btn = document.getElementById('detail-install-toggle');
-                const label = document.getElementById('detail-toggle-label');
-                const knob = document.getElementById('detail-toggle-knob');
-                
-                const isInstalled = btn.getAttribute('aria-checked') === 'true';
-                const newState = !isInstalled;
-                
-                btn.setAttribute('aria-checked', newState.toString());
-                if (newState) {
-                    btn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
-                    btn.classList.add('bg-gnome-blue');
-                    knob.classList.remove('translate-x-1');
-                    knob.classList.add('translate-x-6');
-                    label.textContent = 'ENABLED';
-                    label.classList.add('text-gnome-blue');
-                } else {
-                    btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
-                    btn.classList.remove('bg-gnome-blue');
-                    knob.classList.add('translate-x-1');
-                    knob.classList.remove('translate-x-6');
-                    label.textContent = 'DISABLED';
-                    label.classList.remove('text-gnome-blue');
-                }
-            });
-        }
-        
-        // Reset toggle state when opening a new extension
-        const btn = document.getElementById('detail-install-toggle');
-        const label = document.getElementById('detail-toggle-label');
-        const knob = document.getElementById('detail-toggle-knob');
-        if (btn && label && knob) {
-            btn.setAttribute('aria-checked', 'false');
-            btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
-            btn.classList.remove('bg-gnome-blue');
-            knob.classList.add('translate-x-1');
-            knob.classList.remove('translate-x-6');
-            label.textContent = 'DISABLED';
-            label.classList.remove('text-gnome-blue');
-        }
+        this.renderHostConnectorControls(extension);
 
         const description = document.getElementById('detail-description');
         if (description) {
@@ -159,6 +151,156 @@ class DetailView {
         this.renderMedia(extension.media || []);
         this.renderLinks(extension);
         this.renderAnalyticsMap(extension);
+    }
+
+    renderHostConnectorControls(extension) {
+        const installContainer = document.getElementById('detail-install-container');
+        const btn = document.getElementById('detail-install-toggle');
+        const label = document.getElementById('detail-toggle-label');
+        const knob = document.getElementById('detail-toggle-knob');
+        
+        const uninstallBtn = document.getElementById('detail-uninstall-btn');
+        const updateContainer = document.getElementById('detail-update-container');
+        const systemBadge = document.getElementById('detail-system-badge');
+        const errorBanner = document.getElementById('detail-error-banner');
+        const errorMessage = document.getElementById('detail-error-message');
+
+        // Cleanup any previous bindings using cloned node strategy to prevent multi-fires
+        const newInstallContainer = installContainer.cloneNode(true);
+        installContainer.parentNode.replaceChild(newInstallContainer, installContainer);
+        
+        const newBtn = newInstallContainer.querySelector('#detail-install-toggle');
+        const newLabel = newInstallContainer.querySelector('#detail-toggle-label');
+        const newKnob = newInstallContainer.querySelector('#detail-toggle-knob');
+
+        const newUninstallBtn = uninstallBtn.cloneNode(true);
+        uninstallBtn.parentNode.replaceChild(newUninstallBtn, uninstallBtn);
+
+        const newUpdateContainer = updateContainer.cloneNode(true);
+        updateContainer.parentNode.replaceChild(newUpdateContainer, updateContainer);
+
+        // State Check variables
+        const isInstalled = extension.installed === true;
+        let isEnabled = extension.enabled === true;
+        
+        // Render Error State
+        if (extension.hasError && isInstalled) {
+            errorBanner.classList.remove('hidden');
+            errorMessage.textContent = extension.errorMessage || "Unknown exception occurred.";
+        } else {
+            errorBanner.classList.add('hidden');
+            errorMessage.textContent = "";
+        }
+
+        // Render System Extension Badge
+        if (extension.isSystem) {
+            systemBadge.classList.remove('hidden');
+            newUninstallBtn.classList.add('hidden'); // Cannot uninstall system extensions via web
+        } else {
+            systemBadge.classList.add('hidden');
+            if (isInstalled) newUninstallBtn.classList.remove('hidden');
+        }
+
+        // Render Updates
+        if (extension.hasUpdate && isInstalled && !extension.isSystem) {
+            newUpdateContainer.classList.remove('hidden');
+        } else {
+            newUpdateContainer.classList.add('hidden');
+        }
+
+        // Setup base toggle styling based on installed/enabled state
+        if (isInstalled && isEnabled) {
+            newBtn.setAttribute('aria-checked', 'true');
+            newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.add('bg-gnome-blue');
+            newKnob.classList.remove('translate-x-1');
+            newKnob.classList.add('translate-x-6');
+            newLabel.textContent = 'ENABLED';
+            newLabel.classList.add('text-gnome-blue');
+        } else if (isInstalled && !isEnabled) {
+            newBtn.setAttribute('aria-checked', 'false');
+            newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.remove('bg-gnome-blue');
+            newKnob.classList.add('translate-x-1');
+            newKnob.classList.remove('translate-x-6');
+            newLabel.textContent = 'DISABLED';
+            newLabel.classList.remove('text-gnome-blue');
+        } else {
+            newBtn.setAttribute('aria-checked', 'false');
+            newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+            newBtn.classList.remove('bg-gnome-blue');
+            newKnob.classList.add('translate-x-1');
+            newKnob.classList.remove('translate-x-6');
+            newLabel.textContent = 'INSTALL';
+            newLabel.classList.remove('text-gnome-blue');
+        }
+
+        // Handle Toggle / Install interactions
+        newInstallContainer.addEventListener('click', () => {
+            if (window.GnomeConnector && window.GnomeConnector.isConnected) {
+                if (!isInstalled) {
+                    window.GnomeConnector.install(extension.uuid);
+                    // Visual mock state change for install
+                    newLabel.textContent = 'ENABLED';
+                    newLabel.classList.add('text-gnome-blue');
+                    newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    newBtn.classList.add('bg-gnome-blue');
+                    newKnob.classList.remove('translate-x-1');
+                    newKnob.classList.add('translate-x-6');
+                    newUninstallBtn.classList.remove('hidden');
+                } else {
+                    isEnabled = !isEnabled;
+                    if (isEnabled) {
+                        window.GnomeConnector.enable(extension.uuid);
+                        newBtn.setAttribute('aria-checked', 'true');
+                        newBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        newBtn.classList.add('bg-gnome-blue');
+                        newKnob.classList.remove('translate-x-1');
+                        newKnob.classList.add('translate-x-6');
+                        newLabel.textContent = 'ENABLED';
+                        newLabel.classList.add('text-gnome-blue');
+                    } else {
+                        window.GnomeConnector.disable(extension.uuid);
+                        newBtn.setAttribute('aria-checked', 'false');
+                        newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        newBtn.classList.remove('bg-gnome-blue');
+                        newKnob.classList.add('translate-x-1');
+                        newKnob.classList.remove('translate-x-6');
+                        newLabel.textContent = 'DISABLED';
+                        newLabel.classList.remove('text-gnome-blue');
+                    }
+                }
+            } else {
+                alert("GNOME Shell integration is not installed or running. Cannot manage extensions.");
+            }
+        });
+
+        // Handle Uninstall Interaction
+        newUninstallBtn.addEventListener('click', () => {
+            if (window.GnomeConnector && window.GnomeConnector.isConnected) {
+                if (confirm(`Are you sure you want to uninstall ${extension.name}?`)) {
+                    window.GnomeConnector.uninstall(extension.uuid);
+                    // Reset UI Mock State
+                    newUninstallBtn.classList.add('hidden');
+                    newUpdateContainer.classList.add('hidden');
+                    newLabel.textContent = 'INSTALL';
+                    newLabel.classList.remove('text-gnome-blue');
+                    newBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                    newBtn.classList.remove('bg-gnome-blue');
+                    newKnob.classList.add('translate-x-1');
+                    newKnob.classList.remove('translate-x-6');
+                    errorBanner.classList.add('hidden');
+                }
+            }
+        });
+
+        // Handle Update Interaction
+        newUpdateContainer.addEventListener('click', () => {
+            if (window.GnomeConnector && window.GnomeConnector.isConnected) {
+                window.GnomeConnector.update(extension.uuid);
+                newUpdateContainer.classList.add('hidden');
+            }
+        });
     }
 
     getYoutubeId(url) {
@@ -353,13 +495,10 @@ class DetailView {
         window.addEventListener('resize', updateUI);
 
         // --- Auto-play Carousel Logic ---
-        // Only auto-play if all media items are images (no videos)
-        // Helps because this shows the cool extension pics without user having to click or something
         const onlyPictures = this.currentMediaItems.every(media => media.type !== 'video');
         let autoplayTimer = null;
 
         const startAutoplay = () => {
-            // Only engage auto-play if there's no videos and we have multiple slides
             if (!onlyPictures || dots.length <= 1) return;
             
             stopAutoplay(); // clear existing to prevent duplicates

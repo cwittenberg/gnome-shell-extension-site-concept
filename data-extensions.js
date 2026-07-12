@@ -26,7 +26,12 @@ const EXTENSIONS = [
             { user: "GnomeUser", date: "10 Jan 2026", rating: 5, text: "The best extension to make GNOME truly yours. I use it to hide everything for a distraction-free environment." },
             { user: "LinuxFan", date: "15 Dec 2025", rating: 5, text: "Just Perfection is exactly what it says on the tin. Always works, no bugs." }
         ],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: true,
+        isSystem: false,
+        hasUpdate: false
     },
     {
         id: 10049,
@@ -45,8 +50,8 @@ const EXTENSIONS = [
         bugTracker: 'https://github.com/cwittenberg/omnipanel/issues',
         media: [
                     { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s', caption: 'OmniPanel overview and configuration' },
-                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620530029-3a94f0b8-d7ae-42d5-8752-457bf34c1595.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NTAyNjcsIm5iZiI6MTc4Mzg0OTk2NywicGF0aCI6Ii80ODI1MjExLzYyMDUzMDAyOS0zYTk0ZjBiOC1kN2FlLTQyZDUtODc1Mi00NTdiZjM0YzE1OTUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDk1MjQ3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9YmExNjQ4MTQxNzNhYmIyMjUxM2YxNGIzYWY2ODU2MDBhMzQ3MDBlNGI3ZTE3YTMwNzQ2OGE5OWYzNTJkMTI0MyZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.IuOczhmEu1Xv0-GaKXuBh3HSXLTRrI4mOEpiW38dvRQ', caption: 'OmniPanel Zone Designer' },
-                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620529767-565295f9-ac78-4599-9dcc-f264dc389d2f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NTAyNjcsIm5iZiI6MTc4Mzg0OTk2NywicGF0aCI6Ii80ODI1MjExLzYyMDUyOTc2Ny01NjUyOTVmOS1hYzc4LTQ1OTktOWRjYy1mMjY0ZGMzODlkMmYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDk1MjQ3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZWUxNTI2NjZlMzkwZjU4N2VhMWRiZmE3YjYzNTY2NmRiNWJlNDRiNmQ4YTIyNzU4ZTVkYmM0YWViYTFiYmY5NCZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.IhQXUIfPVPyjWSFW3PIpVRDSf4jTBFDi1SenA56mTDI', caption: 'Dynamic Stack layout switching per Zone' }
+                    { type: 'image', url: 'img/screenshots/zonedesigner.png', caption: 'OmniPanel Zone Designer' },
+                    { type: 'image', url: 'img/screenshots/stacklayout.png', caption: 'Dynamic Stack layout switching per Zone' }
                 ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_10049_d7PgALE.png',
         mdDescription: '## OmniPanel\n\nOmniPanel is a true multi-monitor panel extension and advanced window management system for GNOME Shell (versions 46, 47, and 50).\n\n### Features\n* **Advanced Window Management:** Zone Designer Mode to visually draw and configure custom rectangular drop zones across your screens.\n* **Smart Auto-Placement:** Automatically assigns new windows to zones matching their application name or desktop metadata category.\n* **Active Toolbar Movement:** Your true GNOME panel, including all system tray indicators and extensions, seamlessly follows your mouse to the active screen.\n* **Pure Automatic Tiling:** Master auto-tiling override to dynamically arrange all workspace windows using BSP or Cascading algorithms.\n* **Quick Tiler:** Instantly spawn an 8x8 interactive grid (Default: `<Super>g`) on the active monitor to reshape the active window by clicking and dragging across cells.',
@@ -54,7 +59,8 @@ const EXTENSIONS = [
             { user: "ClixTW", date: "10 July 2026", rating: 5, text: "This is hands down the most 'GNOME-ish' window manager out there. You don't have to fuss with setting up window rules or any of the usual WM configurations, yet it naturally boosts your workflow and desktop efficiency." },
             { user: "4aaa_batteries", date: "11 July 2026", rating: 4, text: "Looks great, wish it didn't require Gnome 50 though." }
         ],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 10209,
@@ -83,7 +89,8 @@ const EXTENSIONS = [
             { user: "callpaul.eu", date: "21 June 2026", rating: 5, text: "Hi and welcome to our site. Thanks you for your contribution i look forward to the reaction from fellow members to your tool." },
             { user: "nevj", date: "21 June 2026", rating: 4, text: "I have used Tesseract - it is a good piece of software. Now I see it extracts text from graphic elements on the screen which were not originally text, using OCR. You might make this clearer in your documentation." }
         ],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 5368,
@@ -110,7 +117,8 @@ const EXTENSIONS = [
         reviews: [
             { user: "cwittenberg", date: "June 20, 2026", rating: 5, text: "Updated to work on Gnome 50. Also added history feature and updated the design.", isAuthor: true }
         ],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 307,
@@ -136,7 +144,12 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_307.png',
         mdDescription: mockMarkdown,
         reviews: mockReviews,
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: true,
+        isSystem: false,
+        hasUpdate: true
     },
     {
         id: 19,
@@ -160,7 +173,12 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_19.png',
         mdDescription: mockMarkdown,
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: true,
+        isSystem: true,
+        hasUpdate: false
     },
     {
         id: 3193,
@@ -186,7 +204,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3193.png',
         mdDescription: mockMarkdown,
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 615,
@@ -211,7 +230,14 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_615.png',
         mdDescription: mockMarkdown,
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: true,
+        isSystem: false,
+        hasUpdate: false,
+        hasError: true,
+        errorMessage: 'TypeError: null has no properties\nStack trace:\n@/home/user/.local/share/gnome-shell/extensions/appindicatorsupport@rgcjonas.gmail.com/extension.js:45:21'
     },
     {
         id: 1319,
@@ -234,7 +260,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1319.png',
         mdDescription: '## GSConnect\n\nSeamless cellular integration built on top of the robust native KDE Connect framework.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 3628,
@@ -257,7 +284,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3628.png',
         mdDescription: '## Arc Menu\n\nA customizable application launcher for power users.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 1160,
@@ -281,7 +309,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1160.png',
         mdDescription: '## Dash to Panel\n\nCombines the top bar and window dashboard elements together into a single master workflow panel.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 779,
@@ -304,7 +333,12 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_779.png',
         mdDescription: '## Clipboard Indicator\n\nMonitors and aggregates active system copying hooks for rapid desktop deployment.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: true,
+        isSystem: false,
+        hasUpdate: false
     },
     {
         id: 517,
@@ -327,7 +361,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_517.png',
         mdDescription: '## Caffeine\n\nPrevents display dimming and operational timeouts.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 1460,
@@ -350,7 +385,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1460.png',
         mdDescription: '## Vitals\n\nA deep overview telemetry asset displaying operational values clearly.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 750,
@@ -373,7 +409,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_750.png',
         mdDescription: '## OpenWeather\n\nSyncs with meteorology feeds to feed active local parameters into global toolbars.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 5090,
@@ -396,7 +433,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_5090.png',
         mdDescription: '## Space Bar\n\nA streamlined status approach for workspace management.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 4679,
@@ -419,7 +457,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_4679.png',
         mdDescription: '## Burn My Windows\n\nFires up old school window events with full performance controls.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 3220,
@@ -442,7 +481,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3220.png',
         mdDescription: '## Compiz Wobbly Windows\n\nRestores retro dynamic inertia metrics to active window canvas operations.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 858,
@@ -465,7 +505,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_858.png',
         mdDescription: '## Sound Percentage\n\nSimple, lightweight volume percentage readout injection.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 97,
@@ -488,7 +529,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_97.png',
         mdDescription: '## Coverflow Alt-Tab\n\nStunning 3D window rotation metrics mapping application switching behaviors.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 13,
@@ -511,7 +553,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_13.png',
         mdDescription: '## Frippery Applications Menu\n\nA stable traditional menu structure mapping standard workflows without layout shifts.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 8,
@@ -534,7 +577,12 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_8.png',
         mdDescription: '## Places Status Indicator\n\nOfficial extension enabling clean desktop file mount mapping tracking loops.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: false,
+        hasSettings: false,
+        isSystem: true,
+        hasUpdate: false
     },
     {
         id: 16,
@@ -557,7 +605,12 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_16.png',
         mdDescription: '## Auto Move Windows\n\nAutomates layout positions across displays based on targeting variables.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: true,
+        enabled: true,
+        hasSettings: false,
+        isSystem: true,
+        hasUpdate: false
     },
     {
         id: 7,
@@ -580,7 +633,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_7.png',
         mdDescription: '## Removable Drive Menu\n\nKeeps discrete controls in top bars tracking block assets accurately.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 1007,
@@ -603,7 +657,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1007.png',
         mdDescription: '## Window Is Ready Notification Remover\n\nEliminates intrusive workflow focus interruptions cleanly.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 545,
@@ -626,7 +681,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_545.png',
         mdDescription: '## Hide Top Bar\n\nProvides visibility metrics to dynamically handle top toolbar elements.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     },
     {
         id: 104,
@@ -649,7 +705,8 @@ const EXTENSIONS = [
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_104.png',
         mdDescription: '## NetSpeed Monitor\n\nRealtime tracking metric for incoming and outgoing throughput directly inside control lines.',
         reviews: [],
-        versions: mockVersions
+        versions: mockVersions,
+        installed: false
     }
 ];
 

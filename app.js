@@ -3,11 +3,27 @@
     let storeController;
 
     function init() {
+        // Initialize Mock GNOME Host Connector
+        window.GnomeConnector = {
+            isConnected: true, // Set to false to see the missing connector warning
+            shellVersion: 'all', // FIX: Set to 'all' so the mock catalog isn't hidden by the string-matching filter on load
+            install: (id) => console.log(`[GNOME Connector] Triggering install for ${id}`),
+            uninstall: (id) => console.log(`[GNOME Connector] Triggering uninstall for ${id}`),
+            enable: (id) => console.log(`[GNOME Connector] Enabling ${id}`),
+            disable: (id) => console.log(`[GNOME Connector] Disabling ${id}`),
+            openPrefs: (id) => console.log(`[GNOME Connector] Opening native GTK preferences for ${id}`),
+            update: (id) => console.log(`[GNOME Connector] Updating ${id} to latest version`)
+        };
+
+        handleConnectorWarning();
+
         // Initialize static views and generate their HTML
         const uploadView = new window.UploadView();
         uploadView.render();
+
         const localView = new window.LocalView();
         localView.render();
+
         const aboutView = new window.AboutView();
         aboutView.render();
 
@@ -31,6 +47,22 @@
         const extData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
         const catData = typeof CATEGORIES !== 'undefined' ? CATEGORIES : [];
         storeController.init(extData, catData);
+
+        // Auto-detect shell version if connector is present
+        if (window.GnomeConnector.isConnected) {
+            storeController.handleShellVersion(window.GnomeConnector.shellVersion);
+        }
+    }
+
+    function handleConnectorWarning() {
+        const warning = document.getElementById('connector-warning');
+        if (warning) {
+            if (!window.GnomeConnector.isConnected) {
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
+            }
+        }
     }
 
     function bindGlobalEvents() {

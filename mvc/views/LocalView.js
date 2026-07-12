@@ -1,15 +1,18 @@
 class LocalView {
     constructor() {
         this.container = document.getElementById('local-view');
+        this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
     }
 
     render() {
         if (!this.container) return;
 
-        this.container.innerHTML = `
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
-              <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-6 tracking-tight">Installed extensions</h1>
-              
+        const isConnected = window.GnomeConnector && window.GnomeConnector.isConnected;
+        let contentHtml = '';
+
+        if (!isConnected) {
+            // Unconnected State Error Message
+            contentHtml = `
               <div class="bg-[#d9edf7] dark:bg-[#243f55] border border-[#bce8f1] dark:border-[#2f5573] rounded-xl p-4 sm:p-5 mb-8 flex items-start gap-4 shadow-sm">
                 <div class="text-[#31708f] dark:text-[#9bc2d5] shrink-0 mt-0.5">
                   <i class="fa-solid fa-circle-info text-2xl"></i>
@@ -22,13 +25,194 @@ class LocalView {
                   </p>
                 </div>
               </div>
-
               <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
                 <i class="fa-solid fa-plug-circle-xmark text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                 <h3 class="text-xl font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions detected</h3>
                 <p class="text-base text-gnome-grey">GNOME Shell Extensions cannot list your installed extensions without the host connector.</p>
               </div>
+            `;
+        } else {
+            // Connected State - Query Local Installed Data
+            const extensionsData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
+            const localExtensions = extensionsData.filter(e => e.installed);
+
+            if (localExtensions.length === 0) {
+                contentHtml = `
+                  <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+                    <i class="fa-regular fa-folder-open text-5xl text-gnome-grey mx-auto mb-4 block"></i>
+                    <h3 class="text-xl font-bold text-gnome-black dark:text-gnome-white mb-2">No Extensions Installed</h3>
+                    <p class="text-base text-gnome-grey mb-6">You don't have any GNOME Shell extensions installed on your system.</p>
+                    <a href="#" data-nav="store" class="bg-gnome-blue text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-sm hover:bg-[#1c71d8] transition-colors inline-block">Explore Store</a>
+                  </div>
+                `;
+            } else {
+                const listHtml = localExtensions.map(ext => this.generateLocalRowHTML(ext)).join('');
+                contentHtml = `<div class="flex flex-col gap-3">${listHtml}</div>`;
+            }
+        }
+
+        this.container.innerHTML = `
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
+              <div class="flex justify-between items-end mb-6">
+                  <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white tracking-tight">Installed extensions</h1>
+              </div>
+              ${contentHtml}
             </div>
+        `;
+
+        // Bind interactive events within the local view
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        const rows = this.container.querySelectorAll('article[data-extension-id]');
+        rows.forEach(row => {
+            const uuid = row.getAttribute('data-extension-uuid');
+
+            // Toggle Button
+            const toggleBtn = row.querySelector('.local-install-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isEnabled = toggleBtn.getAttribute('aria-checked') === 'true';
+                    if (isEnabled) {
+                        window.GnomeConnector.disable(uuid);
+                        toggleBtn.setAttribute('aria-checked', 'false');
+                        toggleBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        toggleBtn.classList.remove('bg-gnome-blue');
+                        toggleBtn.querySelector('span').classList.add('translate-x-1');
+                        toggleBtn.querySelector('span').classList.remove('translate-x-6');
+                    } else {
+                        window.GnomeConnector.enable(uuid);
+                        toggleBtn.setAttribute('aria-checked', 'true');
+                        toggleBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
+                        toggleBtn.classList.add('bg-gnome-blue');
+                        toggleBtn.querySelector('span').classList.remove('translate-x-1');
+                        toggleBtn.querySelector('span').classList.add('translate-x-6');
+                    }
+                });
+            }
+
+            // Uninstall Button
+            const uninstallBtn = row.querySelector('.local-uninstall-btn');
+            if (uninstallBtn) {
+                uninstallBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm('Are you sure you want to uninstall this extension?')) {
+                        window.GnomeConnector.uninstall(uuid);
+                        row.remove(); // Visually remove immediately for mock
+                    }
+                });
+            }
+
+            // Update Button
+            const updateBtn = row.querySelector('.local-update-btn');
+            if (updateBtn) {
+                updateBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.GnomeConnector.update(uuid);
+                    updateBtn.remove(); // Remove update button after triggering
+                });
+            }
+
+            // Details Link 
+            row.addEventListener('click', () => {
+                const id = row.getAttribute('data-extension-id');
+                if (window.openExtensionHandler) window.openExtensionHandler(id);
+            });
+        });
+    }
+
+    renderIcon(extension) {
+        if (!extension.icon) return this.defaultExtensionSvg;
+        if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
+            const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
+            return `<img src="${this.escapeHtml(extension.icon)}" alt="" class="w-full h-full object-cover" onerror="this.outerHTML='${safeSvg}'">`;
+        }
+        return extension.icon;
+    }
+
+    escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    generateLocalRowHTML(extension) {
+        const isSystem = extension.isSystem === true;
+        const hasError = extension.hasError === true;
+        
+        let actionsHtml = '';
+
+        if (extension.hasUpdate && !isSystem) {
+            actionsHtml += `
+                <button type="button" class="local-update-btn text-white bg-gnome-green hover:bg-[#2ebc6c] transition-colors flex items-center justify-center w-8 h-8 rounded-full shadow-sm" title="Update Available">
+                    <i class="fa-solid fa-download text-sm"></i>
+                </button>
+            `;
+        }
+
+        if (!isSystem) {
+            actionsHtml += `
+                <button type="button" class="local-uninstall-btn text-gnome-grey hover:text-gnome-red transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="Uninstall">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            `;
+        } else {
+             actionsHtml += `
+                <div class="text-gnome-grey flex items-center justify-center w-8 h-8" title="System extensions cannot be uninstalled here">
+                    <i class="fa-solid fa-lock text-sm opacity-50"></i>
+                </div>
+            `;
+        }
+
+        const isEnabled = extension.enabled === true;
+        actionsHtml += `
+            <button type="button" class="local-install-toggle ml-2 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isEnabled ? 'bg-gnome-blue' : 'bg-[#c0bfbc] dark:bg-[#3d3846]'}" role="switch" aria-checked="${isEnabled}">
+                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-1'}"></span>
+            </button>
+        `;
+
+        let errorBanner = '';
+        if (hasError) {
+            errorBanner = `
+                <div class="mt-3 col-span-12 bg-gnome-red/10 border border-gnome-red/30 text-gnome-red px-3 py-2 rounded-md text-xs flex items-start gap-2 max-w-full overflow-hidden">
+                    <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0"></i>
+                    <div class="min-w-0">
+                        <span class="font-bold">Error loading extension</span>
+                        <p class="font-mono mt-0.5 opacity-80 break-all">${this.escapeHtml(extension.errorMessage)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        return `
+            <article class="group bg-gnome-white dark:bg-[#2d2640] border ${hasError ? 'border-gnome-red' : 'border-[#c0bfbc] dark:border-[#3d3846]'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-4 min-w-0 flex-1">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                            <div class="scale-[0.8] flex items-center justify-center w-full h-full">
+                                ${this.renderIcon(extension)}
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
+                                ${isSystem ? `<span class="bg-[#deddda] dark:bg-[#3d3846] text-gnome-grey dark:text-[#c0bfbc] text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-[#c0bfbc] dark:border-[#5e5c64] shrink-0">System</span>` : ''}
+                            </div>
+                            <p class="text-xs text-gnome-grey mt-0.5 truncate">${this.escapeHtml(extension.uuid)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
+                        ${actionsHtml}
+                    </div>
+                </div>
+                ${errorBanner}
+            </article>
         `;
     }
 }
