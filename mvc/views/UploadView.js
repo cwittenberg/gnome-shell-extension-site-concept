@@ -1,3 +1,7 @@
+/**
+ * Todo: add more of the existing EGO stuff here
+ * Conceptually just to show the idea here
+ */
 class UploadView {
     constructor() {
         this.container = document.getElementById('upload-view');
@@ -6,111 +10,104 @@ class UploadView {
     render() {
         if (!this.container) return;
         this.container.innerHTML = `
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10">
-              
-              <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-                  <div>
-                      <h1 class="text-4xl font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight">Developer Dashboard</h1>
-                      <p class="text-base text-gnome-grey">Manage your extensions and track their review process.</p>
-                  </div>
-              </div>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 pt-10">
+                
+                <div class="mb-8">
+                    <h1 class="text-[24pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight">Developer Dashboard</h1>
+                    <p class="text-[12pt] font-medium text-gnome-grey">Manage your extensions and track their review process.</p>
+                </div>
 
-              <!-- Dev Tabs UI -->
-              <div class="flex border-b border-[#c0bfbc] dark:border-[#3d3846] mb-8 overflow-x-auto scrollbar-hide">
-                  <button id="tab-my-extensions" class="upload-tab-btn active px-6 py-3 font-bold text-sm text-gnome-blue border-b-2 border-gnome-blue whitespace-nowrap focus:outline-none">
-                      My Extensions
-                  </button>
-                  <button id="tab-upload-new" class="upload-tab-btn px-6 py-3 font-bold text-sm text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white border-b-2 border-transparent transition-colors whitespace-nowrap focus:outline-none">
-                      Add New
-                  </button>
-              </div>
-              
-              <!-- Tab 1: My Extensions List -->
-              <div id="view-my-extensions" class="upload-view-pane block">
-                  <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl shadow-sm overflow-hidden">
-                      <table class="w-full text-left border-collapse">
-                          <thead>
-                              <tr class="bg-[#f6f5f4] dark:bg-[#241F31] border-b border-[#c0bfbc] dark:border-[#3d3846]">
-                                  <th class="py-3 px-5 text-xs font-bold uppercase tracking-wider text-gnome-grey">Extension</th>
-                                  <th class="py-3 px-5 text-xs font-bold uppercase tracking-wider text-gnome-grey">Version</th>
-                                  <th class="py-3 px-5 text-xs font-bold uppercase tracking-wider text-gnome-grey">Status</th>
-                                  <th class="py-3 px-5 text-xs font-bold uppercase tracking-wider text-gnome-grey text-right">Actions</th>
-                              </tr>
-                          </thead>
-                          <tbody class="divide-y divide-[#c0bfbc] dark:divide-[#3d3846]">
-                              <!-- Mock My Extension Item 1 -->
-                              <tr class="hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors">
-                                  <td class="py-4 px-5">
-                                      <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">Snap Text Extractor</p>
-                                      <p class="text-xs text-gnome-grey mt-0.5">snaptext@cwittenberg</p>
-                                  </td>
-                                  <td class="py-4 px-5">
-                                      <span class="text-sm font-mono text-gnome-black dark:text-gnome-white">10</span>
-                                  </td>
-                                  <td class="py-4 px-5">
-                                      <span class="inline-block bg-gnome-green/15 border border-gnome-green/30 text-gnome-green text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Active</span>
-                                  </td>
-                                  <td class="py-4 px-5 text-right space-x-2">
-                                      <button class="text-gnome-grey hover:text-gnome-blue transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
-                                      <button class="text-gnome-grey hover:text-gnome-blue transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
-                                  </td>
-                              </tr>
-                              
-                              <!-- Mock My Extension Item 2 -->
-                              <tr class="hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors">
-                                  <td class="py-4 px-5">
-                                      <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">OmniPanel</p>
-                                      <p class="text-xs text-gnome-grey mt-0.5">omnipanel@christian</p>
-                                  </td>
-                                  <td class="py-4 px-5">
-                                      <span class="text-sm font-mono text-gnome-black dark:text-gnome-white">11</span>
-                                  </td>
-                                  <td class="py-4 px-5">
-                                      <span class="inline-block bg-gnome-orange/15 border border-gnome-orange/30 text-gnome-orange text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Unreviewed</span>
-                                  </td>
-                                  <td class="py-4 px-5 text-right space-x-2">
-                                      <button class="text-gnome-grey hover:text-gnome-blue transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
-                                      <button class="text-gnome-grey hover:text-gnome-blue transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
+                <!-- Dev Tabs UI -->
+                <div class="flex gap-6 border-b border-[#c0bfbc] dark:border-[#3d3846] mb-8 overflow-x-auto scrollbar-hide">
+                    <button id="tab-my-extensions" class="upload-tab-btn active pb-3 font-bold text-[12pt] text-gnome-blue border-b-2 border-gnome-blue whitespace-nowrap focus:outline-none">
+                        My Extensions
+                    </button>
+                    <button id="tab-upload-new" class="upload-tab-btn pb-3 font-bold text-[12pt] text-[#5e5c64] dark:text-[#c0bfbc] hover:text-gnome-black dark:hover:text-gnome-white border-b-2 border-transparent transition-colors whitespace-nowrap focus:outline-none">
+                        Add New
+                    </button>
+                </div>
+                
+                <!-- Tab 1: My Extensions List (GNOME Boxed List Style) -->
+                <div id="view-my-extensions" class="upload-view-pane block animate-fade-in">
+                    <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl shadow-sm overflow-hidden flex flex-col">
+                        
+                        <!-- Boxed List Item 1 -->
+                        <div class="flex items-center justify-between p-4 border-b border-[#c0bfbc] dark:border-[#3d3846] hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors">
+                            <div class="flex items-center gap-4 sm:gap-6 w-full">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">Snap Text Extractor</p>
+                                    <p class="text-sm text-gnome-grey truncate mt-0.5">snaptext@cwittenberg</p>
+                                </div>
+                                <div class="hidden sm:block w-20 shrink-0">
+                                    <span class="text-[12pt] font-mono text-gnome-black dark:text-gnome-white">v10</span>
+                                </div>
+                                <div class="w-28 shrink-0 flex items-center gap-2.5">
+                                    <span class="w-3 h-3 rounded-full bg-gnome-green"></span>
+                                    <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Active</span>
+                                </div>
+                                <div class="flex items-center justify-end gap-1.5 shrink-0">
+                                    <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Boxed List Item 2 -->
+                        <div class="flex items-center justify-between p-4 hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors">
+                            <div class="flex items-center gap-4 sm:gap-6 w-full">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">OmniPanel</p>
+                                    <p class="text-sm text-gnome-grey truncate mt-0.5">omnipanel@christian</p>
+                                </div>
+                                <div class="hidden sm:block w-20 shrink-0">
+                                    <span class="text-[12pt] font-mono text-gnome-black dark:text-gnome-white">v11</span>
+                                </div>
+                                <div class="w-28 shrink-0 flex items-center gap-2.5">
+                                    <span class="w-3 h-3 rounded-full bg-gnome-orange"></span>
+                                    <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Pending</span>
+                                </div>
+                                <div class="flex items-center justify-end gap-1.5 shrink-0">
+                                    <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Edit Metadata"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="w-9 h-9 flex items-center justify-center rounded-lg text-gnome-grey hover:bg-[#deddda] dark:hover:bg-[#3d3846] hover:text-gnome-black dark:hover:text-gnome-white transition-colors" title="Upload Patch"><i class="fa-solid fa-upload"></i></button>
+                                </div>
+                            </div>
+                        </div>
 
-              <!-- Tab 2: Add New (Upload Form) -->
-              <div id="view-upload-new" class="upload-view-pane hidden">
-                  <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-8 sm:p-12 shadow-sm max-w-3xl mx-auto">
-                    <h3 class="font-extrabold text-2xl text-gnome-black dark:text-gnome-white mb-2 text-center">Submit an Extension</h3>
-                    <p class="text-gnome-grey text-center mb-8">Upload your GNOME Shell extension zip file containing your metadata.json and source code.</p>
-                    
-                    <form id="upload-form" class="space-y-6">
-                      <div id="upload-dropzone" class="border-2 border-dashed border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-gnome-black hover:border-gnome-blue hover:bg-gnome-blue/5 transition-all cursor-pointer text-center group">
-                        <i class="fa-solid fa-cloud-arrow-up text-5xl text-gnome-grey group-hover:text-gnome-blue transition-colors mb-4"></i>
-                        <span class="text-lg font-bold text-gnome-black dark:text-gnome-white mb-2">Drag and drop your .zip here</span>
-                        <span class="text-sm font-semibold text-gnome-blue mb-1">or click to browse</span>
-                        <input type="file" id="upload-file-input" class="hidden" accept=".zip" />
-                      </div>
+                    </div>
+                </div>
 
-                      <div id="upload-file-info" class="hidden flex items-center justify-between bg-[#f6f5f4] dark:bg-[#3d3846] p-4 rounded-xl border border-[#c0bfbc] dark:border-[#5e5c64]">
-                          <div class="flex items-center gap-3 overflow-hidden">
-                              <i class="fa-solid fa-file-zipper text-gnome-blue text-2xl"></i>
-                              <div class="min-w-0">
-                                  <p id="upload-file-name" class="text-sm font-bold text-gnome-black dark:text-gnome-white truncate">extension.zip</p>
-                                  <p id="upload-file-size" class="text-xs text-gnome-grey truncate">0 KB</p>
-                              </div>
-                          </div>
-                          <button type="button" id="upload-remove-file" class="text-gnome-grey hover:text-gnome-red p-2 rounded-lg transition-colors">
-                              <i class="fa-solid fa-xmark"></i>
-                          </button>
-                      </div>
+                <!-- Tab 2: Add New (Upload Form) -->
+                <div id="view-upload-new" class="upload-view-pane hidden animate-fade-in">
+                    <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-8 sm:p-12 shadow-sm max-w-2xl mx-auto">
+                      <h3 class="font-extrabold text-[18pt] text-gnome-black dark:text-gnome-white mb-2 text-center">Submit an Extension</h3>
+                      <p class="text-[12pt] text-gnome-grey text-center mb-8">Upload your GNOME Shell extension archive containing your metadata.json and source code.</p>
+                      
+                      <form id="upload-form" class="space-y-6">
+                        <div id="upload-dropzone" class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-[#241F31] hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
+                          <i class="fa-solid fa-file-zipper text-4xl text-gnome-grey group-hover:text-gnome-blue transition-colors mb-4"></i>
+                          <span class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-1">Select or drop your .zip here</span>
+                          <input type="file" id="upload-file-input" class="hidden" accept=".zip" />
+                        </div>
 
-                      <button type="button" id="upload-submit-btn" class="bg-gnome-blue text-white px-6 py-3.5 rounded-xl text-base font-bold hover:bg-[#1c71d8] transition-colors w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640] opacity-50 cursor-not-allowed" disabled>
-                        Submit Extension
-                      </button>
-                    </form>
-                  </div>
-              </div>
+                        <div id="upload-file-info" class="hidden flex items-center justify-between bg-[#f6f5f4] dark:bg-[#3d3846] p-4 rounded-xl border border-[#c0bfbc] dark:border-[#5e5c64]">
+                            <div class="flex items-center gap-4 overflow-hidden">
+                                <i class="fa-solid fa-file-zipper text-gnome-blue text-2xl"></i>
+                                <div class="min-w-0">
+                                    <p id="upload-file-name" class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white truncate">extension.zip</p>
+                                    <p id="upload-file-size" class="text-sm text-gnome-grey truncate">0 KB</p>
+                                </div>
+                            </div>
+                            <button type="button" id="upload-remove-file" class="text-gnome-grey hover:text-gnome-red p-2 rounded-lg transition-colors" title="Remove file">
+                                <i class="fa-solid fa-xmark text-lg"></i>
+                            </button>
+                        </div>
+
+                        <button type="button" id="upload-submit-btn" class="bg-gnome-blue text-white px-6 py-3 rounded-lg text-[12pt] font-bold hover:bg-[#1c71d8] transition-colors w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640] opacity-50 cursor-not-allowed" disabled>
+                          Submit Extension
+                        </button>
+                      </form>
+                    </div>
+                </div>
 
             </div>
         `;
@@ -167,17 +164,17 @@ class UploadView {
 
             dropzone.addEventListener('dragover', (e) => {
                 e.preventDefault();
-                dropzone.classList.add('border-gnome-blue', 'bg-gnome-blue/5');
+                dropzone.classList.add('border-gnome-blue');
             });
 
             dropzone.addEventListener('dragleave', (e) => {
                 e.preventDefault();
-                dropzone.classList.remove('border-gnome-blue', 'bg-gnome-blue/5');
+                dropzone.classList.remove('border-gnome-blue');
             });
 
             dropzone.addEventListener('drop', (e) => {
                 e.preventDefault();
-                dropzone.classList.remove('border-gnome-blue', 'bg-gnome-blue/5');
+                dropzone.classList.remove('border-gnome-blue');
                 if (e.dataTransfer.files.length) {
                     fileInput.files = e.dataTransfer.files;
                     updateFileUI(e.dataTransfer.files[0]);
@@ -207,7 +204,7 @@ class UploadView {
                 fileInfo.classList.remove('flex');
                 fileName.textContent = '';
                 fileSize.textContent = '';
-
+                
                 submitBtn.disabled = true;
                 submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
@@ -236,6 +233,7 @@ class UploadView {
                         submitBtn.innerHTML = 'Submit Extension';
                         submitBtn.classList.replace('bg-gnome-green', 'bg-gnome-blue');
                         submitBtn.classList.replace('hover:bg-[#2ebc6c]', 'hover:bg-[#1c71d8]');
+                        
                         // Switch back to "My Extensions" view
                         if (tabMyExt) tabMyExt.click();
                     }, 2000);
