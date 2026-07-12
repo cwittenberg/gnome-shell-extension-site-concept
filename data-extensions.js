@@ -153,7 +153,6 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Installing a shell theme manually' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Adwaita dark theme active' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Theme selector dropdown menu' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Custom CSS injected properly' }

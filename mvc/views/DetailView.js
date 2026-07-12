@@ -1,4 +1,4 @@
-// GoF Pattern: Observer (Observer Participant)
+// GoF Pattern: Observer (Observer Participant) 
 class DetailView {
     constructor() {
         this.mapInstance = null;
@@ -60,9 +60,9 @@ class DetailView {
         if (ratingContainer) {
             ratingContainer.innerHTML = `
               <div class="flex items-center gap-2 text-sm font-semibold text-gnome-black dark:text-gnome-white">
-                <span class="text-gnome-orange">★ ${extension.rating.toFixed(1)}</span>
+                <span class="text-gnome-orange"><i class="fa-solid fa-star"></i> ${extension.rating.toFixed(1)}</span>
                 <span class="text-gnome-grey">(${extension.ratingCount} ratings)</span>
-              </div>
+            </div>
             `;
         }
 
@@ -148,7 +148,7 @@ class DetailView {
                         <p class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(review.user)}</p>
                         <p class="text-sm text-gnome-grey mt-1">${this.escapeHtml(review.date)}</p>
                       </div>
-                      <div class="text-gnome-orange font-semibold text-lg">★ ${review.rating}</div>
+                      <div class="text-gnome-orange font-semibold text-lg"><i class="fa-solid fa-star"></i> ${review.rating}</div>
                     </div>
                     <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-4 leading-relaxed">${this.escapeHtml(review.text)}</p>
                   </div>
@@ -351,6 +351,44 @@ class DetailView {
         
         // Recalculate on browser resize
         window.addEventListener('resize', updateUI);
+
+        // --- Auto-play Carousel Logic ---
+        // Only auto-play if all media items are images (no videos)
+        // Helps because this shows the cool extension pics without user having to click or something
+        const onlyPictures = this.currentMediaItems.every(media => media.type !== 'video');
+        let autoplayTimer = null;
+
+        const startAutoplay = () => {
+            // Only engage auto-play if there's no videos and we have multiple slides
+            if (!onlyPictures || dots.length <= 1) return;
+            
+            stopAutoplay(); // clear existing to prevent duplicates
+            autoplayTimer = setInterval(() => {
+                const width = track.clientWidth;
+                if (width === 0) return; // Wait if DOM is hidden
+                
+                const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
+                const nextIndex = (activeIndex + 1) % dots.length;
+                track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
+            }, 4000); // 4 second interval
+        };
+
+        const stopAutoplay = () => {
+            if (autoplayTimer) {
+                clearInterval(autoplayTimer);
+                autoplayTimer = null;
+            }
+        };
+
+        startAutoplay();
+
+        const carouselMain = document.getElementById('carousel-main');
+        if (carouselMain) {
+            carouselMain.addEventListener('mouseenter', stopAutoplay);
+            carouselMain.addEventListener('mouseleave', startAutoplay);
+            carouselMain.addEventListener('touchstart', stopAutoplay, { passive: true });
+            carouselMain.addEventListener('touchend', startAutoplay, { passive: true });
+        }
     }
 
     renderLinks(extension) {
