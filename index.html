@@ -1,14 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
   <link class="favicon" rel="icon" type="image/svg+xml" href="/favicon.png">
   <title>GNOME Extensions Store</title>
+  
+  <!-- Render-blocking matrix initialization to prevent FOUC -->
+  <script>
+    try {
+      const savedMode = localStorage.getItem('gnome_mode') || 'dark';
+      const savedHeader = localStorage.getItem('gnome_header') || 'default';
+      const savedBase = localStorage.getItem('gnome_base') || 'default';
+      const savedCard = localStorage.getItem('gnome_card') || 'default';
+      const savedAccent = localStorage.getItem('gnome_accent') || 'blue';
+      const savedGradTop = localStorage.getItem('gnome_grad_top') || 'default';
+      const savedGradBottom = localStorage.getItem('gnome_grad_bottom') || 'default';
+      
+      if (savedMode === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      if (savedHeader !== 'default') document.documentElement.setAttribute('data-header', savedHeader);
+      if (savedBase !== 'default') document.documentElement.setAttribute('data-base', savedBase);
+      if (savedCard !== 'default') document.documentElement.setAttribute('data-card', savedCard);
+      document.documentElement.setAttribute('data-accent', savedAccent);
+      if (savedGradTop !== 'default') document.documentElement.setAttribute('data-grad-top', savedGradTop);
+      if (savedGradBottom !== 'default') document.documentElement.setAttribute('data-grad-bottom', savedGradBottom);
+    } catch (e) {}
+  </script>
+
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  
   <!-- Tailwind Configuration for Dark Mode & Animations utilizing CSS Variables -->
   <script>
     tailwind.config = {
@@ -59,30 +87,24 @@
 
   <!-- Exhaustive Tailwind Safelist (Forces CDN to generate classes injected by JS) -->
   <div
-    class="hidden bg-gnome-white dark:bg-gnome-card-dark border-gnome-border-light border-gnome-hover-light dark:border-gnome-border-dark rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-gnome-page-bg dark:bg-gnome-black font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-gnome-text-muted-light dark:text-gnome-text-muted-dark mt-3 line-clamp-3 bg-gnome-page-bg dark:bg-gnome-border-dark hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100 flex-col sm:flex-row sm:items-center translate-x-6">
+    class="hidden bg-gnome-white dark:bg-gnome-card-dark border-gnome-border-light border-gnome-hover-light dark:border-gnome-border-dark rounded-2xl p-4 shadow-sm shadow-md shadow-lg cursor-pointer hover:border-gnome-blue transition-all flex-col justify-between shrink-0 bg-gnome-page-bg dark:bg-gnome-black font-bold text-gnome-black dark:text-gnome-white text-sm text-gnome-grey mt-1 truncate bg-gnome-blue/10 text-gnome-blue px-2.5 py-1 rounded-full text-gnome-text-muted-light dark:text-gnome-text-muted-dark mt-3 line-clamp-3 bg-gnome-page-bg dark:bg-gnome-border-dark hover:underline whitespace-nowrap bg-gnome-green/15 text-gnome-green bg-gnome-red/15 text-gnome-red grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 gap-10 text-2xl font-extrabold tracking-tight px-4 px-5 py-1.5 hover:bg-gnome-hover-light dark:hover:bg-gnome-border-dark border-t relative z-0 left-0 right-0 h-full w-full w-24 h-16 rounded-lg overflow-hidden flex-shrink-0 object-cover aspect-video animate-fade-in scale-0 opacity-0 scale-100 opacity-100 flex-col sm:flex-row sm:items-center translate-x-6 border-l-gnome-blue">
   </div>
 
   <!-- Header -->
   <header
-    class="sticky top-0 z-40 bg-gnome-white/95 dark:bg-gnome-black/95 backdrop-blur-md border-b border-gnome-border-light dark:border-gnome-border-dark transition-colors duration-300">
+    class="sticky top-0 z-40 bg-[var(--header-bg)] backdrop-blur-md border-b border-[var(--header-border)] transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap sm:flex-nowrap items-center gap-y-3 gap-x-4">
       
       <!-- Logo -->
       <div class="flex flex-1 sm:flex-none items-center gap-3 min-w-0 cursor-pointer order-1"
         onclick="window.closeExtension()">
-        <img src="img/gnome-extensions.svg" class="h-8 sm:h-10 w-auto max-w-none shrink-0 dark:invert" alt="GNOME" />
+        <img src="img/gnome-extensions.svg" id="header-logo" class="h-8 sm:h-10 w-auto max-w-none shrink-0 transition-all duration-300" alt="GNOME" />
       </div>
 
       <!-- Mobile Menu Toggle -->
       <div class="lg:hidden flex shrink-0 items-center gap-1 order-2 sm:order-3 ml-auto">
-        <button id="theme-toggle-mobile"
-          class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark transition-colors text-gnome-grey"
-          aria-label="Toggle theme">
-          <i class="fa-solid fa-moon text-xl hidden dark:block"></i>
-          <i class="fa-solid fa-cloud-sun text-xl block dark:hidden"></i>
-        </button>
         <button id="mobile-menu-btn"
-          class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark transition-colors font-bold text-gnome-grey"
+          class="w-auto px-3 h-9 flex items-center justify-center rounded-lg hover:bg-[var(--header-hover-bg)] transition-colors font-bold text-[var(--header-muted)] hover:text-[var(--header-text)]"
           aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
           <i class="fa-solid fa-bars text-lg"></i>
         </button>
@@ -92,25 +114,137 @@
       <div id="search-container"
         class="relative order-3 basis-full w-full sm:order-2 sm:basis-auto sm:w-auto sm:flex-1 sm:max-w-xl lg:max-w-2xl">
         <input type="search" id="search-input" placeholder="Search for an extension..."
-          class="w-full bg-gnome-white dark:bg-gnome-card-dark text-gnome-black dark:text-gnome-white border border-gnome-border-light dark:border-gnome-border-dark rounded-xl px-4 py-2 text-sm placeholder:text-gnome-grey focus:outline-none focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-sm" />
+          class="w-full bg-[var(--header-input-bg)] text-[var(--header-text)] border border-[var(--header-border)] rounded-xl px-4 py-2 text-sm placeholder:text-[var(--header-muted)] focus:outline-none focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-sm" />
       </div>
 
       <!-- Desktop Nav -->
       <nav class="hidden lg:flex shrink-0 items-center gap-1 order-3">
         <a href="#" data-nav="store"
-          class="text-sm text-gnome-black dark:text-gnome-white px-3 py-1.5 rounded-lg bg-gnome-page-bg dark:bg-gnome-card-dark transition-all font-semibold">Overview</a>
+          class="text-sm text-[var(--header-muted)] hover:text-[var(--header-text)] hover:bg-[var(--header-hover-bg)] px-3 py-1.5 rounded-lg transition-all font-semibold">Overview</a>
         <a href="#" data-nav="upload"
-          class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark hover:text-gnome-black dark:hover:text-gnome-white px-3 py-1.5 rounded-lg hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark transition-all font-semibold">Developers
+          class="text-sm text-[var(--header-muted)] hover:text-[var(--header-text)] hover:bg-[var(--header-hover-bg)] px-3 py-1.5 rounded-lg transition-all font-semibold">Developers
           Guide</a>
         <a href="#" data-nav="local"
-          class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark hover:text-gnome-black dark:hover:text-gnome-white px-3 py-1.5 rounded-lg hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark transition-all font-semibold">Installed
+          class="text-sm text-[var(--header-muted)] hover:text-[var(--header-text)] hover:bg-[var(--header-hover-bg)] px-3 py-1.5 rounded-lg transition-all font-semibold">Installed
           Extensions</a>
-        <button id="theme-toggle"
-          class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gnome-page-bg dark:hover:bg-gnome-card-dark transition-colors text-gnome-grey ml-1"
-          aria-label="Toggle theme">
-          <i class="fa-solid fa-moon text-xl hidden dark:block"></i>
-          <i class="fa-solid fa-cloud-sun text-xl block dark:hidden"></i>
-        </button>
+        
+        <!-- Theme Matrix Combinator Menu -->
+        <div class="relative group ml-1">
+          <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-[var(--header-hover-bg)] transition-colors text-[var(--header-muted)] hover:text-[var(--header-text)]" aria-label="Theme matrix configurator">
+            <i class="fa-solid fa-palette text-xl"></i>
+          </button>
+          <div class="absolute right-0 top-full mt-2 w-[280px] max-h-[80vh] overflow-y-auto scrollbar-hide bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col p-4 z-50">
+            
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Designer Presets</span>
+            <div class="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-gnome-border-light dark:border-gnome-border-dark">
+                <button class="preset-btn px-2 py-1.5 rounded-lg text-xs font-bold bg-gnome-page-bg dark:bg-[#1a1a1a] text-gnome-black dark:text-gnome-white border border-gnome-border-light dark:border-gnome-border-dark hover:border-gnome-blue transition-colors" data-preset="classic">Classic Adwaita</button>
+                <button class="preset-btn px-2 py-1.5 rounded-lg text-xs font-bold bg-[#131a2c] text-white border border-[#2d3b5e] hover:border-[#ff7800] transition-colors" data-preset="ubuntu">Ubuntu Styled</button>
+                <button class="preset-btn px-2 py-1.5 rounded-lg text-xs font-bold bg-[#13241c] text-white border border-[#2b4f3d] hover:border-[#33d17a] transition-colors" data-preset="forest">Forest Console</button>
+                <button class="preset-btn px-2 py-1.5 rounded-lg text-xs font-bold bg-[#291a12] text-white border border-[#5c3929] hover:border-[#f6d32d] transition-colors" data-preset="sunset">Sunset Horizon</button>
+            </div>
+
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Window Elements</span>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="mode-btn px-4 py-1.5 rounded-lg font-bold text-xs bg-[#ffffff] text-[#241f31] border border-[#c0bfbc] hover:opacity-80 transition-opacity shadow-sm" data-mode="light">White</button>
+                <button class="mode-btn px-4 py-1.5 rounded-lg font-bold text-xs bg-[#241f31] text-[#ffffff] border border-[#3d3846] hover:opacity-80 transition-opacity shadow-sm" data-mode="dark">Dark</button>
+            </div>
+            
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Top Bar</span>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="header-btn w-6 h-6 rounded-full bg-[#f6f5f4] dark:bg-[#241f31] border-2 border-[#c0bfbc] dark:border-[#3d3846] hover:scale-110 transition-transform shadow-sm" data-header="default" title="Default"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#000000] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="console" title="Console"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#77767b] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="gray" title="Gray"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#3584e4] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="blue" title="Blue"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#33d17a] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="green" title="Green"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#f6d32d] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="yellow" title="Yellow"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#ff7800] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="orange" title="Orange"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#e01b24] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="red" title="Red"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#9141ac] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="purple" title="Purple"></button>
+                <button class="header-btn w-6 h-6 rounded-full bg-[#986a44] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-header="brown" title="Brown"></button>
+            </div>
+
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Page Background</span>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="base-btn w-6 h-6 rounded-full bg-[#f6f5f4] dark:bg-[#241f31] border-2 border-[#c0bfbc] dark:border-[#3d3846] hover:scale-110 transition-transform shadow-sm" data-base="default" title="Default"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#000000] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="console" title="Console"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#1a5fb4] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="blue" title="Blue"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#26a269] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="green" title="Green"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#e5a50a] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="yellow" title="Yellow"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#c64600] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="orange" title="Orange"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#a51d2d] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="red" title="Red"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#613583] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="purple" title="Purple"></button>
+                <button class="base-btn w-6 h-6 rounded-full bg-[#63452c] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-base="brown" title="Brown"></button>
+            </div>
+
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Card & Panels</span>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="card-btn w-6 h-6 rounded-full bg-[#ffffff] dark:bg-[#2d2640] border-2 border-[#deddda] dark:border-[#3d3846] hover:scale-110 transition-transform shadow-sm" data-card="default" title="Default"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#241f31] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="console" title="Console"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#3d3846] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="gray" title="Gray"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#1c71d8] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="blue" title="Blue"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#2ec27e] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="green" title="Green"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#f5c211] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="yellow" title="Yellow"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#e66100] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="orange" title="Orange"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#c01c28] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="red" title="Red"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#813d9c] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="purple" title="Purple"></button>
+                <button class="card-btn w-6 h-6 rounded-full bg-[#865e3c] border-2 border-transparent hover:scale-110 transition-transform shadow-sm" data-card="brown" title="Brown"></button>
+            </div>
+            
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Accent Color</span>
+            <div class="flex flex-wrap gap-2 mb-4 pb-4 border-b border-gnome-border-light dark:border-gnome-border-dark">
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#77767b] hover:scale-110 transition-transform shadow-sm" data-accent="gray" title="Gray"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#3584e4] hover:scale-110 transition-transform shadow-sm" data-accent="blue" title="Blue"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#33d17a] hover:scale-110 transition-transform shadow-sm" data-accent="green" title="Green"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#f6d32d] hover:scale-110 transition-transform shadow-sm" data-accent="yellow" title="Yellow"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#ff7800] hover:scale-110 transition-transform shadow-sm" data-accent="orange" title="Orange"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#e01b24] hover:scale-110 transition-transform shadow-sm" data-accent="red" title="Red"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#9141ac] hover:scale-110 transition-transform shadow-sm" data-accent="purple" title="Purple"></button>
+                <button class="accent-btn w-6 h-6 rounded-full bg-[#986a44] hover:scale-110 transition-transform shadow-sm" data-accent="brown" title="Brown"></button>
+            </div>
+
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Gradient Top</span>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#433583] hover:scale-110 transition-transform shadow-sm" data-grad-top="default" title="Default"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#5e5c64] hover:scale-110 transition-transform shadow-sm" data-grad-top="gray" title="Gray"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#1c71d8] hover:scale-110 transition-transform shadow-sm" data-grad-top="blue" title="Blue"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#2ec27e] hover:scale-110 transition-transform shadow-sm" data-grad-top="green" title="Green"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#f5c211] hover:scale-110 transition-transform shadow-sm" data-grad-top="yellow" title="Yellow"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#e66100] hover:scale-110 transition-transform shadow-sm" data-grad-top="orange" title="Orange"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#c01c28] hover:scale-110 transition-transform shadow-sm" data-grad-top="red" title="Red"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#813d9c] hover:scale-110 transition-transform shadow-sm" data-grad-top="purple" title="Purple"></button>
+                <button class="grad-top-btn w-6 h-6 rounded-full bg-[#865e3c] hover:scale-110 transition-transform shadow-sm" data-grad-top="brown" title="Brown"></button>
+            </div>
+
+            <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider mb-2">Gradient Bottom</span>
+            <div class="flex flex-wrap gap-2">
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#5494e0] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="default" title="Default"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#000000] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="console" title="Console"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#77767b] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="gray" title="Gray"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#1a5fb4] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="blue" title="Blue"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#26a269] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="green" title="Green"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#e5a50a] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="yellow" title="Yellow"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#c64600] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="orange" title="Orange"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#a51d2d] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="red" title="Red"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#613583] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="purple" title="Purple"></button>
+                <button class="grad-bot-btn w-6 h-6 rounded-full bg-[#63452c] hover:scale-110 transition-transform shadow-sm" data-grad-bottom="brown" title="Brown"></button>
+            </div>
+
+            <!-- JSON Output Tool -->
+            <div class="mt-5 pt-4 border-t border-gnome-border-light dark:border-gnome-border-dark">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-bold text-gnome-grey uppercase tracking-wider">Config Summary</span>
+                    <button class="copy-config-btn text-[10px] font-bold text-gnome-blue hover:text-gnome-blue-hover transition-colors flex items-center gap-1 focus:outline-none">
+                        <i class="fa-regular fa-copy"></i> Copy JSON
+                    </button>
+                </div>
+                <div class="bg-gnome-page-bg dark:bg-[#1a1a1a] rounded-lg p-3 border border-gnome-border-light dark:border-gnome-border-dark">
+                    <pre class="config-json-output text-[10px] font-mono text-gnome-black dark:text-gnome-text-muted-dark whitespace-pre-wrap"></pre>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
         <button
           class="ml-2 text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-1.5 rounded-lg hover:bg-gnome-blue-hover transition-colors shadow-sm">
           Login
@@ -120,12 +254,34 @@
 
     <!-- Mobile Menu (Drops down) -->
     <div id="mobile-menu"
-      class="hidden lg:hidden border-t border-gnome-border-light dark:border-gnome-border-dark bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
-      <a href="#" data-nav="store" class="text-sm font-semibold text-gnome-text-muted-light dark:text-gnome-text-muted-dark py-2">Extensions</a>
-      <a href="#" data-nav="upload" class="text-sm font-semibold text-gnome-text-muted-light dark:text-gnome-text-muted-dark py-2">Developers
+      class="hidden lg:hidden border-t border-[var(--header-border)] bg-[var(--header-bg)] px-4 py-3 flex flex-col gap-2">
+      <a href="#" data-nav="store" class="text-sm font-semibold text-[var(--header-muted)] hover:text-[var(--header-text)] py-2 transition-colors">Extensions</a>
+      <a href="#" data-nav="upload" class="text-sm font-semibold text-[var(--header-muted)] hover:text-[var(--header-text)] py-2 transition-colors">Developers
         Guide</a>
-      <a href="#" data-nav="local" class="text-sm font-semibold text-gnome-text-muted-light dark:text-gnome-text-muted-dark py-2">Installed
+      <a href="#" data-nav="local" class="text-sm font-semibold text-[var(--header-muted)] hover:text-[var(--header-text)] py-2 transition-colors">Installed
         Extensions</a>
+        
+      <div class="py-3 border-t border-[var(--header-border)] mt-2">
+        <span class="text-[10px] font-bold text-[var(--header-muted)] uppercase tracking-wider mb-2 block">Mobile overrides simplified. Use desktop for matrix control.</span>
+        <div class="flex flex-wrap gap-2 mb-3">
+            <button class="mode-btn px-4 py-1.5 rounded-lg font-bold text-xs bg-[#ffffff] text-[#241f31] border border-[#c0bfbc]" data-mode="light">White Elements</button>
+            <button class="mode-btn px-4 py-1.5 rounded-lg font-bold text-xs bg-[#241f31] text-[#ffffff] border border-[#3d3846]" data-mode="dark">Dark Elements</button>
+        </div>
+
+        <!-- JSON Output Tool (Mobile) -->
+        <div class="mt-5 pt-4 border-t border-[var(--header-border)]">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-[10px] font-bold text-[var(--header-muted)] uppercase tracking-wider">Config Summary</span>
+                <button class="copy-config-btn text-[10px] font-bold text-gnome-blue hover:text-gnome-blue-hover transition-colors flex items-center gap-1 focus:outline-none">
+                    <i class="fa-regular fa-copy"></i> Copy JSON
+                </button>
+            </div>
+            <div class="bg-[var(--header-input-bg)] rounded-lg p-3 border border-[var(--header-border)]">
+                <pre class="config-json-output text-[10px] font-mono text-[var(--header-text)] whitespace-pre-wrap"></pre>
+            </div>
+        </div>
+      </div>
+
       <button class="text-sm font-bold bg-gnome-blue text-gnome-white px-4 py-2 rounded-lg w-full mt-2">Login</button>
     </div>
   </header>

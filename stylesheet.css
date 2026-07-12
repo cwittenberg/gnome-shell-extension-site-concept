@@ -11,38 +11,43 @@
     --gnome-text-muted-dark: #c0bfbc;
     --gnome-hover-light: #deddda;
     
-    /* Brand Colors */
+    /* Brand Colors (Strict HIG Compliant Defaults) */
     --gnome-blue: #3584e4;
     --gnome-blue-hover: #1c71d8;
-    --gnome-orange: #FF7800;
-    --gnome-purple: #9141AC;
-    --gnome-green: #33D17A;
-    --gnome-green-hover: #2ebc6c;
-    --gnome-red: #E01B24;
-    --gnome-white: #FFFFFF;
-    --gnome-grey: #77767B;
-    --gnome-black: #241F31;
+    --gnome-orange: #ff7800;
+    --gnome-purple: #9141ac;
+    --gnome-green: #33d17a;
+    --gnome-green-hover: #2ec27e;
+    --gnome-red: #e01b24;
+    --gnome-white: #ffffff;
+    --gnome-grey: #77767b;
+    --gnome-black: #241f31;
 
     /* CSS-Specific Component Variables */
     --color-scrollbar-thumb: var(--gnome-grey);
     --color-scrollbar-thumb-hover: var(--gnome-text-muted-light);
+    
     --color-hero-text: var(--gnome-white);
     --color-hero-bg-top: #433583dd;
     --color-hero-bg-bottom: #5494e000;
     --color-hero-grad-top: #433583;
     --color-hero-grad-bottom: #5494e0;
+    
     --color-prose-text: var(--gnome-black);
     --color-prose-dark-text: var(--gnome-text-muted-dark);
     --color-prose-heading: var(--gnome-white);
     --color-prose-link: var(--gnome-blue);
     --color-prose-code-bg: var(--gnome-border-dark);
+    
     --color-card-hover-border: var(--gnome-blue);
     --color-card-dark-hover-bg: var(--gnome-card-dark-hover);
+    
     --color-shadow-light: rgba(0, 0, 0, 0.15);
     --color-shadow-dark: rgba(0, 0, 0, 0.25);
     --color-shadow-btn: rgba(0, 0, 0, 0.16);
     --color-shadow-btn-dark: rgba(0, 0, 0, 0.3);
     --color-btn-gradient: rgba(255,255,255,0.16);
+    
     --color-grey-text: var(--gnome-hover-light);
 }
 
@@ -61,18 +66,18 @@ body {
     width: 6px;
     height: 6px;
 }
-
 ::-webkit-scrollbar-track {
     background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
     background: var(--color-scrollbar-thumb);
     border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-scrollbar-thumb-hover);
+}
+
+* {
     scrollbar-width: thin;
     scrollbar-color: var(--color-scrollbar-thumb) transparent;
 }
@@ -81,22 +86,23 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
-
 .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
-/* Header Background */
+/* Header Background - Interpolating via HSL to prevent muddy midpoints */
 .gnome-hero {
     color: var(--color-hero-text);
     background: linear-gradient(to top, var(--color-hero-bg-top), var(--color-hero-bg-bottom)), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, var(--color-hero-grad-top), var(--color-hero-grad-bottom));
+    background: linear-gradient(in hsl to top, var(--color-hero-bg-top), var(--color-hero-bg-bottom)), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(in hsl to top, var(--color-hero-grad-top), var(--color-hero-grad-bottom));
     background-size: 1024px;
 }
 
 .dark .gnome-hero {
     color: var(--color-hero-text);
     background: linear-gradient(to top, var(--color-hero-bg-top), var(--color-hero-bg-bottom)), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, var(--color-hero-grad-top), var(--color-hero-grad-bottom));
+    background: linear-gradient(in hsl to top, var(--color-hero-bg-top), var(--color-hero-bg-bottom)), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(in hsl to top, var(--color-hero-grad-top), var(--color-hero-grad-bottom));
     background-size: 1024px;
 }
 
@@ -117,33 +123,26 @@ body {
 .prose {
     color: var(--color-prose-text);
 }
-
 .dark .prose {
     color: var(--color-prose-dark-text);
 }
-
 .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 {
     color: var(--color-prose-heading);
 }
-
 .dark .prose a {
     color: var(--color-prose-link);
 }
-
 .dark .prose strong, .dark .prose b {
     color: var(--color-prose-heading);
 }
-
 .dark .prose code {
     color: var(--color-prose-heading);
     background-color: var(--color-prose-code-bg);
 }
-
 .dark .prose blockquote {
     color: var(--color-prose-dark-text);
     border-left-color: var(--color-prose-code-bg);
 }
-
 .dark .prose hr {
     border-color: var(--color-prose-code-bg);
 }
@@ -154,15 +153,13 @@ body {
     will-change: transform, box-shadow;
 }
 
-.extension-card:hover,
-.extension-card:focus-within {
+.extension-card:hover, .extension-card:focus-within {
     transform: translateY(-4px);
     box-shadow: 0 14px 30px var(--color-shadow-light), 0 0 0 1px var(--color-card-hover-border);
     border-color: var(--color-card-hover-border);
 }
 
-.dark .extension-card:hover,
-.dark .extension-card:focus-within {
+.dark .extension-card:hover, .dark .extension-card:focus-within {
     box-shadow: 0 20px 40px var(--color-shadow-dark), 0 0 0 1px var(--color-card-hover-border);
     background-color: var(--color-card-dark-hover-bg);
 }
@@ -183,23 +180,282 @@ body {
     transition: transform 220ms ease;
 }
 
-.detail-action-btn:hover,
-.detail-action-btn:focus-visible {
+.detail-action-btn:hover, .detail-action-btn:focus-visible {
     transform: translateY(-2px) scale(1.01);
     box-shadow: 0 12px 24px var(--color-shadow-btn);
 }
 
-.detail-action-btn:hover::before,
-.detail-action-btn:focus-visible::before {
+.detail-action-btn:hover::before, .detail-action-btn:focus-visible::before {
     transform: translateX(100%);
 }
 
-.dark .detail-action-btn:hover,
-.detail-action-btn:focus-visible {
+.dark .detail-action-btn:hover, .detail-action-btn:focus-visible {
     box-shadow: 0 12px 24px var(--color-shadow-btn-dark);
 }
 
 /* Dark Mode Contrast Polish for Footers and General Grey Elements */
 .dark .text-gnome-grey {
     color: var(--color-grey-text);
+}
+
+
+/* ==========================================================================
+   DYNAMIC MATRIX: PAGE BACKGROUND (BASE)
+   ========================================================================== */
+
+/* White Window Elements (Light Mode) uses --gnome-page-bg for background */
+html:not(.dark)[data-base="console"] { --gnome-page-bg: #e6e6e6 !important; }
+html:not(.dark)[data-base="gray"]    { --gnome-page-bg: #deddda !important; }
+html:not(.dark)[data-base="blue"]    { --gnome-page-bg: #99c1f1 !important; }
+html:not(.dark)[data-base="green"]   { --gnome-page-bg: #8ff0a4 !important; }
+html:not(.dark)[data-base="yellow"]  { --gnome-page-bg: #f9f06b !important; }
+html:not(.dark)[data-base="orange"]  { --gnome-page-bg: #ffbe6f !important; }
+html:not(.dark)[data-base="red"]     { --gnome-page-bg: #f66151 !important; }
+html:not(.dark)[data-base="purple"]  { --gnome-page-bg: #dc8add !important; }
+html:not(.dark)[data-base="brown"]   { --gnome-page-bg: #cdab8f !important; }
+
+/* Dark Window Elements (Dark Mode) uses --gnome-black for background */
+html.dark[data-base="console"] { --gnome-black: #000000 !important; }
+html.dark[data-base="gray"]    { --gnome-black: #241f31 !important; }
+html.dark[data-base="blue"]    { --gnome-black: #1a5fb4 !important; }
+html.dark[data-base="green"]   { --gnome-black: #26a269 !important; }
+html.dark[data-base="yellow"]  { --gnome-black: #e5a50a !important; }
+html.dark[data-base="orange"]  { --gnome-black: #c64600 !important; }
+html.dark[data-base="red"]     { --gnome-black: #a51d2d !important; }
+html.dark[data-base="purple"]  { --gnome-black: #613583 !important; }
+html.dark[data-base="brown"]   { --gnome-black: #63452c !important; }
+
+
+/* ==========================================================================
+   DYNAMIC MATRIX: TOP BAR (HEADER)
+   ========================================================================== */
+
+:root {
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --header-border: var(--gnome-border-light);
+    --header-text: var(--gnome-black);
+    --header-muted: var(--gnome-text-muted-light);
+    --header-input-bg: var(--gnome-page-bg);
+    --header-hover-bg: var(--gnome-hover-light);
+}
+
+html.dark {
+    --header-bg: rgba(36, 31, 49, 0.95);
+    --header-border: var(--gnome-border-dark);
+    --header-text: var(--gnome-white);
+    --header-muted: var(--gnome-text-muted-dark);
+    --header-input-bg: var(--gnome-card-dark);
+    --header-hover-bg: var(--gnome-card-dark);
+}
+
+html[data-header="console"] {
+    --header-bg: rgba(0, 0, 0, 0.95) !important;
+    --header-border: #242424 !important;
+    --header-text: #ffffff !important;
+    --header-muted: #9a9996 !important;
+    --header-input-bg: #241f31 !important;
+    --header-hover-bg: #241f31 !important;
+}
+html[data-header="gray"] {
+    --header-bg: rgba(119, 118, 123, 0.95) !important;
+    --header-border: #5e5c64 !important;
+    --header-text: #ffffff !important;
+    --header-muted: #deddda !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="blue"] {
+    --header-bg: rgba(53, 132, 228, 0.95) !important;
+    --header-border: #1c71d8 !important;
+    --header-text: #ffffff !important;
+    --header-muted: #99c1f1 !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="green"] {
+    --header-bg: rgba(51, 209, 122, 0.95) !important;
+    --header-border: #2ec27e !important;
+    --header-text: #ffffff !important;
+    --header-muted: #8ff0a4 !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="yellow"] {
+    --header-bg: rgba(246, 211, 45, 0.95) !important;
+    --header-border: #f5c211 !important;
+    --header-text: #000000 !important;
+    --header-muted: #3d3846 !important;
+    --header-input-bg: rgba(255, 255, 255, 0.5) !important;
+    --header-hover-bg: rgba(255, 255, 255, 0.5) !important;
+}
+html[data-header="orange"] {
+    --header-bg: rgba(255, 120, 0, 0.95) !important;
+    --header-border: #e66100 !important;
+    --header-text: #ffffff !important;
+    --header-muted: #ffbe6f !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="red"] {
+    --header-bg: rgba(224, 27, 36, 0.95) !important;
+    --header-border: #c01c28 !important;
+    --header-text: #ffffff !important;
+    --header-muted: #f66151 !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="purple"] {
+    --header-bg: rgba(145, 65, 172, 0.95) !important;
+    --header-border: #813d9c !important;
+    --header-text: #ffffff !important;
+    --header-muted: #dc8add !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+html[data-header="brown"] {
+    --header-bg: rgba(152, 106, 68, 0.95) !important;
+    --header-border: #865e3c !important;
+    --header-text: #ffffff !important;
+    --header-muted: #cdab8f !important;
+    --header-input-bg: rgba(0, 0, 0, 0.2) !important;
+    --header-hover-bg: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Force GNOME Logo color inversion conditionally based on header background */
+html.dark header img#header-logo { filter: invert(1); }
+html:not(.dark) header img#header-logo { filter: none; }
+
+html[data-header="console"] header img#header-logo,
+html[data-header="gray"] header img#header-logo,
+html[data-header="blue"] header img#header-logo,
+html[data-header="green"] header img#header-logo,
+html[data-header="orange"] header img#header-logo,
+html[data-header="red"] header img#header-logo,
+html[data-header="purple"] header img#header-logo,
+html[data-header="brown"] header img#header-logo {
+    filter: invert(1) !important;
+}
+
+html[data-header="yellow"] header img#header-logo {
+    filter: none !important;
+}
+
+
+/* ==========================================================================
+   DYNAMIC MATRIX: CARD & MENU PANELS (CARD)
+   ========================================================================== */
+
+/* White Window Elements (Light Mode) uses --gnome-white for cards */
+html:not(.dark)[data-card="console"] { --gnome-white: #ffffff !important; }
+html:not(.dark)[data-card="gray"]    { --gnome-white: #f6f5f4 !important; }
+html:not(.dark)[data-card="blue"]    { --gnome-white: #e6f0fa !important; --gnome-border-light: #99c1f1 !important; }
+html:not(.dark)[data-card="green"]   { --gnome-white: #e8fdf0 !important; --gnome-border-light: #8ff0a4 !important; }
+html:not(.dark)[data-card="yellow"]  { --gnome-white: #fcf4d6 !important; --gnome-border-light: #f9f06b !important; }
+html:not(.dark)[data-card="orange"]  { --gnome-white: #fbe8d5 !important; --gnome-border-light: #ffbe6f !important; }
+html:not(.dark)[data-card="red"]     { --gnome-white: #fbe6e8 !important; --gnome-border-light: #f66151 !important; }
+html:not(.dark)[data-card="purple"]  { --gnome-white: #f6e5f8 !important; --gnome-border-light: #dc8add !important; }
+html:not(.dark)[data-card="brown"]   { --gnome-white: #f2ebe5 !important; --gnome-border-light: #cdab8f !important; }
+
+/* Dark Window Elements (Dark Mode) uses --gnome-card-dark for cards */
+html.dark[data-card="console"] { --gnome-card-dark: #1e1e1e !important; --gnome-border-dark: #3d3846 !important; }
+html.dark[data-card="gray"]    { --gnome-card-dark: #3d3846 !important; --gnome-border-dark: #5e5c64 !important; }
+html.dark[data-card="blue"]    { --gnome-card-dark: #1c71d8 !important; --gnome-border-dark: #3584e4 !important; }
+html.dark[data-card="green"]   { --gnome-card-dark: #2ec27e !important; --gnome-border-dark: #33d17a !important; }
+html.dark[data-card="yellow"]  { --gnome-card-dark: #f5c211 !important; --gnome-border-dark: #f6d32d !important; }
+html.dark[data-card="orange"]  { --gnome-card-dark: #e66100 !important; --gnome-border-dark: #ff7800 !important; }
+html.dark[data-card="red"]     { --gnome-card-dark: #c01c28 !important; --gnome-border-dark: #e01b24 !important; }
+html.dark[data-card="purple"]  { --gnome-card-dark: #813d9c !important; --gnome-border-dark: #9141ac !important; }
+html.dark[data-card="brown"]   { --gnome-card-dark: #865e3c !important; --gnome-border-dark: #986a44 !important; }
+
+
+/* ==========================================================================
+   DYNAMIC MATRIX: ACCENT BRANDING (ACCENT)
+   ========================================================================== */
+
+html[data-accent="gray"] {
+    --gnome-blue: #77767b !important;
+    --gnome-blue-hover: #5e5c64 !important;
+    --color-card-hover-border: #77767b !important;
+}
+html[data-accent="blue"] {
+    --gnome-blue: #3584e4 !important;
+    --gnome-blue-hover: #1c71d8 !important;
+    --color-card-hover-border: #3584e4 !important;
+}
+html[data-accent="green"] {
+    --gnome-blue: #33d17a !important;
+    --gnome-blue-hover: #2ec27e !important;
+    --color-card-hover-border: #33d17a !important;
+}
+html[data-accent="yellow"] {
+    --gnome-blue: #f6d32d !important;
+    --gnome-blue-hover: #f5c211 !important;
+    --color-card-hover-border: #f6d32d !important;
+}
+html[data-accent="orange"] {
+    --gnome-blue: #ff7800 !important;
+    --gnome-blue-hover: #e66100 !important;
+    --color-card-hover-border: #ff7800 !important;
+}
+html[data-accent="red"] {
+    --gnome-blue: #e01b24 !important;
+    --gnome-blue-hover: #c01c28 !important;
+    --color-card-hover-border: #e01b24 !important;
+}
+html[data-accent="purple"] {
+    --gnome-blue: #9141ac !important;
+    --gnome-blue-hover: #813d9c !important;
+    --color-card-hover-border: #9141ac !important;
+}
+html[data-accent="brown"] {
+    --gnome-blue: #986a44 !important;
+    --gnome-blue-hover: #865e3c !important;
+    --color-card-hover-border: #986a44 !important;
+}
+
+
+/* ==========================================================================
+   DYNAMIC MATRIX: GRADIENTS (GRAD-TOP & GRAD-BOTTOM)
+   ========================================================================== */
+
+html[data-grad-top="default"] { --color-hero-grad-top: #433583 !important; }
+html[data-grad-top="console"] { --color-hero-grad-top: #000000 !important; }
+html[data-grad-top="gray"] { --color-hero-grad-top: #5e5c64 !important; }
+html[data-grad-top="blue"] { --color-hero-grad-top: #1c71d8 !important; }
+html[data-grad-top="green"] { --color-hero-grad-top: #2ec27e !important; }
+html[data-grad-top="yellow"] { --color-hero-grad-top: #f5c211 !important; }
+html[data-grad-top="orange"] { --color-hero-grad-top: #e66100 !important; }
+html[data-grad-top="red"] { --color-hero-grad-top: #c01c28 !important; }
+html[data-grad-top="purple"] { --color-hero-grad-top: #813d9c !important; }
+html[data-grad-top="brown"] { --color-hero-grad-top: #865e3c !important; }
+
+html[data-grad-bottom="default"] { --color-hero-grad-bottom: #5494e0 !important; }
+html[data-grad-bottom="console"] { --color-hero-grad-bottom: #000000 !important; }
+html[data-grad-bottom="gray"] { --color-hero-grad-bottom: #77767b !important; }
+html[data-grad-bottom="blue"] { --color-hero-grad-bottom: #1a5fb4 !important; }
+html[data-grad-bottom="green"] { --color-hero-grad-bottom: #26a269 !important; }
+html[data-grad-bottom="yellow"] { --color-hero-grad-bottom: #e5a50a !important; }
+html[data-grad-bottom="orange"] { --color-hero-grad-bottom: #c64600 !important; }
+html[data-grad-bottom="red"] { --color-hero-grad-bottom: #a51d2d !important; }
+html[data-grad-bottom="purple"] { --color-hero-grad-bottom: #613583 !important; }
+html[data-grad-bottom="brown"] { --color-hero-grad-bottom: #63452c !important; }
+
+
+/* ==========================================================================
+   YELLOW ACCESSIBILITY OVERRIDES (Ensures Text Legibility on Light Tints)
+   ========================================================================== */
+
+html.dark[data-base="yellow"],
+html.dark[data-card="yellow"] {
+    --gnome-text-muted-dark: #3d3846 !important;
+    --gnome-white: #000000 !important;
+    --color-prose-heading: #000000 !important;
+    --color-prose-text: #000000 !important;
+    --color-prose-dark-text: #3d3846 !important;
+}
+html.dark[data-base="yellow"] .dark\:invert,
+html.dark[data-card="yellow"] .dark\:invert { filter: none !important; }
+
+html[data-grad-top="yellow"], html[data-grad-bottom="yellow"] {
+    --color-hero-text: #000000 !important;
 }
