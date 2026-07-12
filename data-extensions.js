@@ -16,7 +16,9 @@ const EXTENSIONS = [
         bugTracker: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/issues',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M38.83 41.53l-3.32-.55a11.13 11.13 0 01-3.51-1.45l-2.61 2.11a1.44 1.44 0 01-1.92-.12l-2.47-2.47a1.44 1.44 0 01-.12-1.92l2.11-2.61a11.13 11.13 0 01-1.45-3.51l-.55-3.32A1.44 1.44 0 0123.57 26h3.49a1.44 1.44 0 011.42 1.21l.55 3.32a11.13 11.13 0 013.51 1.45l2.61-2.11a1.44 1.44 0 011.92.12l2.47 2.47a1.44 1.44 0 01.12 1.92l-2.11 2.61a11.13 11.13 0 011.45 3.51l.55 3.32a1.44 1.44 0 01-1.42 1.63h-3.49a1.44 1.44 0 01-1.42-1.21zM32 37.33A5.33 5.33 0 1026.67 32 5.33 5.33 0 0032 37.33z" fill="#ffffff"/></svg>`,
         mdDescription: '## Just Perfection\n\nTweak Tool to customize GNOME Shell, change the behavior and disable UI elements.\n\n### Features\n* **Minimalist Desktop:** Hide the Top Panel, Dash, Search, Workspace Switcher, and more.\n* **Behavior Tweaks:** Change notification banner positions, disable window demands attention, and control startup status.\n* **Profile System:** Quickly switch between Minimal, Super Minimal, and Default profiles.\n* **Compatibility:** Always updated quickly for the latest GNOME Shell releases.',
@@ -43,7 +45,9 @@ const EXTENSIONS = [
         bugTracker: 'https://github.com/cwittenberg/snaptext/issues',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M20 24H28V40H20V24ZM36 24H44V40H36V24Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Snap Text Extractor\n\nGNOME Extension enabling the user to select an area of the screen to instantly extract and copy text to the clipboard using native Optical Character Recognition (OCR). Similar to how it works on MacOS.\n\n### Features\n* **Instant Text Extraction:** Select any part of your screen, and the text within that area is instantly processed and copied to your clipboard.\n* **Smart OCR Preprocessing:** Utilizes ImageMagick to maximize Text Recognition accuracy by automatically converting to grayscale, maximizing contrast, upscaling small screen snips, and smartly negating colors for Dark Mode UIs.\n* **Multi-Pass OCR Routing:** Dynamically adjusts Page Segmentation Modes (PSM) based on aspect ratio.\n* **Seamless GNOME Integration:** Built exclusively for GNOME Shell versions 45 through 50 using modern standard APIs.',
@@ -69,7 +73,9 @@ const EXTENSIONS = [
         bugTracker: 'https://github.com/cwittenberg/thisipcan.cyou/issues',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M32 16C23.1634 16 16 23.1634 16 32C16 40.8366 23.1634 48 32 48C40.8366 48 48 40.8366 48 32C48 23.1634 40.8366 16 32 16ZM32 40C27.5817 40 24 36.4183 24 32C24 27.5817 27.5817 24 32 24C36.4183 24 40 27.5817 40 32C40 36.4183 36.4183 40 32 40Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Show External IP\n\nKeep track of your public IP address directly from the top panel.\n\n### Features\n* **Live Updates:** Automatically refreshes your IP address.\n* **One-Click Copy:** Click the panel icon to copy the IP to your clipboard.\n* **Multiple Providers:** Configure which service to use for IP checking to ensure uptime and accuracy.',
@@ -95,7 +101,9 @@ const EXTENSIONS = [
         bugTracker: 'https://github.com/micheleg/dash-to-dock/issues',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><rect x="12" y="44" width="40" height="12" rx="4" fill="#ffffff"/><circle cx="20" cy="50" r="3" fill="#3584e4"/><circle cx="32" cy="50" r="3" fill="#3584e4"/><circle cx="44" cy="50" r="3" fill="#3584e4"/><rect x="12" y="12" width="40" height="24" rx="4" fill="#ffffff" opacity="0.3"/></svg>`,
         mdDescription: mockMarkdown,
@@ -119,7 +127,9 @@ const EXTENSIONS = [
         bugTracker: '#',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M48 24C48 15.1634 40.8366 8 32 8C23.1634 8 16 15.1634 16 24C16 32.8366 23.1634 40 32 40V56H40V40C44.4183 40 48 36.4183 48 32V24ZM32 32C27.5817 32 24 28.4183 24 24C24 19.5817 27.5817 16 32 16C36.4183 16 40 19.5817 40 24C40 28.4183 36.4183 32 32 32Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
@@ -143,7 +153,9 @@ const EXTENSIONS = [
         bugTracker: '#',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M32 12C32 12 16 28.4183 16 40C16 48.8366 23.1634 56 32 56C40.8366 56 48 48.8366 48 40C48 28.4183 32 12 32 12ZM32 48C27.5817 48 24 44.4183 24 40C24 37.1129 25.5398 34.2573 28.1636 31.429C30.3475 33.7844 32 36.7825 32 40C32 42.2091 33.7909 44 36 44C37.4988 44 38.8021 43.176 39.5255 41.9363C39.832 43.166 40 44.4534 40 45.7538C40 48.0945 39.1171 50.2289 37.6569 51.7538C36.1966 53.2788 34.1818 54 32 54C28.8182 54 26 51.9055 26 48Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
@@ -166,7 +178,9 @@ const EXTENSIONS = [
         bugTracker: '#',
         media: [
             { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' }
         ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><path d="M48 20V44C48 48.4183 44.4183 52 40 52H24C19.5817 52 16 48.4183 16 44V20C16 15.5817 19.5817 12 24 12H40C44.4183 12 48 15.5817 48 20ZM40 20H24V44H40V20ZM32 40C30.8954 40 30 39.1046 30 38C30 36.8954 30.8954 36 32 36C33.1046 36 34 36.8954 34 38C34 39.1046 33.1046 40 32 40Z" fill="#ffffff"/></svg>`,
         mdDescription: mockMarkdown,
@@ -185,7 +199,12 @@ const EXTENSIONS = [
         rating: 4.8,
         ratingCount: 1950,
         category: 'Integration',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><path d="M22 14H42V50H22V14ZM32 46C33.1 46 34 45.1 34 44C34 42.9 33.1 42 32 42C30.9 42 30 42.9 30 44C30 45.1 30.9 46 32 46Z" fill="#ffffff"/></svg>`,
         mdDescription: '## GSConnect\n\nSeamless cellular integration built on top of the robust native KDE Connect framework.',
         reviews: [],
@@ -203,7 +222,12 @@ const EXTENSIONS = [
         rating: 4.7,
         ratingCount: 1102,
         category: 'Dock & Panel',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M16 16H30V30H16V16ZM34 16H48V30H34V16ZM16 34H30V48H16V34ZM34 34H48V48H34V34Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Arc Menu\n\nA customizable application launcher for power users.',
         reviews: [],
@@ -222,7 +246,12 @@ const EXTENSIONS = [
         ratingCount: 2560,
         category: 'Dock & Panel',
         new: true,
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#241f31"/><rect x="8" y="48" width="48" height="8" fill="#3584e4"/></svg>`,
         mdDescription: '## Dash to Panel\n\nCombines the top bar and window dashboard elements together into a single master workflow panel.',
         reviews: [],
@@ -240,7 +269,12 @@ const EXTENSIONS = [
         rating: 4.6,
         ratingCount: 840,
         category: 'Utilities',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M20 16H44V22H20V16ZM20 28H44V32H20V28ZM20 40H36V44H20V40Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Clipboard Indicator\n\nMonitors and aggregates active system copying hooks for rapid desktop deployment.',
         reviews: [],
@@ -258,7 +292,12 @@ const EXTENSIONS = [
         rating: 4.8,
         ratingCount: 1621,
         category: 'Utilities',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M44 24H20V38C20 42.4 23.6 46 28 46H36C40.4 46 44 42.4 44 38V24Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Caffeine\n\nPrevents display dimming and operational timeouts.',
         reviews: [],
@@ -276,7 +315,12 @@ const EXTENSIONS = [
         rating: 4.7,
         ratingCount: 914,
         category: 'System Monitor',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><path d="M14 32H24L30 16L36 48L42 32H50" stroke="#ffffff" stroke-width="4" fill="none"/></svg>`,
         mdDescription: '## Vitals\n\nA deep overview telemetry asset displaying operational values clearly.',
         reviews: [],
@@ -294,7 +338,12 @@ const EXTENSIONS = [
         rating: 4.5,
         ratingCount: 520,
         category: 'Integration',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><circle cx="32" cy="32" r="12" fill="#ffffff"/></svg>`,
         mdDescription: '## OpenWeather\n\nSyncs with meteorology feeds to feed active local parameters into global toolbars.',
         reviews: [],
@@ -312,7 +361,12 @@ const EXTENSIONS = [
         rating: 4.8,
         ratingCount: 390,
         category: 'Dock & Panel',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><rect x="16" y="28" width="32" height="8" rx="2" fill="#ffffff"/></svg>`,
         mdDescription: '## Space Bar\n\nA streamlined status approach for workspace management.',
         reviews: [],
@@ -330,7 +384,12 @@ const EXTENSIONS = [
         rating: 4.9,
         ratingCount: 1720,
         category: 'Visual Effects',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M32 12C22 24 16 32 16 42C16 50.8 23.2 56 32 56C40.8 56 48 50.8 48 42C48 32 42 24 32 12Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Burn My Windows\n\nFires up old school window events with full performance controls.',
         reviews: [],
@@ -348,7 +407,12 @@ const EXTENSIONS = [
         rating: 4.7,
         ratingCount: 612,
         category: 'Visual Effects',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M16 20C24 16 40 24 48 20V44C40 48 24 40 16 44V20Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Compiz Wobbly Windows\n\nRestores retro dynamic inertia metrics to active window canvas operations.',
         reviews: [],
@@ -366,7 +430,12 @@ const EXTENSIONS = [
         rating: 4.6,
         ratingCount: 211,
         category: 'Customization',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M16 24V40H26L38 50V14L26 24H16Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Sound Percentage\n\nSimple, lightweight volume percentage readout injection.',
         reviews: [],
@@ -384,7 +453,12 @@ const EXTENSIONS = [
         rating: 4.5,
         ratingCount: 418,
         category: 'Window Management',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M14 18H24V46H14V18ZM40 18H50V46H40V18ZM28 14H36V50H28V14Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Coverflow Alt-Tab\n\nStunning 3D window rotation metrics mapping application switching behaviors.',
         reviews: [],
@@ -402,7 +476,12 @@ const EXTENSIONS = [
         rating: 4.4,
         ratingCount: 310,
         category: 'Window Management',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#e01b24"/><circle cx="20" cy="32" r="4" fill="#ffffff"/><circle cx="32" cy="32" r="4" fill="#ffffff"/><circle cx="44" cy="32" r="4" fill="#ffffff"/></svg>`,
         mdDescription: '## Frippery Applications Menu\n\nA stable traditional menu structure mapping standard workflows without layout shifts.',
         reviews: [],
@@ -420,7 +499,12 @@ const EXTENSIONS = [
         rating: 4.7,
         ratingCount: 1420,
         category: 'System Integration',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#241f31"/><path d="M14 18H26L32 24H50V48H14V18Z" fill="#3584e4"/></svg>`,
         mdDescription: '## Places Status Indicator\n\nOfficial extension enabling clean desktop file mount mapping tracking loops.',
         reviews: [],
@@ -438,7 +522,12 @@ const EXTENSIONS = [
         rating: 4.6,
         ratingCount: 1024,
         category: 'Window Management',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#ff7800"/><path d="M20 20H44V34H20V20ZM20 40H44V44H20V40Z" fill="#ffffff"/></svg>`,
         mdDescription: '## Auto Move Windows\n\nAutomates layout positions across displays based on targeting variables.',
         reviews: [],
@@ -456,7 +545,12 @@ const EXTENSIONS = [
         rating: 4.8,
         ratingCount: 1290,
         category: 'System Integration',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#3584e4"/><path d="M16 40H48V48H16V40ZM20 20H44V36H20V20Z" fill="#ffffff" opacity="0.4"/></svg>`,
         mdDescription: '## Removable Drive Menu\n\nKeeps discrete controls in top bars tracking block assets accurately.',
         reviews: [],
@@ -474,7 +568,12 @@ const EXTENSIONS = [
         rating: 4.8,
         ratingCount: 654,
         category: 'Customization',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#9141ac"/><path d="M48 16L16 48M16 16L48 48" stroke="#ffffff" stroke-width="4" fill="none"/></svg>`,
         mdDescription: '## Window Is Ready Notification Remover\n\nEliminates intrusive workflow focus interruptions cleanly.',
         reviews: [],
@@ -492,7 +591,12 @@ const EXTENSIONS = [
         rating: 4.6,
         ratingCount: 720,
         category: 'Customization',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#77767b"/><path d="M10 12H54V20H10V12Z" fill="#ffffff" opacity="0.2"/><rect x="10" y="24" width="44" height="28" rx="2" fill="#ffffff"/></svg>`,
         mdDescription: '## Hide Top Bar\n\nProvides visibility metrics to dynamically handle top toolbar elements.',
         reviews: [],
@@ -510,7 +614,12 @@ const EXTENSIONS = [
         rating: 4.7,
         ratingCount: 580,
         category: 'System Monitor',
-        media: [{ type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' }],
+        media: [
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450' }
+        ],
         icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-12 h-12"><rect width="64" height="64" rx="12" fill="#33d17a"/><path d="M32 14L20 26H28V46H36V26H44L32 14Z" fill="#ffffff"/></svg>`,
         mdDescription: '## NetSpeed Monitor\n\nRealtime tracking metric for incoming and outgoing throughput directly inside control lines.',
         reviews: [],
