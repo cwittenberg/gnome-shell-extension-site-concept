@@ -38,15 +38,15 @@ const EXTENSIONS = [
         version: '10',
         downloads: 88,
         rating: 4.8,
-        ratingCount: 15,
+        featured: true,
+        ratingCount: 2800,
         category: 'Window Management',
-        new: true,
         homepage: 'https://github.com/cwittenberg/omnipanel',
         bugTracker: 'https://github.com/cwittenberg/omnipanel/issues',
         media: [
-                    { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s' },
-                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620529767-565295f9-ac78-4599-9dcc-f264dc389d2f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NDg4NTEsIm5iZiI6MTc4Mzg0ODU1MSwicGF0aCI6Ii80ODI1MjExLzYyMDUyOTc2Ny01NjUyOTVmOS1hYzc4LTQ1OTktOWRjYy1mMjY0ZGMzODlkMmYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDkyOTExWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9M2QxY2I1Mjc3ZTQ4NDUwZDZiM2UxMzZhZWMyMmY5NmEzOWFkNGU0OGEzMmUwNzhmMzA0N2VkODQ5Nzc3YTJlMyZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.gRH0FHz40HeEPLcxQflaL2KByEF7voJ2RYjQSjRFX_E' },
-                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620530029-3a94f0b8-d7ae-42d5-8752-457bf34c1595.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NDg4NTEsIm5iZiI6MTc4Mzg0ODU1MSwicGF0aCI6Ii80ODI1MjExLzYyMDUzMDAyOS0zYTk0ZjBiOC1kN2FlLTQyZDUtODc1Mi00NTdiZjM0YzE1OTUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDkyOTExWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9YjNmYzM0ODRlOGFiN2RhYzU1MGNlZjNjMWI1OGU3ZDk0NTA0MjRhODk5MTMyNjA0N2ZmYjc4MDBkMGRkYWVmMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.YsaB4FiTkCvYMJQHk70bBL1LT1RpYdMw8xVeoBCpnio' }
+                    { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s', caption: 'OmniPanel overview and configuration' },
+                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620530029-3a94f0b8-d7ae-42d5-8752-457bf34c1595.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NTAyNjcsIm5iZiI6MTc4Mzg0OTk2NywicGF0aCI6Ii80ODI1MjExLzYyMDUzMDAyOS0zYTk0ZjBiOC1kN2FlLTQyZDUtODc1Mi00NTdiZjM0YzE1OTUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDk1MjQ3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9YmExNjQ4MTQxNzNhYmIyMjUxM2YxNGIzYWY2ODU2MDBhMzQ3MDBlNGI3ZTE3YTMwNzQ2OGE5OWYzNTJkMTI0MyZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.IuOczhmEu1Xv0-GaKXuBh3HSXLTRrI4mOEpiW38dvRQ', caption: 'OmniPanel Zone Designer' },
+                    { type: 'image', url: 'https://private-user-images.githubusercontent.com/4825211/620529767-565295f9-ac78-4599-9dcc-f264dc389d2f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODM4NTAyNjcsIm5iZiI6MTc4Mzg0OTk2NywicGF0aCI6Ii80ODI1MjExLzYyMDUyOTc2Ny01NjUyOTVmOS1hYzc4LTQ1OTktOWRjYy1mMjY0ZGMzODlkMmYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDcxMiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA3MTJUMDk1MjQ3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZWUxNTI2NjZlMzkwZjU4N2VhMWRiZmE3YjYzNTY2NmRiNWJlNDRiNmQ4YTIyNzU4ZTVkYmM0YWViYTFiYmY5NCZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.IhQXUIfPVPyjWSFW3PIpVRDSf4jTBFDi1SenA56mTDI', caption: 'Dynamic Stack layout switching per Zone' }
                 ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_10049_d7PgALE.png',
         mdDescription: '## OmniPanel\n\nOmniPanel is a true multi-monitor panel extension and advanced window management system for GNOME Shell (versions 46, 47, and 50).\n\n### Features\n* **Advanced Window Management:** Zone Designer Mode to visually draw and configure custom rectangular drop zones across your screens.\n* **Smart Auto-Placement:** Automatically assigns new windows to zones matching their application name or desktop metadata category.\n* **Active Toolbar Movement:** Your true GNOME panel, including all system tray indicators and extensions, seamlessly follows your mouse to the active screen.\n* **Pure Automatic Tiling:** Master auto-tiling override to dynamically arrange all workspace windows using BSP or Cascading algorithms.\n* **Quick Tiler:** Instantly spawn an 8x8 interactive grid (Default: `<Super>g`) on the active monitor to reshape the active window by clicking and dragging across cells.',
@@ -150,7 +150,6 @@ const EXTENSIONS = [
         rating: 4.6,
         ratingCount: 1892,
         category: 'Theming',
-        featured: true,
         homepage: '#',
         bugTracker: '#',
         media: [
