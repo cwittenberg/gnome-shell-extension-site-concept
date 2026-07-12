@@ -83,14 +83,14 @@ class DetailView {
                     btn.classList.add('bg-gnome-blue');
                     knob.classList.remove('translate-x-1');
                     knob.classList.add('translate-x-6');
-                    label.textContent = 'ENABLE';
+                    label.textContent = 'ENABLED';
                     label.classList.add('text-gnome-blue');
                 } else {
                     btn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
                     btn.classList.remove('bg-gnome-blue');
                     knob.classList.add('translate-x-1');
                     knob.classList.remove('translate-x-6');
-                    label.textContent = 'DISABLE';
+                    label.textContent = 'DISABLED';
                     label.classList.remove('text-gnome-blue');
                 }
             });
@@ -106,7 +106,7 @@ class DetailView {
             btn.classList.remove('bg-gnome-blue');
             knob.classList.add('translate-x-1');
             knob.classList.remove('translate-x-6');
-            label.textContent = 'DISABLE';
+            label.textContent = 'DISABLED';
             label.classList.remove('text-gnome-blue');
         }
 
