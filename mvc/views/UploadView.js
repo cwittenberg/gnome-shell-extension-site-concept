@@ -1,11 +1,3 @@
-/**
- * GNOME Brand Book Alignment:
- * - Typography: Header 1 uses 24pt, Header 3 uses 18pt, and Body Text uses 12pt (Inter font via standard classes)[cite: 2].
- * - Color: Primary Blue #3584e4 is used for active tabs, inline controls, and line numbers[cite: 2].
- * - Color: Secondary Green #33D17A, Orange #FF7800, and Red #E01B24 are used for status dots and diff blocks[cite: 2].
- * - Style: Added EGO-style file navigation and comment threads natively integrated using GNOME Boxed Lists and distinct panel sections.
- */
-
 class UploadView {
     constructor() {
         this.container = document.getElementById('upload-view');
@@ -34,7 +26,7 @@ class UploadView {
                             { type: 'delete', oldLine: 44, newLine: '', text: '-       this._settings.connect(\'changed\', () => { this._update(); });' },
                             { type: 'add', oldLine: '', newLine: 44, text: '+       this._settings.connectObject(\'changed\', () => this._update(), this);' },
                             { type: 'normal', oldLine: 45, newLine: 45, text: '    }' }
-                        ]
+                        ] 
                     },
                     { 
                         name: "metadata.json", 
@@ -46,7 +38,7 @@ class UploadView {
                             { type: 'delete', oldLine: 3, newLine: '', text: '-    "version": 9,' },
                             { type: 'add', oldLine: '', newLine: 3, text: '+    "version": 10,' },
                             { type: 'normal', oldLine: 4, newLine: 4, text: '    "uuid": "snaptext@cwittenberg"' }
-                        ]
+                        ] 
                     },
                     { 
                         name: "prefs.js", 
@@ -60,7 +52,7 @@ class UploadView {
                             { type: 'normal', oldLine: 4, newLine: 4, text: '        // ...' },
                             { type: 'normal', oldLine: 5, newLine: 5, text: '    }' },
                             { type: 'normal', oldLine: 6, newLine: 6, text: '}' }
-                        ]
+                        ] 
                     }
                 ]
             },
@@ -92,7 +84,7 @@ class UploadView {
                             { type: 'add', oldLine: '', newLine: 90, text: '+       global.display.disconnectObject(this);' },
                             { type: 'add', oldLine: '', newLine: 91, text: '+       this._windowTracker = null;' },
                             { type: 'normal', oldLine: 91, newLine: 92, text: '    }' }
-                        ]
+                        ] 
                     },
                     { 
                         name: "windowManager.js", 
@@ -101,7 +93,7 @@ class UploadView {
                         deletions: 0, 
                         diff: [
                             { type: 'normal', oldLine: 1, newLine: 1, text: '// No changes detected in this file' }
-                        ]
+                        ] 
                     }
                 ]
             }
@@ -110,9 +102,10 @@ class UploadView {
 
     render() {
         if (!this.container) return;
+        
         this.container.innerHTML = `
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10">
-                
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-16">
+                                
                 <div class="mb-8">
                     <h1 class="text-[24pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2 tracking-tight">Developer Dashboard</h1>
                     <p class="text-[12pt] font-medium text-gnome-grey">Manage your extensions and track their review process.</p>
@@ -127,13 +120,13 @@ class UploadView {
                         Add New
                     </button>
                 </div>
-                
+                                
                 <!-- Tab 1: My Extensions List & Reviewer Split Pane -->
                 <div id="view-my-extensions" class="upload-view-pane block animate-fade-in">
                     <div class="space-y-8">
                         <!-- GNOME Boxed List Container -->
                         <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl shadow-sm overflow-hidden flex flex-col">
-                            
+                                                        
                             <!-- Boxed List Item 1 -->
                             <div class="flex items-center justify-between p-4 border-b border-[#c0bfbc] dark:border-[#3d3846] hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors cursor-pointer" data-action="view-review" data-target="snaptext">
                                 <div class="flex items-center gap-4 sm:gap-6 w-full">
@@ -154,7 +147,7 @@ class UploadView {
                                     </div>
                                 </div>
                             </div>
-                            
+                                                        
                             <!-- Boxed List Item 2 -->
                             <div class="flex items-center justify-between p-4 hover:bg-[#f6f5f4] dark:hover:bg-[#322b47] transition-colors cursor-pointer" data-action="view-review" data-target="omnipanel">
                                 <div class="flex items-center gap-4 sm:gap-6 w-full">
@@ -175,27 +168,26 @@ class UploadView {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- Integrated EGO Code Review Panel -->
                         <div id="review-details-panel" class="hidden space-y-8 animate-fade-in pb-16">
                             <div class="flex items-center justify-between border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8">
                                 <h3 id="review-panel-title" class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white tracking-tight">Review Context</h3>
-                                <button id="close-review-btn" class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1.5 bg-[#f6f5f4] dark:bg-[#3d3846] px-3 py-1.5 rounded-lg border border-[#c0bfbc] dark:border-[#5e5c64]">
+                                <button id="close-review-btn" class="text-[12pt] font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-1.5 bg-[#f6f5f4] dark:bg-[#3d3846] px-3 py-1.5 rounded-lg border border-[#c0bfbc] dark:border-[#5e5c64]">
                                     <i class="fa-solid fa-xmark"></i> Hide Review
                                 </button>
                             </div>
 
                             <!-- Structural Source Code Diff Engine Output Layout -->
                             <div class="space-y-3">
-                                <h4 class="text-sm font-bold text-gnome-grey uppercase tracking-wider">Source Code Comparison</h4>
+                                <h4 class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Source Code Comparison</h4>
                                 <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row">
-                                    
+                                                                        
                                     <!-- File List Navigation (Sidebar) -->
                                     <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-[#241F31]">
                                         <div class="p-3 border-b border-[#c0bfbc] dark:border-[#3d3846]">
-                                            <span class="text-xs font-bold text-gnome-grey uppercase tracking-wider">Files</span>
+                                            <span class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Files</span>
                                         </div>
                                         <ul class="flex flex-col h-64 overflow-y-auto scrollbar-hide" id="review-file-list">
                                             <!-- Dynamically generated file list -->
@@ -205,36 +197,34 @@ class UploadView {
                                     <!-- Diff View (Main) -->
                                     <div class="w-full md:w-2/3 bg-gnome-white dark:bg-gnome-black flex flex-col">
                                         <div class="p-3 border-b border-[#c0bfbc] dark:border-[#3d3846] flex justify-between items-center bg-[#f6f5f4] dark:bg-[#2d2640]">
-                                            <span id="diff-file-badge" class="font-mono text-sm font-bold text-gnome-black dark:text-gnome-white"></span>
+                                            <span id="diff-file-badge" class="font-mono text-[12pt] font-bold text-gnome-black dark:text-gnome-white"></span>
                                         </div>
-                                        <div class="overflow-x-auto overflow-y-auto h-64 font-mono text-sm leading-relaxed p-0">
+                                        <div class="overflow-x-auto overflow-y-auto h-64 font-mono text-[12pt] leading-relaxed p-0">
                                             <div class="w-full table border-collapse divide-y divide-[#c0bfbc]/20 dark:divide-[#3d3846]/40" id="diff-lines-container">
                                                 <!-- Unified line rows will be dynamically drawn here -->
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 
                             <!-- EGO Feedback Section & Interaction -->
                             <div class="space-y-3">
-                                <h4 class="text-sm font-bold text-gnome-grey uppercase tracking-wider">Review Log</h4>
-                                
+                                <h4 class="text-[12pt] font-bold text-gnome-grey uppercase tracking-wider">Review Log</h4>
+                                                                
                                 <div id="ego-comments-container" class="space-y-3">
                                     <!-- Dynamic EGO Threads will appear here -->
                                 </div>
 
                                 <!-- Add Comment / Reply Box -->
                                 <div class="mt-4 border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-4 bg-gnome-white dark:bg-[#2d2640] shadow-sm">
-                                    <textarea id="review-comment-textarea" class="w-full bg-[#f6f5f4] dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#3d3846] rounded-lg p-3 text-sm text-gnome-black dark:text-gnome-white focus:outline-none focus:border-gnome-blue focus:ring-1 focus:ring-gnome-blue resize-y" rows="3" placeholder="Add a comment or reply to the reviewer..."></textarea>
+                                    <textarea id="review-comment-textarea" class="w-full bg-[#f6f5f4] dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#3d3846] rounded-lg p-3 text-[12pt] text-gnome-black dark:text-gnome-white focus:outline-none focus:border-gnome-blue focus:ring-1 focus:ring-gnome-blue resize-y" rows="3" placeholder="Add a comment or reply to the reviewer..."></textarea>
                                     <div class="flex justify-between items-center mt-3">
-                                        <span class="text-xs text-gnome-grey"><i class="fa-solid fa-circle-info mr-1"></i> Comments are public and visible to reviewers.</span>
-                                        <button id="submit-review-comment-btn" class="bg-gnome-blue text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-[#1c71d8] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640]">Submit Comment</button>
+                                        <span class="text-[12pt] text-gnome-grey"><i class="fa-solid fa-circle-info mr-1"></i> Comments are public.</span>
+                                        <button id="submit-review-comment-btn" class="bg-gnome-blue text-white px-5 py-2.5 rounded-lg text-[12pt] font-bold hover:bg-[#1c71d8] transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-gnome-blue focus:ring-offset-2 dark:focus:ring-offset-[#2d2640]">Submit Comment</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -244,7 +234,7 @@ class UploadView {
                     <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-8 sm:p-12 shadow-sm max-w-2xl mx-auto">
                       <h3 class="font-extrabold text-[18pt] text-gnome-black dark:text-gnome-white mb-2 text-center">Submit an Extension</h3>
                       <p class="text-[12pt] text-gnome-grey text-center mb-8">Upload your GNOME Shell extension archive containing your metadata.json and source code.</p>
-                      
+                                            
                       <form id="upload-form" class="space-y-6">
                         <div id="upload-dropzone" class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-[#241F31] hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
                           <i class="fa-solid fa-file-zipper text-4xl text-gnome-grey group-hover:text-gnome-blue transition-colors mb-4"></i>
@@ -257,7 +247,7 @@ class UploadView {
                                 <i class="fa-solid fa-file-zipper text-gnome-blue text-2xl"></i>
                                 <div class="min-w-0">
                                     <p id="upload-file-name" class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white truncate">extension.zip</p>
-                                    <p id="upload-file-size" class="text-sm text-gnome-grey truncate">0 KB</p>
+                                    <p id="upload-file-size" class="text-[12pt] text-gnome-grey truncate">0 KB</p>
                                 </div>
                             </div>
                             <button type="button" id="upload-remove-file" class="text-gnome-grey hover:text-gnome-red p-2 rounded-lg transition-colors" title="Remove file">
@@ -271,10 +261,9 @@ class UploadView {
                       </form>
                     </div>
                 </div>
-
             </div>
         `;
-
+        
         this.bindEvents();
     }
 
@@ -349,6 +338,7 @@ class UploadView {
         // Comment Submission
         const submitCommentBtn = document.getElementById('submit-review-comment-btn');
         const commentTextarea = document.getElementById('review-comment-textarea');
+        
         if (submitCommentBtn && commentTextarea) {
             submitCommentBtn.addEventListener('click', () => {
                 const text = commentTextarea.value.trim();
@@ -475,8 +465,10 @@ class UploadView {
         const firstFilename = data.files.length > 0 ? data.files[0].name : '';
         this.renderFileDiff(targetExtension, firstFilename);
         
-        // Scroll the panel into view naturally
-        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Defer scroll action briefly so rendering layout metrics are fully locked
+        setTimeout(() => {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
     }
 
     renderFileDiff(targetExtension, filename) {
@@ -496,7 +488,7 @@ class UploadView {
             let statsHtml = '';
             if (file.status === 'modified') {
                 statsHtml = `
-                    <div class="flex gap-2 text-xs font-bold shrink-0">
+                    <div class="flex gap-2 text-[12pt] font-bold shrink-0">
                         ${file.additions > 0 ? `<span class="text-gnome-green">+${file.additions}</span>` : ''}
                         ${file.deletions > 0 ? `<span class="text-gnome-red">-${file.deletions}</span>` : ''}
                     </div>
@@ -505,7 +497,7 @@ class UploadView {
 
             return `
                 <li class="cursor-pointer px-4 py-3 border-b border-[#c0bfbc] dark:border-[#3d3846] flex justify-between items-center transition-colors border-l-4 ${bgClass}" data-filename="${this.escapeHtml(file.name)}" data-target="${targetExtension}">
-                    <span class="font-mono text-sm ${textClass} truncate pr-2">${this.escapeHtml(file.name)}</span>
+                    <span class="font-mono text-[12pt] ${textClass} truncate pr-2">${this.escapeHtml(file.name)}</span>
                     ${statsHtml}
                 </li>
             `;
@@ -513,6 +505,7 @@ class UploadView {
 
         // Render Main Diff Box
         const selectedFile = data.files.find(f => f.name === filename);
+        
         if (selectedFile) {
             fileBadge.textContent = selectedFile.name;
             diffLinesContainer.innerHTML = this.generateDiffHtml(selectedFile.diff);
@@ -559,9 +552,9 @@ class UploadView {
                 <div class="flex items-center gap-3 justify-between mb-3 border-b border-[#c0bfbc]/50 dark:border-[#3d3846]/50 pb-2">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full ${dotColor}"></span>
-                        <span class="font-bold text-sm text-gnome-black dark:text-gnome-white">${this.escapeHtml(comment.author)}</span>
+                        <span class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white">${this.escapeHtml(comment.author)}</span>
                     </div>
-                    <span class="text-xs font-semibold text-gnome-grey">${this.escapeHtml(comment.date)}</span>
+                    <span class="text-[12pt] font-semibold text-gnome-grey">${this.escapeHtml(comment.date)}</span>
                 </div>
                 <p class="text-[12pt] text-gnome-black dark:text-[#c0bfbc] leading-relaxed">
                     ${this.escapeHtml(comment.text)}
