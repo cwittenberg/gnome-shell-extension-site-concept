@@ -1,5 +1,4 @@
 // mvc/views/StoreView.js
-
 // GoF Pattern: Observer (Observer Participant)
 class StoreView {
     constructor() {
@@ -37,6 +36,42 @@ class StoreView {
         }, 350);
     }
 
+    scrollToFilters() {
+        // Yield to the event loop so the controller can update the model and the view can react
+        // (adding/removing .hero-hidden, .hidden, etc.)
+        setTimeout(() => {
+            const hero = document.getElementById('hero-section');
+            const isHeroHidden = hero && hero.classList.contains('hero-hidden');
+            
+            if (isHeroHidden) {
+                // When filtered, the hero and featured sections are gone.
+                // The category bar is the top-most element in main.
+                // Scrolling to 0 aligns it perfectly under the sticky header.
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // When unfiltered (All), the hero and featured sections are present.
+                // We need to scroll down to the category bar.
+                const header = document.querySelector('.gnome-header');
+                const filterContainer = document.querySelector('.gnome-filter-container');
+                
+                if (header && filterContainer) {
+                    const headerHeight = header.offsetHeight;
+                    
+                    // The hero section has a 500ms transition. 
+                    // To avoid a jarring jump, we do an initial smooth scroll...
+                    const initialTop = filterContainer.getBoundingClientRect().top + window.scrollY - headerHeight - 24;
+                    window.scrollTo({ top: initialTop, behavior: 'smooth' });
+                    
+                    // ...and a precise snap after the layout stabilizes
+                    setTimeout(() => {
+                        const finalTop = filterContainer.getBoundingClientRect().top + window.scrollY - headerHeight - 24;
+                        window.scrollTo({ top: finalTop, behavior: 'smooth' });
+                    }, 510);
+                }
+            }
+        }, 10);
+    }
+
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
@@ -57,13 +92,19 @@ class StoreView {
         
         if (sortSelect) {
             sortSelect.addEventListener('change', (event) => {
-                if (this.controller) this.controller.handleSort(event.target.value);
+                if (this.controller) {
+                    this.controller.handleSort(event.target.value);
+                    this.scrollToFilters();
+                }
             });
         }
 
         if (shellVersionSelect) {
             shellVersionSelect.addEventListener('change', (event) => {
-                if (this.controller) this.controller.handleShellVersion(event.target.value);
+                if (this.controller) {
+                    this.controller.handleShellVersion(event.target.value);
+                    this.scrollToFilters();
+                }
             });
         }
         
@@ -94,6 +135,7 @@ class StoreView {
                 const categoryBtn = event.target.closest('[data-category]');
                 if (categoryBtn && this.controller) {
                     this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
+                    this.scrollToFilters();
                 }
             });
         }
@@ -106,7 +148,7 @@ class StoreView {
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
                     this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    this.scrollToFilters();
                     return;
                 }
 
@@ -146,7 +188,7 @@ class StoreView {
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
                     this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    this.scrollToFilters();
                     return;
                 }
 
@@ -167,7 +209,7 @@ class StoreView {
                     const pageNum = parseInt(pageBtn.getAttribute('data-page'), 10);
                     if (!isNaN(pageNum)) {
                         this.controller.handlePageChange(pageNum);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        this.scrollToFilters();
                     }
                 }
             });
@@ -180,6 +222,7 @@ class StoreView {
                 const itemsPerPageSelect = event.target.closest('[data-action="change-items-per-page"]');
                 if (itemsPerPageSelect && this.controller) {
                     this.controller.handleItemsPerPage(itemsPerPageSelect.value);
+                    this.scrollToFilters();
                 }
             });
         }
@@ -391,7 +434,6 @@ class StoreView {
                     <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                 </select>
-
                 <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 border border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-[#2d2640]" title="Hide Featured">
                     <i class="icon icon-angles-up"></i>
                     Hide
