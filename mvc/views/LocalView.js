@@ -1,21 +1,20 @@
 class LocalView {
     constructor() {
         this.container = document.getElementById('local-view');
-        this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
+        this.defaultExtensionSvg = `<i class="icon icon-settings text-4xl"></i>`;
     }
 
     render() {
         if (!this.container) return;
-
         const isConnected = window.GnomeConnector && window.GnomeConnector.isConnected;
+
         let contentHtml = '';
 
         if (!isConnected) {
-            // Unconnected State Error Message
             contentHtml = `
                <div class="bg-[#d9edf7] dark:bg-[#243f55] border border-[#bce8f1] dark:border-[#2f5573] rounded-xl p-4 sm:p-5 mb-8 flex items-start gap-4 shadow-sm">
                  <div class="text-[#31708f] dark:text-[#9bc2d5] shrink-0 mt-0.5">
-                   <i class="fa-solid fa-circle-info text-2xl"></i>
+                   <i class="icon icon-info text-2xl"></i>
                  </div>
                  <div class="text-[12pt] text-[#31708f] dark:text-[#9bc2d5] leading-relaxed">
                    <p>To control GNOME Shell extensions using this site you must install GNOME Shell integration that consists of two parts: browser extension and native host messaging application.</p>
@@ -25,30 +24,50 @@ class LocalView {
                    </p>
                  </div>
                </div>
-               
-               <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-2xl p-10 sm:p-16 shadow-md text-center">
-                 <i class="fa-solid fa-plug-circle-xmark text-5xl text-gnome-grey mx-auto mb-4 block"></i>
+
+               <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+                 <i class="icon icon-extension-disabled text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                  <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No extensions detected</h3>
                  <p class="text-[12pt] text-gnome-grey">GNOME Shell Extensions cannot list your installed extensions without the host connector.</p>
                </div>
              `;
         } else {
-            // Connected State - Query Local Installed Data
             const extensionsData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
             const localExtensions = extensionsData.filter(e => e.installed);
 
             if (localExtensions.length === 0) {
                 contentHtml = `
-                   <div class="bg-gnome-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-gnome-border-dark rounded-2xl p-10 sm:p-16 shadow-md text-center">
-                     <i class="fa-regular fa-folder-open text-5xl text-gnome-grey mx-auto mb-4 block"></i>
+                   <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+                     <i class="icon icon-folder-open text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                      <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No Extensions Installed</h3>
                      <p class="text-[12pt] text-gnome-grey mb-6">You don't have any GNOME Shell extensions installed on your system.</p>
-                     <a href="#" data-nav="store" class="bg-gnome-blue text-white px-6 py-2.5 rounded-lg text-[12pt] font-bold shadow-sm hover:bg-gnome-blue-hover transition-colors inline-block">Explore Store</a>
+                     <a href="#" data-nav="search" class="bg-gnome-blue text-white px-6 py-2.5 rounded-lg text-[12pt] font-bold shadow-sm hover:bg-[#1c71d8] transition-colors inline-block">Explore Store</a>
                    </div>
                  `;
             } else {
                 const listHtml = localExtensions.map(ext => this.generateLocalRowHTML(ext)).join('');
-                contentHtml = `<div class="flex flex-col gap-3">${listHtml}</div>`;
+                contentHtml = `
+                    <!-- Global Extension Controls -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-5 shadow-sm mb-8 animate-fade-in">
+                        <div class="flex items-center justify-between w-full sm:w-auto gap-6 mb-4 sm:mb-0">
+                            <span class="font-bold text-gnome-black dark:text-gnome-white">Disable All Extensions</span>
+                            <button id="local-global-disable" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none bg-[#c0bfbc] dark:bg-[#3d3846]" role="switch" aria-checked="false">
+                                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
+                            </button>
+                        </div>
+                        <div class="w-px h-8 bg-[#c0bfbc] dark:bg-[#3d3846] hidden sm:block"></div>
+                        <div class="flex items-center justify-between w-full sm:w-auto gap-6">
+                            <span class="font-bold text-gnome-black dark:text-gnome-white">Disable Version Validation</span>
+                            <button id="local-version-validation" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none bg-[#c0bfbc] dark:bg-[#3d3846]" role="switch" aria-checked="false">
+                                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col gap-3">
+                        ${listHtml}
+                    </div>
+                `;
             }
         }
 
@@ -61,37 +80,66 @@ class LocalView {
             </div>
         `;
 
-        // Bind interactive events within the local view
         this.bindEvents();
     }
 
     bindEvents() {
+        // Global Toggles
+        const globalDisable = document.getElementById('local-global-disable');
+        if (globalDisable) {
+            globalDisable.addEventListener('click', () => {
+                const isChecked = globalDisable.getAttribute('aria-checked') === 'true';
+                if (isChecked) {
+                    globalDisable.setAttribute('aria-checked', 'false');
+                    globalDisable.classList.replace('bg-gnome-blue', 'bg-[#c0bfbc]');
+                    globalDisable.querySelector('span').classList.replace('translate-x-6', 'translate-x-1');
+                } else {
+                    globalDisable.setAttribute('aria-checked', 'true');
+                    globalDisable.classList.replace('bg-[#c0bfbc]', 'bg-gnome-blue');
+                    globalDisable.querySelector('span').classList.replace('translate-x-1', 'translate-x-6');
+                }
+            });
+        }
+
+        const versionValidation = document.getElementById('local-version-validation');
+        if (versionValidation) {
+            versionValidation.addEventListener('click', () => {
+                const isChecked = versionValidation.getAttribute('aria-checked') === 'true';
+                if (isChecked) {
+                    versionValidation.setAttribute('aria-checked', 'false');
+                    versionValidation.classList.replace('bg-gnome-blue', 'bg-[#c0bfbc]');
+                    versionValidation.querySelector('span').classList.replace('translate-x-6', 'translate-x-1');
+                } else {
+                    versionValidation.setAttribute('aria-checked', 'true');
+                    versionValidation.classList.replace('bg-[#c0bfbc]', 'bg-gnome-blue');
+                    versionValidation.querySelector('span').classList.replace('translate-x-1', 'translate-x-6');
+                }
+            });
+        }
+
+        // Row Interactions
         const rows = this.container.querySelectorAll('article[data-extension-id]');
-        
         rows.forEach(row => {
             const uuid = row.getAttribute('data-extension-uuid');
 
-            // Toggle Button
+            // Toggle Extension
             const toggleBtn = row.querySelector('.local-install-toggle');
             if (toggleBtn) {
                 toggleBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const isEnabled = toggleBtn.getAttribute('aria-checked') === 'true';
-                    
                     if (isEnabled) {
                         window.GnomeConnector.disable(uuid);
                         toggleBtn.setAttribute('aria-checked', 'false');
-                        toggleBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
+                        toggleBtn.classList.add('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
                         toggleBtn.classList.remove('bg-gnome-blue');
-                        toggleBtn.querySelector('span').classList.add('translate-x-1');
-                        toggleBtn.querySelector('span').classList.remove('translate-x-6');
+                        toggleBtn.querySelector('span').classList.replace('translate-x-6', 'translate-x-1');
                     } else {
                         window.GnomeConnector.enable(uuid);
                         toggleBtn.setAttribute('aria-checked', 'true');
-                        toggleBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
+                        toggleBtn.classList.remove('bg-[#c0bfbc]', 'dark:bg-[#3d3846]');
                         toggleBtn.classList.add('bg-gnome-blue');
-                        toggleBtn.querySelector('span').classList.remove('translate-x-1');
-                        toggleBtn.querySelector('span').classList.remove('translate-x-6');
+                        toggleBtn.querySelector('span').classList.replace('translate-x-1', 'translate-x-6');
                     }
                 });
             }
@@ -117,9 +165,7 @@ class LocalView {
                             row.style.marginBottom = '0';
                             row.style.borderWidth = '0';
                             
-                            setTimeout(() => {
-                                row.remove();
-                            }, 350);
+                            setTimeout(() => { row.remove(); }, 350);
                         }, 50);
                     }
                 });
@@ -131,7 +177,16 @@ class LocalView {
                 updateBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     window.GnomeConnector.update(uuid);
-                    updateBtn.remove(); // Remove update button after triggering
+                    updateBtn.remove();
+                });
+            }
+
+            // Settings/Prefs Button
+            const prefsBtn = row.querySelector('.local-prefs-btn');
+            if (prefsBtn) {
+                prefsBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.GnomeConnector.openPrefs(uuid);
                 });
             }
 
@@ -145,7 +200,6 @@ class LocalView {
 
     renderIcon(extension) {
         if (!extension.icon) return this.defaultExtensionSvg;
-        
         if (extension.icon.startsWith('http') || extension.icon.startsWith('/')) {
             const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
             return `<img src="${this.escapeHtml(extension.icon)}" alt="" class="w-full h-full object-cover" onerror="this.outerHTML='${safeSvg}'">`;
@@ -168,73 +222,81 @@ class LocalView {
         
         let actionsHtml = '';
 
+        if (extension.hasSettings) {
+            actionsHtml += `
+                <button type="button" class="local-prefs-btn text-gnome-grey hover:text-gnome-blue transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="Preferences">
+                    <i class="icon icon-settings"></i>
+                </button>
+            `;
+        }
+
         if (extension.hasUpdate && !isSystem) {
             actionsHtml += `
-                 <button type="button" class="local-update-btn text-white bg-gnome-green hover:bg-gnome-green-hover transition-colors flex items-center justify-center w-8 h-8 rounded-full shadow-sm" title="Update Available">
-                     <i class="fa-solid fa-download text-sm"></i>
-                 </button>
-             `;
+                <button type="button" class="local-update-btn text-white bg-gnome-green hover:bg-[#2ebc6c] transition-colors flex items-center justify-center w-8 h-8 rounded-full shadow-sm" title="Update Available">
+                    <i class="icon icon-download"></i>
+                </button>
+            `;
         }
 
         if (!isSystem) {
             actionsHtml += `
-                 <button type="button" class="local-uninstall-btn text-gnome-grey hover:text-gnome-red transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-gnome-page-bg dark:bg-gnome-border-dark" title="Uninstall">
-                     <i class="fa-solid fa-trash"></i>
-                 </button>
-             `;
+                <button type="button" class="local-uninstall-btn text-gnome-grey hover:text-gnome-red transition-colors flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f5f4] dark:bg-[#3d3846]" title="Uninstall">
+                    <i class="icon icon-bin"></i>
+                </button>
+            `;
         } else {
              actionsHtml += `
-                 <div class="text-gnome-grey flex items-center justify-center w-8 h-8" title="System extensions cannot be uninstalled here">
-                     <i class="fa-solid fa-lock text-sm opacity-50"></i>
-                 </div>
-             `;
+                <div class="text-gnome-grey flex items-center justify-center w-8 h-8" title="System extensions cannot be uninstalled here">
+                    <i class="icon icon-lock text-sm opacity-50"></i>
+                </div>
+            `;
         }
 
         const isEnabled = extension.enabled === true;
         actionsHtml += `
-             <button type="button" class="local-install-toggle ml-2 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isEnabled ? 'bg-gnome-blue' : 'bg-gnome-border-light dark:bg-gnome-border-dark'}" role="switch" aria-checked="${isEnabled}">
-                 <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-1'}"></span>
-             </button>
-         `;
+            <button type="button" class="local-install-toggle ml-2 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isEnabled ? 'bg-gnome-blue' : 'bg-[#c0bfbc] dark:bg-[#3d3846]'}" role="switch" aria-checked="${isEnabled}">
+                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isEnabled ? 'translate-x-6' : 'translate-x-1'}"></span>
+            </button>
+        `;
 
         let errorBanner = '';
         if (hasError) {
             errorBanner = `
-                 <div class="mt-3 col-span-12 bg-gnome-red/10 border border-gnome-red/30 text-gnome-red px-3 py-2 rounded-md text-xs flex items-start gap-2 max-w-full overflow-hidden">
-                     <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0"></i>
-                     <div class="min-w-0">
-                         <span class="font-bold">Error loading extension</span>
-                         <p class="font-mono mt-0.5 opacity-80 break-all">${this.escapeHtml(extension.errorMessage)}</p>
-                     </div>
-                 </div>
-             `;
+                <div class="mt-3 col-span-12 bg-gnome-red/10 border border-gnome-red/30 text-gnome-red px-3 py-2 rounded-md text-xs flex items-start gap-2 max-w-full overflow-hidden">
+                    <i class="icon icon-error mt-0.5 shrink-0"></i>
+                    <div class="min-w-0">
+                        <span class="font-bold">Error loading extension</span>
+                        <p class="font-mono mt-0.5 opacity-80 break-all">${this.escapeHtml(extension.errorMessage)}</p>
+                    </div>
+                </div>
+            `;
         }
 
         return `
-             <article class="group bg-gnome-white dark:bg-gnome-card-dark border ${hasError ? 'border-gnome-red' : 'border-gnome-border-light dark:border-gnome-border-dark'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
-                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                     <div class="flex items-center gap-4 min-w-0 flex-1">
-                         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gnome-page-bg dark:bg-gnome-black overflow-hidden text-gnome-blue">
-                             <div class="scale-[0.8] flex items-center justify-center w-full h-full">
-                                 ${this.renderIcon(extension)}
-                             </div>
-                         </div>
-                         <div class="min-w-0 flex-1">
-                             <div class="flex items-center gap-2">
-                                 <h3 class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
-                                 ${isSystem ? `<span class="bg-gnome-hover-light dark:bg-gnome-border-dark text-gnome-grey dark:text-gnome-text-muted-dark text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-gnome-border-light dark:border-gnome-text-muted-light shrink-0">System</span>` : ''}
-                             </div>
-                             <p class="text-xs text-gnome-grey mt-0.5 truncate">${this.escapeHtml(extension.uuid)}</p>
-                         </div>
-                     </div>
-                     
-                     <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t border-gnome-border-light sm:border-t-0 dark:border-gnome-border-dark pt-3 sm:pt-0 mt-2 sm:mt-0">
-                         ${actionsHtml}
-                     </div>
-                 </div>
-                 ${errorBanner}
-             </article>
-         `;
+            <article class="group bg-gnome-white dark:bg-[#2d2640] border ${hasError ? 'border-gnome-red' : 'border-[#c0bfbc] dark:border-[#3d3846]'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center gap-4 min-w-0 flex-1">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">
+                            <div class="scale-[0.8] flex items-center justify-center w-full h-full">
+                                ${this.renderIcon(extension)}
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-[12pt] text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
+                                ${isSystem ? `<span class="bg-[#deddda] dark:bg-[#3d3846] text-gnome-grey dark:text-[#c0bfbc] text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-[#c0bfbc] dark:border-[#5e5c64] shrink-0">System</span>` : ''}
+                            </div>
+                            <p class="text-xs text-gnome-grey mt-0.5 truncate">${this.escapeHtml(extension.uuid)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
+                        ${actionsHtml}
+                    </div>
+                </div>
+                ${errorBanner}
+            </article>
+        `;
     }
 }
 

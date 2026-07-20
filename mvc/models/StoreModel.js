@@ -1,14 +1,17 @@
+// mvc/models/StoreModel.js
 // GoF Pattern: Observer (Subject Participant)
 class StoreModel {
     constructor() {
         this.observers = [];
         this.extensions = [];
+        this.categories = [];
         
         // Persist layout mode preference across reloads
         const savedLayout = localStorage.getItem('gnome_ext_layout') || 'grid';
         
         this.state = {
-            sortBy: 'downloads',
+            selectedCategory: 'All',
+            sortBy: 'popularity',
             shellVersion: 'all',
             searchTerm: '',
             featuredTab: 'trending',
@@ -42,7 +45,7 @@ class StoreModel {
         
         const data = {
             state: this.state,
-            // Pre-process sorted categories for the Featured tab view
+            categories: this.categories,
             featured: {
                 trending: [...allExtensions].sort((a, b) => b.ratingCount - a.ratingCount).slice(0, 4),
                 popular: [...allExtensions].sort((a, b) => b.downloads - a.downloads).slice(0, 4),
@@ -62,13 +65,20 @@ class StoreModel {
         }
     }
 
-    setData(extensions) {
+    setData(extensions, categories) {
         this.extensions = extensions;
+        this.categories = categories;
         this.notifyObservers();
     }
 
     setSearchTerm(term) {
         this.state.searchTerm = term.toLowerCase();
+        this.state.currentPage = 1;
+        this.notifyObservers();
+    }
+
+    setCategory(category) {
+        this.state.selectedCategory = category;
         this.state.currentPage = 1;
         this.notifyObservers();
     }
@@ -113,7 +123,8 @@ class StoreModel {
     }
 
     resetFilters() {
-        this.state.sortBy = 'downloads';
+        this.state.selectedCategory = 'All';
+        this.state.sortBy = 'popularity';
         this.state.shellVersion = 'all';
         this.state.searchTerm = '';
         this.state.currentPage = 1;
@@ -123,23 +134,35 @@ class StoreModel {
 
     getFilteredExtensions() {
         return this.extensions.filter((extension) => {
+            const matchesCategory = this.state.selectedCategory === 'All' || extension.category === this.state.selectedCategory;
             const matchesSearch = !this.state.searchTerm || [extension.name, extension.author, extension.description, extension.category].join(' ').toLowerCase().includes(this.state.searchTerm);
             
             let matchesVersion = true;
-            if (this.state.shellVersion !== 'all') {
+            if (this.state.shellVersion === 'current') {
+                // Mock logic: assume current shell is 46 for demonstration purposes
+                const extText = JSON.stringify(extension).toLowerCase();
+                matchesVersion = extText.includes('gnome 46') || extText.includes('gnome46') || extText.includes('gnome shell 46');
+            } else if (this.state.shellVersion !== 'all') {
                 const versionStr = this.state.shellVersion;
                 const extText = JSON.stringify(extension).toLowerCase();
                 matchesVersion = extText.includes('gnome ' + versionStr) || extText.includes('gnome' + versionStr) || extText.includes('gnome shell ' + versionStr);
             }
-            return matchesSearch && matchesVersion;
+            
+            return matchesCategory && matchesSearch && matchesVersion;
         }).sort((a, b) => {
             switch (this.state.sortBy) {
-                case 'rating':
-                    return b.rating - a.rating;
+                case 'popularity':
+                    return b.ratingCount - a.ratingCount;
+                case 'relevance':
+                    if (this.state.searchTerm && a.name.toLowerCase().includes(this.state.searchTerm)) return -1;
+                    if (this.state.searchTerm && b.name.toLowerCase().includes(this.state.searchTerm)) return 1;
+                    return b.downloads - a.downloads;
+                case 'recent':
                 case 'newest':
                     return (b.new ? 1 : 0) - (a.new ? 1 : 0);
                 case 'name':
                     return a.name.localeCompare(b.name);
+                case 'downloads':
                 default:
                     return b.downloads - a.downloads;
             }

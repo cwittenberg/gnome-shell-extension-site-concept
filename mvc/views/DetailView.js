@@ -1,14 +1,13 @@
-// GoF Pattern: Observer (Observer Participant)
+// mvc/views/DetailView.js
 class DetailView {
     constructor() {
         this.currentMediaItems = [];
-        this.defaultExtensionSvg = `<i class="fa-solid fa-gear text-4xl"></i>`;
+        this.defaultExtensionSvg = `<i class="icon icon-settings text-4xl"></i>`;
         
         this.bindEvents();
     }
 
     bindEvents() {
-        // Interactive star rating mechanics for the review submission form
         const starContainer = document.getElementById('interactive-star-rating');
         if (starContainer) {
             const stars = starContainer.querySelectorAll('i');
@@ -19,10 +18,8 @@ class DetailView {
                     const hoverValue = parseInt(e.target.getAttribute('data-rating'));
                     stars.forEach(s => {
                         if (parseInt(s.getAttribute('data-rating')) <= hoverValue) {
-                            s.classList.replace('fa-regular', 'fa-solid');
                             s.classList.add('text-gnome-orange');
                         } else {
-                            s.classList.replace('fa-solid', 'fa-regular');
                             s.classList.remove('text-gnome-orange');
                         }
                     });
@@ -31,10 +28,8 @@ class DetailView {
                 star.addEventListener('mouseout', () => {
                     stars.forEach(s => {
                         if (parseInt(s.getAttribute('data-rating')) <= selectedRating) {
-                            s.classList.replace('fa-regular', 'fa-solid');
                             s.classList.add('text-gnome-orange');
                         } else {
-                            s.classList.replace('fa-solid', 'fa-regular');
                             s.classList.remove('text-gnome-orange');
                         }
                     });
@@ -66,6 +61,10 @@ class DetailView {
         document.getElementById('detail-title').textContent = extension.name;
         document.getElementById('detail-author').textContent = extension.author;
         document.getElementById('detail-meta-uuid').textContent = extension.uuid;
+        
+        document.getElementById('detail-meta-categories').textContent = extension.category || 'N/A';
+        document.getElementById('detail-meta-locale').textContent = (extension.locales || ['en-US']).join(', ');
+        
         document.getElementById('detail-meta-maintainers').textContent = (extension.maintainers || []).join(', ');
         document.getElementById('detail-meta-version').textContent = extension.version;
         document.getElementById('detail-meta-downloads').textContent = extension.downloads.toLocaleString();
@@ -78,11 +77,12 @@ class DetailView {
                     const safeSvg = this.defaultExtensionSvg.replace(/"/g, '&quot;');
                     iconHtml = `<img src="${this.escapeHtml(extension.icon)}" alt="${this.escapeHtml(extension.name)} icon" class="w-full h-full object-contain p-2" onerror="this.outerHTML='${safeSvg}'">`;
                 } else {
-                    iconHtml = extension.icon; // fallback to inline svg if needed
+                    iconHtml = extension.icon;
                 }
             }
+
             detailIcon.innerHTML = `
-              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-gnome-card-dark text-gnome-blue overflow-hidden rounded-3xl">
+              <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
                 ${iconHtml}
               </div>
             `;
@@ -92,12 +92,13 @@ class DetailView {
         if (ratingContainer) {
             ratingContainer.innerHTML = `
               <div class="flex items-center gap-2 text-sm font-semibold text-gnome-black dark:text-gnome-white">
-                <span class="text-gnome-orange"><i class="fa-solid fa-star"></i> ${extension.rating.toFixed(1)}</span>
+                <span class="text-gnome-orange"><i class="icon icon-star"></i> ${extension.rating.toFixed(1)}</span>
                 <span class="text-gnome-grey">(${extension.ratingCount} ratings)</span>
             </div>
             `;
         }
-
+        
+        this.renderWarnings(extension);
         this.renderHostConnectorControls(extension);
 
         const description = document.getElementById('detail-description');
@@ -109,16 +110,21 @@ class DetailView {
         if (versionsContainer) {
             const versions = extension.versions || [];
             if (versions.length === 0) {
-                versionsContainer.innerHTML = '<p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark italic">No version history available.</p>';
+                versionsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No version history available.</p>';
             } else {
                 versionsContainer.innerHTML = versions.map((version) => `
-                  <div class="border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 bg-gnome-page-bg dark:bg-gnome-card-dark">
-                    <div class="flex items-center justify-between gap-3">
-                      <div>
-                        <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">Version ${this.escapeHtml(version.version)}</p>
-                        <p class="text-sm text-gnome-grey mt-1">${this.escapeHtml(version.comment)}</p>
-                      </div>
-                      <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${version.status === 'Active' ? 'bg-gnome-green/15 text-gnome-green' : 'bg-gnome-red/15 text-gnome-red'}">${this.escapeHtml(version.status)}</span>
+                  <div class="gnome-card-panel p-4 bg-[#f6f5f4] dark:bg-[#241F31]">
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center justify-between gap-3">
+                          <div>
+                            <p class="font-bold text-sm text-gnome-black dark:text-gnome-white">Version ${this.escapeHtml(version.version)}</p>
+                            <p class="text-sm text-gnome-grey mt-1">${this.escapeHtml(version.comment)}</p>
+                          </div>
+                          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${version.status === 'Active' ? 'bg-gnome-green/15 text-gnome-green' : 'bg-gnome-red/15 text-gnome-red'}">${this.escapeHtml(version.status)}</span>
+                        </div>
+                        <div class="mt-2 text-right">
+                            <button onclick="window.showViewHandler('upload')" class="text-gnome-blue hover:underline text-xs font-bold transition-colors">View Review Thread</button>
+                        </div>
                     </div>
                   </div>
                 `).join('');
@@ -129,55 +135,164 @@ class DetailView {
         if (reviewsContainer) {
             const reviews = extension.reviews || [];
             if (reviews.length === 0) {
-                reviewsContainer.innerHTML = '<p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark italic">No reviews have been submitted for this extension yet.</p>';
+                reviewsContainer.innerHTML = '<p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] italic">No reviews have been submitted for this extension yet.</p>';
             } else {
                 reviewsContainer.innerHTML = reviews.map((review) => `
-                  <div class="border border-gnome-border-light dark:border-gnome-border-dark rounded-xl p-4 bg-gnome-white dark:bg-gnome-card-dark">
+                  <div class="gnome-card-panel p-4 group">
                     <div class="flex items-center justify-between gap-3">
-                      <div>
+                      <div class="flex items-center gap-2">
                         <p class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(review.user)}</p>
-                        <p class="text-sm text-gnome-grey mt-1">${this.escapeHtml(review.date)}</p>
+                        ${review.isAuthor ? `<span class="bg-gnome-blue/15 text-gnome-blue text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-gnome-blue/20">Maintainer</span>` : ''}
                       </div>
-                      <div class="text-gnome-orange font-semibold text-lg"><i class="fa-solid fa-star"></i> ${review.rating}</div>
+                      <div class="flex items-center gap-3">
+                        <p class="text-sm text-gnome-grey">${this.escapeHtml(review.date)}</p>
+                        <div class="text-gnome-orange font-semibold text-sm"><i class="icon icon-star"></i> ${review.rating}</div>
+                        <!-- EGO Admin Delete Button -->
+                        <button class="opacity-0 group-hover:opacity-100 text-gnome-grey hover:text-gnome-red transition-all ml-2" title="Remove review from public view (Admin)">
+                            <i class="icon icon-bin"></i>
+                        </button>
+                      </div>
                     </div>
-                    <p class="text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark mt-4 leading-relaxed">${this.escapeHtml(review.text)}</p>
+                    <p class="text-sm text-[#5e5c64] dark:text-[#c0bfbc] mt-4 leading-relaxed">${this.escapeHtml(review.text)}</p>
                   </div>
                 `).join('');
+            }
+        }
+
+        // Add the Bug Report warning box to the interactive review form dynamically
+        const bugTrackerUrl = extension.bugTracker || extension.url || extension.homepage || '#';
+        const interactiveFormBox = document.querySelector('.gnome-card-panel.p-5.animate-fade-in.mb-8');
+        
+        if (interactiveFormBox) {
+            let warningNode = interactiveFormBox.querySelector('#review-bug-warning');
+            
+            if (!warningNode) {
+                const warningHtml = `
+                    <div id="review-bug-warning" class="hidden bg-gnome-orange/10 border border-gnome-orange/20 text-gnome-orange px-3 py-2 rounded-lg text-sm mb-0 flex items-start gap-2 transition-all duration-300 opacity-0 overflow-hidden" style="max-height: 0;">
+                        <i class="icon icon-info mt-0.5 shrink-0 text-base"></i>
+                        <p><strong>Reviews are not bug reports.</strong> If you are experiencing issues or need support, please use the <a id="review-bug-link" href="#" target="_blank" rel="noreferrer" class="underline font-bold hover:text-gnome-orange/80">Bug Tracker</a>.</p>
+                    </div>
+                `;
+                interactiveFormBox.insertAdjacentHTML('afterbegin', warningHtml);
+                warningNode = interactiveFormBox.querySelector('#review-bug-warning');
+                
+                const textarea = interactiveFormBox.querySelector('textarea');
+                if (textarea) {
+                    textarea.addEventListener('focus', () => {
+                        warningNode.classList.remove('hidden');
+                        // Small delay to allow display:block to apply before animating opacity/height
+                        setTimeout(() => {
+                            warningNode.classList.remove('opacity-0');
+                            warningNode.classList.add('opacity-100', 'mb-4');
+                            warningNode.style.maxHeight = '100px';
+                        }, 10);
+                    });
+                    
+                    textarea.addEventListener('blur', (e) => {
+                        // Delay hiding slightly to allow clicks on the bug link to process first
+                        setTimeout(() => {
+                            const bugLink = interactiveFormBox.querySelector('#review-bug-link');
+                            if (e.target.value.trim() === '' && document.activeElement !== bugLink) {
+                                warningNode.classList.remove('opacity-100', 'mb-4');
+                                warningNode.classList.add('opacity-0');
+                                warningNode.style.maxHeight = '0';
+                                setTimeout(() => {
+                                    warningNode.classList.add('hidden');
+                                }, 300);
+                            }
+                        }, 150);
+                    });
+                }
+            }
+            
+            const bugLink = interactiveFormBox.querySelector('#review-bug-link');
+            if (bugLink) {
+                bugLink.href = bugTrackerUrl;
             }
         }
 
         this.renderMedia(extension.media || []);
         this.renderLinks(extension);
     }
+    
+    renderWarnings(extension) {
+        const warningsContainer = document.getElementById('detail-warnings-container');
+        if (!warningsContainer) return;
+        
+        const warnings = extension.warnings || [];
+        
+        if (warnings.length === 0) {
+            warningsContainer.innerHTML = '';
+            warningsContainer.classList.add('hidden');
+            return;
+        }
+        
+        warningsContainer.classList.remove('hidden');
+        warningsContainer.innerHTML = warnings.map(warn => {
+            let icon = '<i class="icon icon-exclamation-color"></i>';
+            if (warn.includes('Subprocess')) icon = '<i class="icon icon-terminal-color"></i>';
+            if (warn.includes('Python')) icon = '<i class="icon icon-python-color"></i>';
+            if (warn.includes('Clipboard')) icon = '<i class="icon icon-copy-color"></i>';
+            
+            return `
+                <span class="inline-flex items-center gap-1.5 bg-gnome-orange/15 text-gnome-orange border border-gnome-orange/20 px-2.5 py-1 rounded-md text-xs font-bold" title="Security / Environment Warning">
+                    ${icon} ${this.escapeHtml(warn)}
+                </span>
+            `;
+        }).join('');
+    }
 
     renderHostConnectorControls(extension) {
-        const installContainer = document.getElementById('detail-install-container');
-        const btn = document.getElementById('detail-install-toggle');
-        const label = document.getElementById('detail-toggle-label');
-        const knob = document.getElementById('detail-toggle-knob');
+        const wrapper = document.getElementById('detail-actions-wrapper');
+        if (!wrapper) return;
         
+        // Clone to clear previous event listeners
+        const newWrapper = wrapper.cloneNode(true);
+        wrapper.parentNode.replaceChild(newWrapper, wrapper);
+
+        const toggleBtn = document.getElementById('detail-install-toggle');
         const uninstallBtn = document.getElementById('detail-uninstall-btn');
         const updateContainer = document.getElementById('detail-update-container');
+        const installBtn = document.getElementById('detail-install-btn');
+        const prefsBtn = document.getElementById('detail-prefs-btn');
+        const donateBtn = document.getElementById('detail-donate-btn');
+        const incompatibleBtn = document.getElementById('detail-incompatible-btn');
+        const bugBtn = document.getElementById('detail-bug-btn');
+        
         const systemBadge = document.getElementById('detail-system-badge');
         const errorBanner = document.getElementById('detail-error-banner');
         const errorMessage = document.getElementById('detail-error-message');
 
-        // Cleanup any previous bindings using cloned node strategy to prevent multi-fires
-        const newInstallContainer = installContainer.cloneNode(true);
-        installContainer.parentNode.replaceChild(newInstallContainer, installContainer);
+        const isInstalled = extension.installed === true;
+        let isEnabled = extension.enabled === true;
+        const hasSettings = extension.hasSettings === true;
         
-        const newBtn = newInstallContainer.querySelector('#detail-install-toggle');
-        const newLabel = newInstallContainer.querySelector('#detail-toggle-label');
-        const newKnob = newInstallContainer.querySelector('#detail-toggle-knob');
+        // Mock compatibility check: default to true unless explicitly flagged
+        const isCompatible = extension.compatible !== false; 
 
-        const newUninstallBtn = uninstallBtn.cloneNode(true);
-        uninstallBtn.parentNode.replaceChild(newUninstallBtn, uninstallBtn);
+        // 1. Bug Report Link
+        const bugTrackerUrl = extension.bugTracker || extension.url || extension.homepage || '#';
+        bugBtn.href = bugTrackerUrl;
 
-        const newUpdateContainer = updateContainer.cloneNode(true);
-        updateContainer.parentNode.replaceChild(newUpdateContainer, updateContainer);
-        
-        // Render Error State
-        if (extension.hasError && extension.installed) {
+        // 2. Donate Button: Display if URL exists (Mocked as always active to show design)
+        const donateUrl = extension.donate || '#sponsor';
+        donateBtn.classList.remove('hidden');
+        donateBtn.href = donateUrl;
+
+        // 3. Settings Button: Display only when installed & has settings
+        if (isInstalled && hasSettings) {
+            prefsBtn.classList.remove('hidden');
+            prefsBtn.addEventListener('click', () => {
+                if (window.GnomeConnector && window.GnomeConnector.isConnected) {
+                    window.GnomeConnector.openPrefs(extension.uuid);
+                }
+            });
+        } else {
+            prefsBtn.classList.add('hidden');
+        }
+
+        // 4. Uninstall/Remove Button: Display only when installed
+        if (extension.hasError && isInstalled) {
             errorBanner.classList.remove('hidden');
             errorMessage.textContent = extension.errorMessage || "Unknown exception occurred.";
         } else {
@@ -185,119 +300,115 @@ class DetailView {
             errorMessage.textContent = "";
         }
 
-        // Render System Extension Badge
         if (extension.isSystem) {
             systemBadge.classList.remove('hidden');
-            newUninstallBtn.classList.add('hidden'); // Cannot uninstall system extensions via web
+            uninstallBtn.classList.add('hidden');
         } else {
             systemBadge.classList.add('hidden');
-            if (extension.installed) newUninstallBtn.classList.remove('hidden');
+            if (isInstalled) {
+                uninstallBtn.classList.remove('hidden');
+            } else {
+                uninstallBtn.classList.add('hidden');
+            }
         }
 
-        // Render Updates
-        if (extension.hasUpdate && extension.installed && !extension.isSystem) {
-            newUpdateContainer.classList.remove('hidden');
+        // 5. Update Button: Display when an update is available and extension is installed
+        if (extension.hasUpdate && isInstalled && !extension.isSystem) {
+            updateContainer.classList.remove('hidden');
         } else {
-            newUpdateContainer.classList.add('hidden');
+            updateContainer.classList.add('hidden');
         }
 
-        // Setup base toggle styling based on installed/enabled state
-        if (extension.installed && extension.enabled) {
-            newBtn.setAttribute('aria-checked', 'true');
-            newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-            newBtn.classList.add('bg-gnome-blue');
-            newKnob.classList.remove('translate-x-1');
-            newKnob.classList.add('translate-x-6');
-            newLabel.textContent = 'ENABLED';
-            newLabel.classList.add('text-gnome-blue');
-        } else if (extension.installed && !extension.enabled) {
-            newBtn.setAttribute('aria-checked', 'false');
-            newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-            newBtn.classList.remove('bg-gnome-blue');
-            newKnob.classList.add('translate-x-1');
-            newKnob.classList.remove('translate-x-6');
-            newLabel.textContent = 'DISABLED';
-            newLabel.classList.remove('text-gnome-blue');
+        // 6. Install Button: Display only when NOT installed 
+        if (!isInstalled) {
+            installBtn.classList.remove('hidden');
         } else {
-            newBtn.setAttribute('aria-checked', 'false');
-            newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-            newBtn.classList.remove('bg-gnome-blue');
-            newKnob.classList.add('translate-x-1');
-            newKnob.classList.remove('translate-x-6');
-            newLabel.textContent = 'INSTALL';
-            newLabel.classList.remove('text-gnome-blue');
+            installBtn.classList.add('hidden');
         }
 
-        // Handle Toggle / Install interactions
-        newInstallContainer.addEventListener('click', () => {
+        // 7. Incompatible Button: Display only when installed and marked as incompatible
+        if (isInstalled && !isCompatible) {
+            incompatibleBtn.classList.remove('hidden');
+        } else {
+            incompatibleBtn.classList.add('hidden');
+        }
+
+        // 8. Top Toggle Switch State Validation
+        if (isInstalled) {
+            toggleBtn.classList.remove('pointer-events-none', 'opacity-50');
+            if (isEnabled) {
+                toggleBtn.setAttribute('aria-checked', 'true');
+            } else {
+                toggleBtn.setAttribute('aria-checked', 'false');
+            }
+        } else {
+            toggleBtn.classList.add('pointer-events-none', 'opacity-50');
+            toggleBtn.setAttribute('aria-checked', 'false');
+        }
+
+        // --- Event Listeners ---
+        
+        toggleBtn.addEventListener('click', () => {
             if (window.GnomeConnector && window.GnomeConnector.isConnected) {
-                if (!extension.installed) {
-                    window.GnomeConnector.install(extension.uuid);
-                    extension.installed = true;
-                    extension.enabled = true;
-                    
-                    newBtn.setAttribute('aria-checked', 'true');
-                    newLabel.textContent = 'ENABLED';
-                    newLabel.classList.add('text-gnome-blue');
-                    newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-                    newBtn.classList.add('bg-gnome-blue');
-                    newKnob.classList.remove('translate-x-1');
-                    newKnob.classList.add('translate-x-6');
-                    newUninstallBtn.classList.remove('hidden');
+                isEnabled = !isEnabled;
+                if (isEnabled) {
+                    window.GnomeConnector.enable(extension.uuid);
+                    toggleBtn.setAttribute('aria-checked', 'true');
                 } else {
-                    extension.enabled = !extension.enabled;
-                    if (extension.enabled) {
-                        window.GnomeConnector.enable(extension.uuid);
-                        newBtn.setAttribute('aria-checked', 'true');
-                        newBtn.classList.remove('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-                        newBtn.classList.add('bg-gnome-blue');
-                        newKnob.classList.remove('translate-x-1');
-                        newKnob.classList.add('translate-x-6');
-                        newLabel.textContent = 'ENABLED';
-                        newLabel.classList.add('text-gnome-blue');
-                    } else {
-                        window.GnomeConnector.disable(extension.uuid);
-                        newBtn.setAttribute('aria-checked', 'false');
-                        newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-                        newBtn.classList.remove('bg-gnome-blue');
-                        newKnob.classList.add('translate-x-1');
-                        newKnob.classList.remove('translate-x-6');
-                        newLabel.textContent = 'DISABLED';
-                        newLabel.classList.remove('text-gnome-blue');
-                    }
+                    window.GnomeConnector.disable(extension.uuid);
+                    toggleBtn.setAttribute('aria-checked', 'false');
                 }
             } else {
                 alert("GNOME Shell integration is not installed or running. Cannot manage extensions.");
             }
         });
 
-        // Handle Uninstall Interaction
-        newUninstallBtn.addEventListener('click', () => {
+        installBtn.addEventListener('click', () => {
             if (window.GnomeConnector && window.GnomeConnector.isConnected) {
-                if (confirm(`Are you sure you want to uninstall ${extension.name}?`)) {
-                    window.GnomeConnector.uninstall(extension.uuid);
-                    extension.installed = false;
-                    extension.enabled = false;
-                    
-                    // Reset UI Mock State
-                    newUninstallBtn.classList.add('hidden');
-                    newUpdateContainer.classList.add('hidden');
-                    newLabel.textContent = 'INSTALL';
-                    newLabel.classList.remove('text-gnome-blue');
-                    newBtn.classList.add('bg-gnome-border-light', 'dark:bg-gnome-border-dark');
-                    newBtn.classList.remove('bg-gnome-blue');
-                    newKnob.classList.add('translate-x-1');
-                    newKnob.classList.remove('translate-x-6');
-                    errorBanner.classList.add('hidden');
+                window.GnomeConnector.install(extension.uuid);
+                
+                // Optimistically update UI to installed state
+                installBtn.classList.add('hidden');
+                toggleBtn.classList.remove('pointer-events-none', 'opacity-50');
+                toggleBtn.setAttribute('aria-checked', 'true');
+                
+                if (!extension.isSystem) {
+                    uninstallBtn.classList.remove('hidden');
                 }
+                if (hasSettings) {
+                    prefsBtn.classList.remove('hidden');
+                }
+                
+                isEnabled = true;
+            } else {
+                alert("GNOME Shell integration is not installed or running. Cannot manage extensions.");
             }
         });
 
-        // Handle Update Interaction
-        newUpdateContainer.addEventListener('click', () => {
+        uninstallBtn.addEventListener('click', () => {
+            if (window.GnomeConnector && window.GnomeConnector.isConnected) {
+                if (confirm(`Are you sure you want to uninstall ${extension.name}?`)) {
+                    window.GnomeConnector.uninstall(extension.uuid);
+                    
+                    uninstallBtn.classList.add('hidden');
+                    updateContainer.classList.add('hidden');
+                    prefsBtn.classList.add('hidden');
+                    installBtn.classList.remove('hidden');
+                    
+                    toggleBtn.classList.add('pointer-events-none', 'opacity-50');
+                    toggleBtn.setAttribute('aria-checked', 'false');
+                    
+                    if (errorBanner) errorBanner.classList.add('hidden');
+                }
+            } else {
+                alert("GNOME Shell integration is not installed or running. Cannot manage extensions.");
+            }
+        });
+
+        updateContainer.addEventListener('click', () => {
             if (window.GnomeConnector && window.GnomeConnector.isConnected) {
                 window.GnomeConnector.update(extension.uuid);
-                newUpdateContainer.classList.add('hidden');
+                updateContainer.classList.add('hidden');
             }
         });
     }
@@ -321,75 +432,65 @@ class DetailView {
             return;
         }
 
-        // Generate the native scroll-snap track
         const trackHtml = this.currentMediaItems.map((media, index) => {
             let content = '';
             if (media.type === 'video') {
                 const ytId = this.getYoutubeId(media.url);
                 if (ytId) {
-                    content = `<iframe class="w-full h-full object-cover pointer-events-auto" src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+                    content = `<iframe class="w-full h-full object-contain pointer-events-auto" src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
                 } else {
-                    content = `<video class="w-full h-full object-cover" controls playsinline poster="${this.escapeHtml(media.poster || '')}">
+                    content = `<video class="w-full h-full object-contain" controls playsinline poster="${this.escapeHtml(media.poster || '')}">
                                  <source src="${this.escapeHtml(media.url)}" type="video/mp4">
                                </video>`;
                 }
             } else {
-                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-cover select-none">`;
+                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-contain select-none">`;
             }
             
-            // Generate the Caption Overlay
             let captionHtml = '';
             if (media.caption) {
                 captionHtml = `
-                    <div class="absolute bottom-10 left-0 right-0 flex justify-center z-10 pointer-events-none">
-                        <span class="bg-black/60 text-white text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg tracking-wide">
+                    <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10 pointer-events-none px-4">
+                        <span class="bg-black/70 text-white text-sm sm:text-base font-bold px-5 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-lg tracking-wide text-center max-w-[90%]">
                             ${this.escapeHtml(media.caption)}
                         </span>
                     </div>
                 `;
             }
-            
+
             return `<div class="min-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black" data-index="${index}">${content}${captionHtml}</div>`;
         }).join('');
 
-        // Generate expanding pill indicators (overlayed)
         const dotsHtml = this.currentMediaItems.map((_, index) => {
             const activeClasses = index === 0 ? 'w-5 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/90';
             return `<button type="button" data-dot-index="${index}" class="carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${activeClasses} focus:outline-none" aria-label="Go to slide ${index + 1}"></button>`;
         }).join('');
 
-        // Apply track, arrows, and pill indicators to the main container
-        carouselMain.className = "w-full aspect-video bg-black rounded-xl overflow-hidden mb-3 relative group shadow-inner";
+        carouselMain.className = "w-full max-h-72 sm:max-h-80 md:max-h-96 aspect-video bg-[#241F31] dark:bg-black rounded-xl overflow-hidden mb-3 relative group shadow-inner";
         carouselMain.innerHTML = `
             <div id="carousel-track" class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth">
                 ${trackHtml}
             </div>
-            
             <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/50 hover:scale-105 hover:shadow-lg border border-white/20 z-10 hidden sm:flex pointer-events-none" aria-label="Previous image">
-                <i class="fa-solid fa-chevron-left text-lg pr-1"></i>
+                <i class="icon icon-arrow-left text-lg pr-1"></i>
             </button>
             <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/50 hover:scale-105 hover:shadow-lg border border-white/20 z-10 hidden sm:flex pointer-events-none" aria-label="Next image">
-                <i class="fa-solid fa-chevron-right text-lg pl-1"></i>
+                <i class="icon icon-arrow-right text-lg pl-1"></i>
             </button>
-
             <div class="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-1.5 z-20 pointer-events-auto">
                 ${dotsHtml}
             </div>
         `;
 
-        // Generate Thumbnails underneath.
         carouselThumbnails.className = "flex gap-2.5 overflow-x-auto scrollbar-hide py-1 w-full";
         carouselThumbnails.innerHTML = this.currentMediaItems.map((media, index) => {
             let thumbUrl = media.url;
             if (media.type === 'video') {
                 const ytId = this.getYoutubeId(media.url);
-                if (ytId) {
-                    thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
-                } else {
-                    thumbUrl = media.poster || '';
-                }
+                if (ytId) thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                else thumbUrl = media.poster || '';
             }
-            
+
             const activeClasses = index === 0 ? 'border-gnome-blue opacity-100 scale-100' : 'border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             
             return `
@@ -399,7 +500,6 @@ class DetailView {
             `;
         }).join('');
 
-        // Initialize interactivity
         this.setupCarouselBehaviors();
     }
 
@@ -412,76 +512,41 @@ class DetailView {
 
         if (!track || dots.length === 0) return;
 
-        // UI update function synced to exact scroll layout
         const updateUI = () => {
             const width = track.clientWidth;
-            if (width === 0) return; // Prevent calc error on hidden views
-
-            // Add half a track width to accurately calculate the center item during snap
+            if (width === 0) return;
             const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
 
-            // Update pills
             dots.forEach((dot, idx) => {
-                if (idx === activeIndex) {
-                    dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-5 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
-                } else {
-                    dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-1.5 bg-white/50 hover:bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
-                }
+                if (idx === activeIndex) dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-5 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
+                else dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-1.5 bg-white/50 hover:bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
             });
 
-            // Update thumbnails
             thumbs.forEach((thumb, idx) => {
-                if (idx === activeIndex) {
-                    thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-gnome-blue opacity-100 scale-100';
-                } else {
-                    thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
-                }
+                if (idx === activeIndex) thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-gnome-blue opacity-100 scale-100';
+                else thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             });
 
-            // Update directional arrow visibility
             if (prevBtn) {
-                if (activeIndex === 0) {
-                    prevBtn.style.opacity = '0';
-                    prevBtn.style.pointerEvents = 'none';
-                } else {
-                    prevBtn.style.opacity = '';
-                    prevBtn.style.pointerEvents = 'auto';
-                }
+                if (activeIndex === 0) { prevBtn.style.opacity = '0'; prevBtn.style.pointerEvents = 'none'; }
+                else { prevBtn.style.opacity = ''; prevBtn.style.pointerEvents = 'auto'; }
             }
             if (nextBtn) {
-                if (activeIndex === dots.length - 1) {
-                    nextBtn.style.opacity = '0';
-                    nextBtn.style.pointerEvents = 'none';
-                } else {
-                    nextBtn.style.opacity = '';
-                    nextBtn.style.pointerEvents = 'auto';
-                }
+                if (activeIndex === dots.length - 1) { nextBtn.style.opacity = '0'; nextBtn.style.pointerEvents = 'none'; }
+                else { nextBtn.style.opacity = ''; nextBtn.style.pointerEvents = 'auto'; }
             }
         };
 
-        // Bind scroll updates
         let scrollTimeout;
         track.addEventListener('scroll', () => {
             window.clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(updateUI, 15); // Short debounce for buttery smooth rendering
+            scrollTimeout = setTimeout(updateUI, 15);
         });
-
-        // Initialize boundaries on load
         updateUI();
 
-        // Arrow Controls
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
-            });
-        }
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
-            });
-        }
+        if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); });
 
-        // Indicator & Thumbnail Navigation
         const navigateTo = (e) => {
             const idx = parseInt(e.currentTarget.getAttribute('data-dot-index') || e.currentTarget.getAttribute('data-thumb-index'), 10);
             track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
@@ -490,25 +555,21 @@ class DetailView {
         dots.forEach(dot => dot.addEventListener('click', navigateTo));
         thumbs.forEach(thumb => thumb.addEventListener('click', navigateTo));
         
-        // Recalculate on browser resize
         window.addEventListener('resize', updateUI);
 
-        // --- Auto-play Carousel Logic ---
         const onlyPictures = this.currentMediaItems.every(media => media.type !== 'video');
         let autoplayTimer = null;
 
         const startAutoplay = () => {
             if (!onlyPictures || dots.length <= 1) return;
-            
-            stopAutoplay(); // clear existing to prevent duplicates
+            stopAutoplay();
             autoplayTimer = setInterval(() => {
                 const width = track.clientWidth;
-                if (width === 0) return; // Wait if DOM is hidden
-                
+                if (width === 0) return;
                 const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
                 const nextIndex = (activeIndex + 1) % dots.length;
                 track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
-            }, 4000); // 4 second interval
+            }, 4000);
         };
 
         const stopAutoplay = () => {
@@ -519,7 +580,6 @@ class DetailView {
         };
 
         startAutoplay();
-
         const carouselMain = document.getElementById('carousel-main');
         if (carouselMain) {
             carouselMain.addEventListener('mouseenter', stopAutoplay);
@@ -533,12 +593,15 @@ class DetailView {
         const linksContainer = document.getElementById('detail-meta-links');
         if (!linksContainer) return;
 
+        const bugTrackerUrl = extension.bugTracker || extension.url || extension.homepage;
         const links = [
             { label: 'Homepage', href: extension.homepage },
-            { label: 'Bug tracker', href: extension.bugTracker }
+            { label: 'Bug tracker', href: bugTrackerUrl }
         ].filter((link) => link.href && link.href !== '#');
 
-        linksContainer.innerHTML = links.map((link) => `
+        const uniqueLinks = Array.from(new Map(links.map(item => [item.href, item])).values());
+
+        linksContainer.innerHTML = uniqueLinks.map((link) => `
           <a href="${this.escapeHtml(link.href)}" target="_blank" rel="noreferrer" class="text-sm font-semibold text-gnome-blue hover:underline">${this.escapeHtml(link.label)}</a>
         `).join('');
     }

@@ -7,12 +7,16 @@ class StoreController {
         this.model.addObserver(this.view);
     }
 
-    init(extensions) {
-        this.model.setData(extensions);
+    init(extensions, categories) {
+        this.model.setData(extensions, categories);
     }
 
     handleSearch(term) {
         this.model.setSearchTerm(term);
+    }
+
+    handleCategory(category) {
+        this.model.setCategory(category);
     }
 
     handleSort(sortBy) {
@@ -60,4 +64,5 @@ class StoreController {
         }
     }
 }
+
 window.StoreController = StoreController;

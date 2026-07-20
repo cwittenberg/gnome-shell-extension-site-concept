@@ -15,10 +15,10 @@ const EXTENSIONS = [
         homepage: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection',
         bugTracker: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Customizing standard behaviors' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Minimalist desktop view' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Profile configuration menu' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification placement overrides' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification placement overrides' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Customizing standard behaviors' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3843.png',
         mdDescription: '## Just Perfection\n\nTweak Tool to customize GNOME Shell, change the behavior and disable UI elements.\n\n### Features\n* **Minimalist Desktop:** Hide the Top Panel, Dash, Search, Workspace Switcher, and more.\n* **Behavior Tweaks:** Change notification banner positions, disable window demands attention, and control startup status.\n* **Profile System:** Quickly switch between Minimal, Super Minimal, and Default profiles.\n* **Compatibility:** Always updated quickly for the latest GNOME Shell releases.',
@@ -49,10 +49,10 @@ const EXTENSIONS = [
         homepage: 'https://github.com/cwittenberg/omnipanel',
         bugTracker: 'https://github.com/cwittenberg/omnipanel/issues',
         media: [
-                    { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s', caption: 'OmniPanel overview and configuration' },
-                    { type: 'image', url: 'img/screenshots/zonedesigner.png', caption: 'OmniPanel Zone Designer' },
-                    { type: 'image', url: 'img/screenshots/stacklayout.png', caption: 'Dynamic Stack layout switching per Zone' }
-                ],
+            { type: 'image', url: 'img/screenshots/zonedesigner.png', caption: 'OmniPanel Zone Designer' },
+            { type: 'image', url: 'img/screenshots/stacklayout.png', caption: 'Dynamic Stack layout switching per Zone' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=c7JNV20OV8k&t=3s', caption: 'OmniPanel overview and configuration' }
+        ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_10049_d7PgALE.png',
         mdDescription: '## OmniPanel\n\nOmniPanel is a true multi-monitor panel extension and advanced window management system for GNOME Shell (versions 46, 47, and 50).\n\n### Features\n* **Advanced Window Management:** Zone Designer Mode to visually draw and configure custom rectangular drop zones across your screens.\n* **Smart Auto-Placement:** Automatically assigns new windows to zones matching their application name or desktop metadata category.\n* **Active Toolbar Movement:** Your true GNOME panel, including all system tray indicators and extensions, seamlessly follows your mouse to the active screen.\n* **Pure Automatic Tiling:** Master auto-tiling override to dynamically arrange all workspace windows using BSP or Cascading algorithms.\n* **Quick Tiler:** Instantly spawn an 8x8 interactive grid (Default: `<Super>g`) on the active monitor to reshape the active window by clicking and dragging across cells.',
         reviews: [
@@ -78,10 +78,10 @@ const EXTENSIONS = [
         homepage: 'https://github.com/cwittenberg/snaptext',
         bugTracker: 'https://github.com/cwittenberg/snaptext/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How OCR text grabbing works' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Extracting text from a YouTube video' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Scanning code snippets instantly' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Clipboard notification confirmation' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Clipboard notification confirmation' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How OCR text grabbing works' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_10209.png',
         mdDescription: '## Snap Text Extractor\n\nGNOME Extension enabling the user to select an area of the screen to instantly extract and copy text to the clipboard using native Optical Character Recognition (OCR). Similar to how it works on MacOS.\n\n### Features\n* **Instant Text Extraction:** Select any part of your screen, and the text within that area is instantly processed and copied to your clipboard.\n* **Smart OCR Preprocessing:** Utilizes ImageMagick to maximize Text Recognition accuracy by automatically converting to grayscale, maximizing contrast, upscaling small screen snips, and smartly negating colors for Dark Mode UIs.\n* **Multi-Pass OCR Routing:** Dynamically adjusts Page Segmentation Modes (PSM) based on aspect ratio.\n* **Seamless GNOME Integration:** Built exclusively for GNOME Shell versions 45 through 50 using modern standard APIs.',
@@ -107,10 +107,10 @@ const EXTENSIONS = [
         homepage: 'https://github.com/cwittenberg/thisipcan.cyou',
         bugTracker: 'https://github.com/cwittenberg/thisipcan.cyou/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Tracking VPN node jumps automatically' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Top panel address indicator' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'IP Geolocation integration' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification banner on network change' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Notification banner on network change' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Tracking VPN node jumps automatically' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_5368.png',
         mdDescription: '## Show External IP\n\nKeep track of your public IP address directly from the top panel.\n\n### Features\n* **Live Updates:** Automatically refreshes your IP address.\n* **One-Click Copy:** Click the panel icon to copy the IP to your clipboard.\n* **Multiple Providers:** Configure which service to use for IP checking to ensure uptime and accuracy.',
@@ -136,10 +136,10 @@ const EXTENSIONS = [
         homepage: 'https://github.com/micheleg/dash-to-dock',
         bugTracker: 'https://github.com/micheleg/dash-to-dock/issues',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Overview of Dash configuration' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Bottom orientation setting' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dash appearance tuning' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Intellihide behavior enabled' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Intellihide behavior enabled' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Overview of Dash configuration' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_307.png',
         mdDescription: mockMarkdown,
@@ -196,10 +196,10 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Blur configurations in action' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Blurred overview background' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dash to dock blurring' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dynamic window blurs' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dynamic window blurs' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Blur configurations in action' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3193.png',
         mdDescription: mockMarkdown,
@@ -222,10 +222,10 @@ const EXTENSIONS = [
         homepage: '#',
         bugTracker: '#',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'How AppIndicator manages trays' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450', caption: 'KStatusNotifierItem rendering' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Legacy tray app support' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Standard GNOME integration' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Standard GNOME integration' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'How AppIndicator manages trays' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_615.png',
         mdDescription: mockMarkdown,
@@ -252,10 +252,10 @@ const EXTENSIONS = [
         ratingCount: 1950,
         category: 'Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Syncing your phone notifications' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Sending SMS from GNOME' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Remote filesystem mapping' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Device security pairing' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Device security pairing' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Syncing your phone notifications' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1319.png',
         mdDescription: '## GSConnect\n\nSeamless cellular integration built on top of the robust native KDE Connect framework.',
@@ -276,10 +276,10 @@ const EXTENSIONS = [
         ratingCount: 1102,
         category: 'Dock & Panel',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Exploring Arc Menu presets' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Windows 11 style layout' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Custom search providers active' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Category navigation' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Category navigation' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Exploring Arc Menu presets' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3628.png',
         mdDescription: '## Arc Menu\n\nA customizable application launcher for power users.',
@@ -301,10 +301,10 @@ const EXTENSIONS = [
         category: 'Dock & Panel',
         new: true,
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Setting up a unified taskbar' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Clock formatting and indicators' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Fine window grouping settings' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Isolating workspace instances' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Isolating workspace instances' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Setting up a unified taskbar' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1160.png',
         mdDescription: '## Dash to Panel\n\nCombines the top bar and window dashboard elements together into a single master workflow panel.',
@@ -325,10 +325,10 @@ const EXTENSIONS = [
         ratingCount: 840,
         category: 'Utilities',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Browsing through clip history' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'History drop-down layout' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Pinning items permanently' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Private mode toggled' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Private mode toggled' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Browsing through clip history' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_779.png',
         mdDescription: '## Clipboard Indicator\n\nMonitors and aggregates active system copying hooks for rapid desktop deployment.',
@@ -353,10 +353,10 @@ const EXTENSIONS = [
         ratingCount: 1621,
         category: 'Utilities',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How caffeine suppresses sleep' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Coffee cup icon in tray' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Configuring fullscreen override' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Manual toggle switch' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Manual toggle switch' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'How caffeine suppresses sleep' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_517.png',
         mdDescription: '## Caffeine\n\nPrevents display dimming and operational timeouts.',
@@ -377,10 +377,10 @@ const EXTENSIONS = [
         ratingCount: 914,
         category: 'System Monitor',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Vitals sensor arrays tracking' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'System dropdown graph' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Network flow speeds' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Temperature node selections' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Temperature node selections' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Vitals sensor arrays tracking' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1460.png',
         mdDescription: '## Vitals\n\nA deep overview telemetry asset displaying operational values clearly.',
@@ -401,10 +401,10 @@ const EXTENSIONS = [
         ratingCount: 520,
         category: 'Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Fetching real-time local forecasts' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Weekly prediction modal' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Panel numeric formatting' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multiple location tracking' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multiple location tracking' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Fetching real-time local forecasts' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_750.png',
         mdDescription: '## OpenWeather\n\nSyncs with meteorology feeds to feed active local parameters into global toolbars.',
@@ -425,10 +425,10 @@ const EXTENSIONS = [
         ratingCount: 390,
         category: 'Dock & Panel',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Switching workspaces via Space Bar' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Named workspace mapping' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dynamic node width expansion' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Active application indicators' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Active application indicators' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Switching workspaces via Space Bar' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_5090.png',
         mdDescription: '## Space Bar\n\nA streamlined status approach for workspace management.',
@@ -449,10 +449,10 @@ const EXTENSIONS = [
         ratingCount: 1720,
         category: 'Visual Effects',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'All physics effects running live' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'The fire termination effect' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Matrix data stream closing' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'T-Rex bite window break' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'T-Rex bite window break' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'All physics effects running live' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_4679.png',
         mdDescription: '## Burn My Windows\n\nFires up old school window events with full performance controls.',
@@ -473,10 +473,10 @@ const EXTENSIONS = [
         ratingCount: 612,
         category: 'Visual Effects',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Wobbly window snapping limits' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Drag elasticity setting configuration' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Spring friction parameters' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Edge snapping behavior' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Edge snapping behavior' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Wobbly window snapping limits' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_3220.png',
         mdDescription: '## Compiz Wobbly Windows\n\nRestores retro dynamic inertia metrics to active window canvas operations.',
@@ -497,10 +497,10 @@ const EXTENSIONS = [
         ratingCount: 211,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Adjusting sound reads live' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Inline panel rendering' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Quick mute threshold' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-device percent scaling' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-device percent scaling' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Adjusting sound reads live' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_858.png',
         mdDescription: '## Sound Percentage\n\nSimple, lightweight volume percentage readout injection.',
@@ -521,10 +521,10 @@ const EXTENSIONS = [
         ratingCount: 418,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: '3D rotation timeline' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Toggling application depth' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Setting coverflow perspective' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dark mode preview isolation' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Dark mode preview isolation' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: '3D rotation timeline' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_97.png',
         mdDescription: '## Coverflow Alt-Tab\n\nStunning 3D window rotation metrics mapping application switching behaviors.',
@@ -545,10 +545,10 @@ const EXTENSIONS = [
         ratingCount: 310,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Navigating typical sub-menus' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Static nested categories' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Quick jump search feature' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Replacing activities label' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Replacing activities label' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Navigating typical sub-menus' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_13.png',
         mdDescription: '## Frippery Applications Menu\n\nA stable traditional menu structure mapping standard workflows without layout shifts.',
@@ -569,10 +569,10 @@ const EXTENSIONS = [
         ratingCount: 1420,
         category: 'System Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Mounting logical drives from Places' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'User folder quick links' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Network mount mapping' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Remote server tree' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Remote server tree' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Mounting logical drives from Places' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_8.png',
         mdDescription: '## Places Status Indicator\n\nOfficial extension enabling clean desktop file mount mapping tracking loops.',
@@ -597,10 +597,10 @@ const EXTENSIONS = [
         ratingCount: 1024,
         category: 'Window Management',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Opening Firefox specifically on Workspace 2' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Configuring application routing lists' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Binding keys to routing IDs' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-screen awareness options' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multi-screen awareness options' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Opening Firefox specifically on Workspace 2' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_16.png',
         mdDescription: '## Auto Move Windows\n\nAutomates layout positions across displays based on targeting variables.',
@@ -625,10 +625,10 @@ const EXTENSIONS = [
         ratingCount: 1290,
         category: 'System Integration',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Ejecting a USB block smoothly' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Multiple nodes displayed inline' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Tracking internal LUKS partitions' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'System formatting modal trigger' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'System formatting modal trigger' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Ejecting a USB block smoothly' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_7.png',
         mdDescription: '## Removable Drive Menu\n\nKeeps discrete controls in top bars tracking block assets accurately.',
@@ -649,10 +649,10 @@ const EXTENSIONS = [
         ratingCount: 654,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Background apps focusing silently' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Before overlay structure' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'After modal removal structure' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Deep focus lock overrides' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Deep focus lock overrides' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Background apps focusing silently' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_1007.png',
         mdDescription: '## Window Is Ready Notification Remover\n\nEliminates intrusive workflow focus interruptions cleanly.',
@@ -673,10 +673,10 @@ const EXTENSIONS = [
         ratingCount: 720,
         category: 'Customization',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Intellihide avoiding overlapping windows' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Hover boundary mapping' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Animation timing constraints' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Excluding desktop modes' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Excluding desktop modes' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=bSeav8Rltn8', caption: 'Intellihide avoiding overlapping windows' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_545.png',
         mdDescription: '## Hide Top Bar\n\nProvides visibility metrics to dynamically handle top toolbar elements.',
@@ -697,10 +697,10 @@ const EXTENSIONS = [
         ratingCount: 580,
         category: 'System Monitor',
         media: [
-            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Visualizing download speeds actively' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Formatting custom strings' },
             { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Aligning beside calendar' },
-            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Adapter selection UI' }
+            { type: 'image', url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=800&h=450', caption: 'Adapter selection UI' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=LXb3EKWsInQ', caption: 'Visualizing download speeds actively' }
         ],
         icon: 'https://extensions.gnome.org/extension-data/icons/icon_104.png',
         mdDescription: '## NetSpeed Monitor\n\nRealtime tracking metric for incoming and outgoing throughput directly inside control lines.',
