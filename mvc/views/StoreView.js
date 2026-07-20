@@ -8,10 +8,19 @@ class StoreView {
         // Cache state variables to prevent unnecessary DOM redraws and flashing
         this._lastFeaturedTab = null;
         this._lastIsFeaturedHidden = null;
-        this._lastItemsPerPage = null;
+        this._lastFeaturedItemsPerPage = null;
         this._lastSelectedCategory = null;
         this._categoriesRendered = false;
-
+        
+        this._lastGridSearchTerm = null;
+        this._lastGridCategory = null;
+        this._lastGridSortBy = null;
+        this._lastGridShellVersion = null;
+        this._lastGridPage = null;
+        this._lastGridItemsPerPage = null;
+        this._lastGridLayoutMode = null;
+        this._gridRendered = false;
+        
         this.bindEvents();
         this.bindScrollEvents();
     }
@@ -280,7 +289,6 @@ class StoreView {
             this.renderCategories(data.categories, data.state.selectedCategory);
             this._lastSelectedCategory = data.state.selectedCategory;
             this._categoriesRendered = true;
-
             // Scroll the newly active category into view
             setTimeout(() => {
                 const container = document.getElementById('categories-container');
@@ -297,20 +305,41 @@ class StoreView {
         const featuredNeedsUpdate = 
             this._lastFeaturedTab !== data.state.featuredTab || 
             this._lastIsFeaturedHidden !== data.state.isFeaturedHidden ||
-            this._lastItemsPerPage !== data.state.itemsPerPage;
-
+            this._lastFeaturedItemsPerPage !== data.state.itemsPerPage;
+            
         if (featuredNeedsUpdate) {
             this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden, data.state.itemsPerPage);
             this._lastFeaturedTab = data.state.featuredTab;
             this._lastIsFeaturedHidden = data.state.isFeaturedHidden;
-            this._lastItemsPerPage = data.state.itemsPerPage;
+            this._lastFeaturedItemsPerPage = data.state.itemsPerPage;
         }
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         
-        // Grid elements always update based on pagination/filtering
-        this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode, isFiltering);
-        this.renderPagination(data.pagination);
+        const gridNeedsUpdate =
+            this._lastGridSearchTerm !== data.state.searchTerm ||
+            this._lastGridCategory !== data.state.selectedCategory ||
+            this._lastGridSortBy !== data.state.sortBy ||
+            this._lastGridShellVersion !== data.state.shellVersion ||
+            this._lastGridPage !== data.pagination.currentPage ||
+            this._lastGridItemsPerPage !== data.state.itemsPerPage ||
+            this._lastGridLayoutMode !== data.state.layoutMode ||
+            !this._gridRendered;
+
+        if (gridNeedsUpdate) {
+            // Grid elements always update based on pagination/filtering
+            this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode, isFiltering);
+            this.renderPagination(data.pagination);
+            
+            this._lastGridSearchTerm = data.state.searchTerm;
+            this._lastGridCategory = data.state.selectedCategory;
+            this._lastGridSortBy = data.state.sortBy;
+            this._lastGridShellVersion = data.state.shellVersion;
+            this._lastGridPage = data.pagination.currentPage;
+            this._lastGridItemsPerPage = data.state.itemsPerPage;
+            this._lastGridLayoutMode = data.state.layoutMode;
+            this._gridRendered = true;
+        }
         
         // Element Hooks
         const heroSection = document.getElementById('hero-section');
@@ -471,6 +500,7 @@ class StoreView {
         }
         
         emptyState.classList.add('hidden');
+
         resultsHeader.innerHTML = `
             <div class="animate-fade-in ${isFiltering ? '' : 'hidden'}">
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
