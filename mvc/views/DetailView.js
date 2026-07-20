@@ -450,8 +450,8 @@ class DetailView {
             let captionHtml = '';
             if (media.caption) {
                 captionHtml = `
-                    <div class="absolute bottom-6 left-0 right-0 flex justify-center z-10 pointer-events-none px-4">
-                        <span class="bg-black/70 text-white text-sm sm:text-base font-bold px-5 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-lg tracking-wide text-center max-w-[90%]">
+                    <div class="absolute top-4 left-0 right-0 flex justify-center z-10 pointer-events-none px-4">
+                        <span class="bg-black/75 text-white text-sm sm:text-base font-bold px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg tracking-wide text-center max-w-[90%]">
                             ${this.escapeHtml(media.caption)}
                         </span>
                     </div>
@@ -531,6 +531,7 @@ class DetailView {
                 if (activeIndex === 0) { prevBtn.style.opacity = '0'; prevBtn.style.pointerEvents = 'none'; }
                 else { prevBtn.style.opacity = ''; prevBtn.style.pointerEvents = 'auto'; }
             }
+
             if (nextBtn) {
                 if (activeIndex === dots.length - 1) { nextBtn.style.opacity = '0'; nextBtn.style.pointerEvents = 'none'; }
                 else { nextBtn.style.opacity = ''; nextBtn.style.pointerEvents = 'auto'; }
@@ -542,6 +543,7 @@ class DetailView {
             window.clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(updateUI, 15);
         });
+
         updateUI();
 
         if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }); });
@@ -580,6 +582,7 @@ class DetailView {
         };
 
         startAutoplay();
+
         const carouselMain = document.getElementById('carousel-main');
         if (carouselMain) {
             carouselMain.addEventListener('mouseenter', stopAutoplay);

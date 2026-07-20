@@ -8,7 +8,6 @@
   <title>GNOME Extensions Store</title>
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
-  
   <!-- Tailwind Configuration for Dark Mode & Animations -->
   <script>
     tailwind.config = {
@@ -44,7 +43,6 @@
   <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body class="gnome-layout-body">
-
   <!-- Scroll to Top Button -->
   <button id="scroll-to-top-btn"
     class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
@@ -89,6 +87,7 @@
           <i class="icon icon-dark text-xl hidden dark:block"></i>
           <i class="icon icon-light text-xl block dark:hidden"></i>
         </button>
+
         <button id="nav-login-btn" data-nav="auth" class="gnome-btn-primary ml-2 auth-guest">Login</button>
         <button id="nav-profile-btn" data-nav="profile" class="gnome-btn-primary ml-2 auth-user hidden">Profile</button>
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
@@ -241,8 +240,8 @@
                     <a href="https://gjs-docs.gnome.org/" target="_blank" rel="noreferrer" class="gnome-btn-ghost gnome-btn-large shrink-0 whitespace-nowrap">API Reference</a>
                 </div>
             </div>
-            <div class="hidden md:block w-48 h-48 opacity-20 dark:opacity-40">
-                 <i class="icon icon-extension text-[10rem]"></i>
+            <div class="hidden md:block w-48 h-48 opacity-20 dark:opacity-40"> 
+                <i class="icon icon-extension text-[10rem]"></i>
             </div>
         </div>
       </div>
@@ -258,25 +257,29 @@
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
     <!-- Back Header -->
-    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30 h-10 flex items-center shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
         <button onclick="window.showViewHandler('store')"
-          class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-3">
-          <i class="icon icon-navigation-back-color text-xl shrink-0"></i>
+          class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 w-fit leading-none py-1">
+          <i class="icon icon-navigation-back-color text-lg shrink-0"></i>
           Back to Store
         </button>
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10">
-      <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
-        <div id="detail-icon" class="gnome-detail-icon-box animate-fade-in">
-          <!-- JS injected SVG -->
-        </div>
-
-        <div class="flex-1 w-full animate-fade-in">
-          <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-            <div class="flex-1 min-w-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
+      <!-- Main Layout Split -->
+      <div class="flex flex-col md:flex-row gap-8 md:gap-12">
+        
+        <!-- LEFT COLUMN: Logo, Title, Carousel, Description, Reviews -->
+        <div class="flex-1 min-w-0 w-full">
+          
+          <!-- Header Area -->
+          <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start mb-8 animate-fade-in">
+            <div id="detail-icon" class="gnome-detail-icon-box flex-shrink-0 animate-fade-in">
+              <!-- JS injected SVG -->
+            </div>
+            <div class="flex-1 w-full min-w-0 animate-fade-in">
               <div class="flex flex-wrap items-center gap-3 mb-2">
                 <h1 id="detail-title" class="gnome-title-page text-4xl"></h1>
                 <span id="detail-system-badge" class="hidden gnome-badge-status gnome-badge-system">System Extension</span>
@@ -285,7 +288,7 @@
               <p id="detail-author" class="text-lg text-gnome-secondary font-semibold mb-4"></p>
               
               <div id="detail-rating-container" class="mb-4"></div>
-
+              
               <!-- Error Banner -->
               <div id="detail-error-banner" class="hidden mb-4 gnome-error-banner w-full max-w-2xl">
                 <i class="icon icon-exclamation-color"></i>
@@ -294,15 +297,77 @@
                   <p id="detail-error-message" class="font-mono text-xs mt-1 opacity-80 break-all"></p>
                 </div>
               </div>
-
+              
               <!-- Security Warnings Banner -->
               <div id="detail-warnings-container" class="mb-4 flex flex-wrap gap-2">
                 <!-- JS Injected Warnings -->
               </div>
             </div>
+          </div>
 
-            <!-- Host Actions Container -->
-            <div id="detail-actions-wrapper" class="flex-shrink-0 w-full lg:w-64 flex flex-col gap-2 min-w-[16rem] animate-fade-in mt-4 md:mt-0 gnome-card-panel p-5">
+          <!-- Carousel Section -->
+          <div class="mb-12 gnome-card-panel p-4 animate-fade-in">
+            <div id="carousel-main"
+              class="w-full aspect-video bg-[#f6f5f4] dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
+              <!-- JS injected -->
+            </div>
+            <div id="carousel-thumbnails" class="flex gap-3 overflow-x-auto scrollbar-hide py-1">
+              <!-- JS injected -->
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-16">
+            <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
+              <!-- Rendered by marked.js -->
+            </div>
+          </div>
+
+          <!-- User Reviews -->
+          <div class="gnome-section-divider">
+            <h3 class="gnome-title-section mb-6">User Reviews</h3>
+            
+            <!-- Interactive Review Form -->
+            <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-[#f6f5f4]">
+              <h4 class="text-sm font-bold text-gnome-black dark:text-gnome-white mb-3">Write a Review</h4>
+              <div class="flex items-center gap-2 mb-3 text-[#c0bfbc] dark:text-[#5e5c64] text-xl cursor-pointer"
+                id="interactive-star-rating">
+                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="1"></i>
+                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="2"></i>
+                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="3"></i>
+                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="4"></i>
+                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="5"></i>
+              </div>
+              <textarea
+                class="gnome-input mb-3 resize-y bg-gnome-white dark:bg-gnome-black"
+                rows="3" placeholder="Leave a review using Markdown..."></textarea>
+              <div class="flex justify-between items-center">
+                <span class="text-xs text-gnome-grey"><i class="icon icon-markdown mr-1"></i> Markdown supported</span>
+                <button class="gnome-btn-primary">Submit</button>
+              </div>
+            </div>
+            <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
+              <!-- JS Injected Reviews -->
+            </div>
+          </div>
+
+          <!-- Version History -->
+          <div class="gnome-section-divider">
+            <h3 class="gnome-title-section mb-6">Version History</h3>
+            <div id="detail-versions-container" class="space-y-4 animate-fade-in">
+              <!-- JS Injected Versions -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Buttons + Information Track -->
+        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
+          <!-- WebKit scroll padding workaround: Using precise max-h and an explicit spacer div -->
+          <div class="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
+            <div class="flex flex-col gap-6">
+              
+              <!-- Host Actions Container -->
+              <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
                     <button id="detail-install-toggle" class="gnome-toggle pointer-events-none opacity-50" role="switch" aria-checked="false">
@@ -333,111 +398,57 @@
                 <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2 flex items-center justify-center rounded-lg border border-[#c0bfbc] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-[#3584e4] dark:hover:border-[#3584e4] transition-colors gap-1.5 mt-2">
                     <i class="icon icon-virus text-sm"></i> Bug Report
                 </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Carousel Section -->
-      <div class="mb-12 gnome-card-panel p-4 animate-fade-in">
-        <div id="carousel-main"
-          class="w-full aspect-video bg-[#f6f5f4] dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
-          <!-- JS injected -->
-        </div>
-        <div id="carousel-thumbnails" class="flex gap-3 overflow-x-auto scrollbar-hide py-1">
-          <!-- JS injected -->
-        </div>
-      </div>
-
-      <!-- Description & Metadata Split -->
-      <div class="flex flex-col md:flex-row gap-12">
-        <div class="flex-1 min-w-0">
-          <div class="mb-16">
-            <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
-              <!-- Rendered by marked.js -->
-            </div>
-          </div>
-
-          <div class="gnome-section-divider">
-            <h3 class="gnome-title-section mb-6">User Reviews</h3>
-            
-            <!-- Interactive Review Form -->
-            <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-[#f6f5f4]">
-              <h4 class="text-sm font-bold text-gnome-black dark:text-gnome-white mb-3">Write a Review</h4>
-              <div class="flex items-center gap-2 mb-3 text-[#c0bfbc] dark:text-[#5e5c64] text-xl cursor-pointer"
-                id="interactive-star-rating">
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="1"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="2"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="3"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="4"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="5"></i>
               </div>
-              <textarea
-                class="gnome-input mb-3 resize-y bg-gnome-white dark:bg-gnome-black"
-                rows="3" placeholder="Leave a review using Markdown..."></textarea>
-              <div class="flex justify-between items-center">
-                <span class="text-xs text-gnome-grey"><i class="icon icon-markdown mr-1"></i> Markdown
-                  supported</span>
-                <button class="gnome-btn-primary">Submit</button>
+
+              <!-- Information Container -->
+              <div class="gnome-card-panel p-6 shrink-0">
+                <h3 class="gnome-title-uppercase">Information</h3>
+                <dl class="space-y-4 text-sm">
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">UUID</dt>
+                    <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Categories</dt>
+                    <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Maintainers</dt>
+                    <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
+                    <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Version</dt>
+                    <dd class="mt-1">
+                      <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Downloads</dt>
+                    <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">License</dt>
+                    <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
+                  </div>
+                  <div>
+                    <dt class="text-gnome-grey font-semibold">Links</dt>
+                    <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
+                      <!-- JS Injected Links -->
+                    </dd>
+                  </div>
+                </dl>
               </div>
-            </div>
 
-            <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
-              <!-- JS Injected Reviews -->
-            </div>
-          </div>
-
-          <div class="gnome-section-divider">
-            <h3 class="gnome-title-section mb-6">Version History</h3>
-            <div id="detail-versions-container" class="space-y-4 animate-fade-in">
-              <!-- JS Injected Versions -->
+              <!-- Safe Scroll Clearance Spacer -->
+              <div class="h-2 w-full shrink-0"></div>
             </div>
           </div>
         </div>
 
-        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
-          <div class="gnome-card-panel p-6 sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
-            <h3 class="gnome-title-uppercase">Information</h3>
-            <dl class="space-y-4 text-sm">
-              <div>
-                <dt class="text-gnome-grey font-semibold">UUID</dt>
-                <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Categories</dt>
-                <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Maintainers</dt>
-                <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
-                <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Version</dt>
-                <dd class="mt-1">
-                  <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
-                </dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Downloads</dt>
-                <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">License</dt>
-                <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
-              </div>
-              <div>
-                <dt class="text-gnome-grey font-semibold">Links</dt>
-                <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
-                  <!-- JS Injected Links -->
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -500,7 +511,6 @@
           </ul>
         </div>
       </div>
-
       <div
         class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
