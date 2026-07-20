@@ -60,6 +60,7 @@
         // Populate the Store
         const extData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
         const catData = typeof CATEGORIES !== 'undefined' ? CATEGORIES : [];
+
         storeController.init(extData, catData);
 
         if (window.GnomeConnector.isConnected) {
@@ -70,7 +71,7 @@
     function handleConnectorWarning() {
         const warning = document.getElementById('connector-warning');
         if (warning) {
-            if (!window.GnomeConnector.isConnected) {
+            if (!window.GnomeConnector.isConnected && !sessionStorage.getItem('connectorWarningDismissed')) {
                 warning.classList.remove('hidden');
             } else {
                 warning.classList.add('hidden');
@@ -80,14 +81,17 @@
 
     function updateAuthUI() {
         const isAuth = window.AuthState.isLoggedIn;
+
         document.querySelectorAll('.auth-user').forEach(el => {
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
+
         document.querySelectorAll('.auth-guest').forEach(el => {
             if (!isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
+
         document.querySelectorAll('.auth-required').forEach(el => {
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
@@ -158,6 +162,18 @@
             });
         });
 
+        // Close connector warning
+        const closeWarningBtn = document.getElementById('close-connector-warning');
+        if (closeWarningBtn) {
+            closeWarningBtn.addEventListener('click', () => {
+                const warning = document.getElementById('connector-warning');
+                if (warning) {
+                    warning.classList.add('hidden');
+                    sessionStorage.setItem('connectorWarningDismissed', 'true');
+                }
+            });
+        }
+
         // Handle Scroll to Top Button Visibility Globally
         window.addEventListener('scroll', () => {
             const scrollTopBtn = document.getElementById('scroll-to-top-btn');
@@ -182,6 +198,7 @@
 
     function showView(view) {
         const views = ['store', 'details', 'upload', 'local', 'about', 'auth', 'profile'];
+
         views.forEach(v => {
             const el = document.getElementById(`${v}-view`);
             if (el) {
