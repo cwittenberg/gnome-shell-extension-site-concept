@@ -256,8 +256,8 @@
 
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
-    <!-- Back Header -->
-    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black sticky top-16 z-30 h-10 flex items-center shadow-sm">
+    <!-- Back Header (Non-sticky to prevent overlap and save space) -->
+    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black py-2.5">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
         <button onclick="window.showViewHandler('store')"
           class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 w-fit leading-none py-1">
@@ -361,91 +361,86 @@
         </div>
 
         <!-- RIGHT COLUMN: Buttons + Information Track -->
-        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in">
-          <!-- WebKit scroll padding workaround: Using precise max-h and an explicit spacer div -->
-          <div class="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
-            <div class="flex flex-col gap-6">
+        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in relative">
+          <div class="flex flex-col gap-6">
+            
+            <!-- Host Actions Container (Scrolls normally with page) -->
+            <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
+              <div class="flex items-center justify-between mb-3 px-1 shrink-0">
+                  <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
+                  <button id="detail-install-toggle" class="gnome-toggle pointer-events-none opacity-50 shrink-0" role="switch" aria-checked="false">
+                      <span id="detail-toggle-knob" class="gnome-toggle-knob"></span>
+                  </button>
+              </div>
               
-              <!-- Host Actions Container -->
-              <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
-                <div class="flex items-center justify-between mb-3 px-1">
-                    <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
-                    <button id="detail-install-toggle" class="gnome-toggle pointer-events-none opacity-50" role="switch" aria-checked="false">
-                        <span id="detail-toggle-knob" class="gnome-toggle-knob"></span>
-                    </button>
-                </div>
-                
-                <button id="detail-install-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors gap-1.5">
-                    <i class="icon icon-extension-add text-sm"></i> Install
-                </button>
-                <button id="detail-update-container" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors gap-1.5">
-                    <i class="icon icon-download-color text-sm"></i> Update
-                </button>
-                <div id="detail-incompatible-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none gap-1.5">
-                    <i class="icon icon-warning text-sm"></i> Incompatible
-                </div>
-                <button id="detail-prefs-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] gap-1.5">
-                    <i class="icon icon-settings text-sm"></i> Settings
-                </button>
-                <button id="detail-uninstall-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] gap-1.5">
-                    <i class="icon icon-extension-remove text-sm"></i> Remove
-                </button>
-                <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] gap-1.5">
-                    <i class="icon icon-donate text-sm"></i> Donate
-                </a>
-                
-                <!-- Bug Report -->
-                <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2 flex items-center justify-center rounded-lg border border-[#c0bfbc] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-[#3584e4] dark:hover:border-[#3584e4] transition-colors gap-1.5 mt-2">
-                    <i class="icon icon-virus text-sm"></i> Bug Report
-                </a>
+              <button id="detail-install-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors gap-1.5 shrink-0">
+                  <i class="icon icon-extension-add text-sm"></i> Install
+              </button>
+              <button id="detail-update-container" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors gap-1.5 shrink-0">
+                  <i class="icon icon-download-color text-sm"></i> Update
+              </button>
+              <div id="detail-incompatible-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none gap-1.5 shrink-0">
+                  <i class="icon icon-warning text-sm"></i> Incompatible
               </div>
-
-              <!-- Information Container -->
-              <div class="gnome-card-panel p-6 shrink-0">
-                <h3 class="gnome-title-uppercase">Information</h3>
-                <dl class="space-y-4 text-sm">
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">UUID</dt>
-                    <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Categories</dt>
-                    <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Maintainers</dt>
-                    <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
-                    <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Version</dt>
-                    <dd class="mt-1">
-                      <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Downloads</dt>
-                    <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">License</dt>
-                    <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
-                  </div>
-                  <div>
-                    <dt class="text-gnome-grey font-semibold">Links</dt>
-                    <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
-                      <!-- JS Injected Links -->
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-
-              <!-- Safe Scroll Clearance Spacer -->
-              <div class="h-2 w-full shrink-0"></div>
+              <button id="detail-prefs-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] gap-1.5 shrink-0">
+                  <i class="icon icon-settings text-sm"></i> Settings
+              </button>
+              <button id="detail-uninstall-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] gap-1.5 shrink-0">
+                  <i class="icon icon-extension-remove text-sm"></i> Remove
+              </button>
+              <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] gap-1.5 shrink-0">
+                  <i class="icon icon-donate text-sm"></i> Donate
+              </a>
+              
+              <!-- Bug Report -->
+              <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2 flex items-center justify-center rounded-lg border border-[#c0bfbc] dark:border-[#3d3846] text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-[#3584e4] dark:hover:border-[#3584e4] transition-colors gap-1.5 mt-2 shrink-0">
+                  <i class="icon icon-virus text-sm"></i> Bug Report
+              </a>
             </div>
+
+            <!-- Information Container (Sticks when scrolling down) -->
+            <div class="gnome-card-panel p-6 shrink-0 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
+              <h3 class="gnome-title-uppercase">Information</h3>
+              <dl class="space-y-4 text-sm">
+                <div>
+                  <dt class="text-gnome-grey font-semibold">UUID</dt>
+                  <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Categories</dt>
+                  <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Maintainers</dt>
+                  <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
+                  <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Version</dt>
+                  <dd class="mt-1">
+                    <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Downloads</dt>
+                  <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">License</dt>
+                  <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
+                </div>
+                <div>
+                  <dt class="text-gnome-grey font-semibold">Links</dt>
+                  <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
+                    <!-- JS Injected Links -->
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
           </div>
         </div>
 
