@@ -1,4 +1,6 @@
 # Conceptual design
+See concept here: https://cwittenberg.github.io/gnome-shell-extension-site-concept/
+
 For Gnome Extension Store, which is due for a visual update (https://extensions.gnome.org/ aka EGO)
 
 To run, use:
