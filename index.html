@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="gnome.css">
   <link rel="stylesheet" href="stylesheet.css">
 </head>
+
 <body class="gnome-layout-body">
 
   <!-- Scroll to Top Button -->
@@ -57,26 +58,26 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center gap-y-3 gap-x-4">
       
       <!-- Logo -->
-      <div class="logo flex flex-1 sm:flex-none items-center gap-3 min-w-0 cursor-pointer order-1"
+      <div class="logo flex shrink-0 sm:flex-none items-center gap-3 min-w-0 cursor-pointer order-1"
         onclick="window.showViewHandler('home')">
         <i class="icon icon-gnome-extensions"></i>
       </div>
 
+      <!-- Search -->
+      <div id="search-container"
+        class="relative hidden sm:block order-2 flex-1 min-w-0 sm:max-w-xl mx-2 sm:mx-4">
+        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input" />
+      </div>
+
       <!-- Mobile Menu Toggle -->
-      <div class="sm:hidden flex shrink-0 items-center gap-1 order-2 ml-auto">
+      <div class="sm:hidden flex shrink-0 items-center gap-1 order-3 ml-auto">
         <button id="mobile-menu-btn" class="gnome-btn-icon font-bold px-3 w-auto" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
           <i class="icon icon-sidebar-color text-lg"></i>
         </button>
       </div>
 
-      <!-- Search -->
-      <div id="search-container"
-        class="relative hidden sm:block order-3 basis-full w-full sm:order-2 sm:basis-auto sm:w-auto sm:flex-1 sm:max-w-xl">
-        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input" />
-      </div>
-
       <!-- Desktop Nav -->
-      <nav class="hidden sm:flex shrink-0 items-center gap-1 order-3 ml-auto">
+      <nav class="hidden sm:flex shrink-0 items-center gap-1 order-4 ml-auto">
         <a href="#" data-nav="store" class="gnome-nav-link active">Store</a>
         <a href="#" data-nav="local" class="gnome-nav-link">Installed</a>
         <a href="#" data-nav="upload" class="gnome-nav-link auth-required hidden">Developers</a>
@@ -85,6 +86,7 @@
         <button id="nav-profile-btn" data-nav="profile" class="gnome-btn-primary ml-2 auth-user hidden">Profile</button>
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
       </nav>
+
     </div>
 
     <!-- Mobile Menu -->
@@ -143,7 +145,6 @@
 
       <!-- SEARCH / CATALOG SECTION -->
       <div id="search-catalog-section">
-
         <!-- Filters Bar with Scrollable Categories -->
         <div class="flex flex-col md:flex-row gap-3 mb-8">
           <div class="gnome-filter-container">
@@ -371,23 +372,18 @@
               <button id="detail-install-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-extension-add text-sm"></i> Install
               </button>
-
               <button id="detail-update-container" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-download-color text-sm"></i> Update
               </button>
-
               <div id="detail-incompatible-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none gap-1.5 shrink-0">
                   <i class="icon icon-warning text-sm"></i> Incompatible
               </div>
-
               <button id="detail-prefs-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] gap-1.5 shrink-0">
                   <i class="icon icon-settings text-sm"></i> Settings
               </button>
-
               <button id="detail-uninstall-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] gap-1.5 shrink-0">
                   <i class="icon icon-extension-remove text-sm"></i> Remove
               </button>
-
               <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] gap-1.5 shrink-0">
                     Donate
               </a>
@@ -508,9 +504,9 @@
       <div
         class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
-          <p>Copyright © 2005–2026 The GNOME Project.</p>
+          <p>Copyright   2005 2026 The GNOME Project.</p>
           <p class="mt-1 text-sm text-[#5e5c64] dark:text-[#c0bfbc]">
-            Made with <span class="text-gnome-red">♥</span> by the GNOME community.
+            Made with <span class="text-gnome-red"> </span> by the GNOME community.
           </p>
         </div>
         <div class="flex items-center gap-5">

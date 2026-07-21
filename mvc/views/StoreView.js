@@ -231,7 +231,7 @@ class StoreView {
         
         // Check if featured section actually needs an update to prevent animation flashing
         const featuredNeedsUpdate = this._lastFeaturedTab !== data.state.featuredTab;
-            
+        
         if (featuredNeedsUpdate) {
             this.renderFeatured(data.featured, data.state.featuredTab);
             this._lastFeaturedTab = data.state.featuredTab;
@@ -240,7 +240,7 @@ class StoreView {
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         const isSearchOrVersionFiltering = data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         
-        const gridNeedsUpdate =
+        const gridNeedsUpdate = 
             this._lastGridSearchTerm !== data.state.searchTerm ||
             this._lastGridCategory !== data.state.selectedCategory ||
             this._lastGridSortBy !== data.state.sortBy ||
@@ -335,9 +335,27 @@ class StoreView {
     renderFeatured(featured, activeTab) {
         const featuredSection = document.getElementById('featured-section');
         if (!featuredSection) return;
-        
+
         featuredSection.classList.remove('mb-2');
         featuredSection.classList.add('mb-12');
+
+        let container = featuredSection.querySelector('.featured-container');
+        let tabsContainer;
+        let cardsContainer;
+
+        if (!container) {
+            featuredSection.innerHTML = `
+                <div class="featured-container flex flex-col gap-4">
+                    <div class="featured-tabs flex items-center gap-2 overflow-x-auto scrollbar-hide w-full"></div>
+                    <div class="featured-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+                </div>
+            `;
+            tabsContainer = featuredSection.querySelector('.featured-tabs');
+            cardsContainer = featuredSection.querySelector('.featured-cards');
+        } else {
+            tabsContainer = featuredSection.querySelector('.featured-tabs');
+            cardsContainer = featuredSection.querySelector('.featured-cards');
+        }
 
         const tabs = [
             { id: 'trending', label: 'Trending' },
@@ -345,7 +363,7 @@ class StoreView {
             { id: 'newest', label: 'New' },
             { id: 'updated', label: 'Updated' }
         ];
-        
+
         const tabsHtml = tabs.map(tab => {
             const isActive = tab.id === activeTab;
             return `
@@ -354,19 +372,16 @@ class StoreView {
                 </button>
             `;
         }).join('');
-        
+
         const extensionsToShow = featured[activeTab] || [];
-        
-        featuredSection.innerHTML = `
-            <div class="flex flex-col gap-4 animate-fade-in">
-                <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
-                    ${tabsHtml}
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    ${extensionsToShow.map(ext => this.generateCardHTML(ext)).join('')}
-                </div>
-            </div>
-        `;
+
+        // Update tabs only if needed to avoid flashing
+        if (tabsContainer.innerHTML !== tabsHtml) {
+            tabsContainer.innerHTML = tabsHtml;
+        }
+
+        // Always update cards
+        cardsContainer.innerHTML = extensionsToShow.map(ext => this.generateCardHTML(ext)).join('');
     }
 
     renderExtensions(visible, selectedCategory, totalItems, layoutMode, isFiltering) {
@@ -384,6 +399,7 @@ class StoreView {
         }
         
         emptyState.classList.add('hidden');
+
         resultsHeader.innerHTML = `
             <div class="animate-fade-in ${isFiltering ? '' : 'hidden'}">
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
@@ -412,6 +428,7 @@ class StoreView {
         let paginationHtml = '<div class="hidden sm:block flex-1"></div>';
         
         paginationHtml += '<div class="flex items-center justify-center gap-2 shrink-0">';
+
         if (pagination.totalPages > 1) {
             // Previous page button
             const isPrevDisabled = pagination.currentPage === 1;
@@ -439,6 +456,7 @@ class StoreView {
                 </button>
             `;
         }
+
         paginationHtml += '</div>';
         
         // Paginator Items Per Page Layout
