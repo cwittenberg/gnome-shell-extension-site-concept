@@ -1,6 +1,5 @@
 // mvc/views/StoreView.js
 // GoF Pattern: Observer (Observer Participant)
-
 class StoreView {
     constructor() {
         this.controller = null;
@@ -346,7 +345,7 @@ class StoreView {
         if (!container) {
             featuredSection.innerHTML = `
                 <div class="featured-container flex flex-col gap-4">
-                    <div class="featured-tabs flex items-center gap-2 overflow-x-auto scrollbar-hide w-full"></div>
+                    <div class="featured-tabs flex items-center gap-2 overflow-x-auto scrollbar-hide w-full py-2 px-1"></div>
                     <div class="featured-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
                 </div>
             `;

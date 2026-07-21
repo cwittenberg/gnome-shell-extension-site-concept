@@ -43,7 +43,6 @@
   <link rel="stylesheet" href="gnome.css">
   <link rel="stylesheet" href="stylesheet.css">
 </head>
-
 <body class="gnome-layout-body">
 
   <!-- Scroll to Top Button -->
@@ -86,7 +85,6 @@
         <button id="nav-profile-btn" data-nav="profile" class="gnome-btn-primary ml-2 auth-user hidden">Profile</button>
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
       </nav>
-
     </div>
 
     <!-- Mobile Menu -->
@@ -124,7 +122,7 @@
 
   <!-- STORE VIEW (Combines Home & Search) -->
   <div id="store-view" class="block">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-8">
       
       <section id="hero-section" class="relative overflow-hidden bg-gradient-to-r from-[#3584e4] to-[#1c71d8] rounded-2xl transition-all duration-500 ease-in-out shadow-md mb-12">
         <div id="hero-content"
@@ -235,8 +233,8 @@
                     <a href="https://matrix.to/#/#extensions:gnome.org" target="_blank" rel="noreferrer" class="gnome-btn-ghost gnome-btn-large shrink-0 whitespace-nowrap flex items-center gap-2"><i class="icon icon-matrix-chat text-xl"></i> Connect on Matrix</a>
                 </div>
             </div>
-            <div class="hidden md:block w-48 h-48 opacity-20 dark:opacity-40">
-                 <i class="icon icon-extension text-[10rem]"></i>
+            <div class="hidden md:block w-48 h-48 opacity-20 dark:opacity-40"> 
+                <i class="icon icon-extension text-[10rem]"></i>
             </div>
         </div>
       </div>
@@ -354,6 +352,7 @@
               <!-- JS Injected Versions -->
             </div>
           </div>
+
         </div>
 
         <!-- RIGHT COLUMN: Buttons + Information Track -->
@@ -439,6 +438,7 @@
 
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -504,7 +504,7 @@
       <div
         class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
-          <p>Copyright   2005 2026 The GNOME Project.</p>
+          <p>Copyright © 2005–2026 The GNOME Project.</p>
           <p class="mt-1 text-sm text-[#5e5c64] dark:text-[#c0bfbc]">
             Made with <span class="text-gnome-red">♥</span> by the GNOME community.
           </p>
@@ -528,7 +528,7 @@
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
-
+  
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
@@ -539,7 +539,7 @@
   <script src="mvc/views/UploadView.js"></script>
   <script src="mvc/views/LocalView.js"></script>
   <script src="mvc/views/AboutView.js"></script>
-
+  
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>
