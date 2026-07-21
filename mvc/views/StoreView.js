@@ -1,5 +1,6 @@
 // mvc/views/StoreView.js
 // GoF Pattern: Observer (Observer Participant)
+
 class StoreView {
     constructor() {
         this.controller = null;
@@ -7,8 +8,6 @@ class StoreView {
         
         // Cache state variables to prevent unnecessary DOM redraws and flashing
         this._lastFeaturedTab = null;
-        this._lastIsFeaturedHidden = null;
-        this._lastFeaturedItemsPerPage = null;
         this._lastSelectedCategory = null;
         this._categoriesRendered = false;
         
@@ -45,42 +44,6 @@ class StoreView {
         }, 350);
     }
 
-    scrollToFilters() {
-        // Yield to the event loop so the controller can update the model and the view can react
-        // (adding/removing .hero-hidden, .hidden, etc.)
-        setTimeout(() => {
-            const hero = document.getElementById('hero-section');
-            const isHeroHidden = hero && hero.classList.contains('hero-hidden');
-            
-            if (isHeroHidden) {
-                // When filtered, the hero and featured sections are gone.
-                // The category bar is the top-most element in main.
-                // Scrolling to 0 aligns it perfectly under the sticky header.
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                // When unfiltered (All), the hero and featured sections are present.
-                // We need to scroll down to the category bar.
-                const header = document.querySelector('.gnome-header');
-                const filterContainer = document.querySelector('.gnome-filter-container');
-                
-                if (header && filterContainer) {
-                    const headerHeight = header.offsetHeight;
-                    
-                    // The hero section has a 500ms transition. 
-                    // To avoid a jarring jump, we do an initial smooth scroll...
-                    const initialTop = filterContainer.getBoundingClientRect().top + window.scrollY - headerHeight - 24;
-                    window.scrollTo({ top: initialTop, behavior: 'smooth' });
-                    
-                    // ...and a precise snap after the layout stabilizes
-                    setTimeout(() => {
-                        const finalTop = filterContainer.getBoundingClientRect().top + window.scrollY - headerHeight - 24;
-                        window.scrollTo({ top: finalTop, behavior: 'smooth' });
-                    }, 510);
-                }
-            }
-        }, 10);
-    }
-
     bindEvents() {
         const searchInput = document.getElementById('search-input');
         const sortSelect = document.getElementById('sort-select');
@@ -103,7 +66,6 @@ class StoreView {
             sortSelect.addEventListener('change', (event) => {
                 if (this.controller) {
                     this.controller.handleSort(event.target.value);
-                    this.scrollToFilters();
                 }
             });
         }
@@ -112,7 +74,6 @@ class StoreView {
             shellVersionSelect.addEventListener('change', (event) => {
                 if (this.controller) {
                     this.controller.handleShellVersion(event.target.value);
-                    this.scrollToFilters();
                 }
             });
         }
@@ -144,7 +105,6 @@ class StoreView {
                 const categoryBtn = event.target.closest('[data-category]');
                 if (categoryBtn && this.controller) {
                     this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
-                    this.scrollToFilters();
                 }
             });
         }
@@ -157,14 +117,6 @@ class StoreView {
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
                     this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
-                    this.scrollToFilters();
-                    return;
-                }
-
-                const toggleFeaturedBtn = event.target.closest('[data-action="toggle-featured"]');
-                if (toggleFeaturedBtn && this.controller) {
-                    event.preventDefault();
-                    this.controller.handleToggleFeatured();
                     return;
                 }
                 
@@ -180,13 +132,6 @@ class StoreView {
                     this.handleCardClick(card);
                 }
             });
-            
-            featuredSection.addEventListener('change', (event) => {
-                const itemsPerPageSelect = event.target.closest('[data-action="change-items-per-page"]');
-                if (itemsPerPageSelect && this.controller) {
-                    this.controller.handleItemsPerPage(itemsPerPageSelect.value);
-                }
-            });
         }
 
         // 3. Extensions Grid Events (Search & Filter Results)
@@ -197,7 +142,6 @@ class StoreView {
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
                     this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
-                    this.scrollToFilters();
                     return;
                 }
 
@@ -208,7 +152,7 @@ class StoreView {
             });
         }
 
-        // 4. Pagination Events
+        // 4. Pagination & Items Per Page Events
         const paginationContainer = document.getElementById('pagination-container');
         if (paginationContainer) {
             paginationContainer.addEventListener('click', (event) => {
@@ -218,20 +162,14 @@ class StoreView {
                     const pageNum = parseInt(pageBtn.getAttribute('data-page'), 10);
                     if (!isNaN(pageNum)) {
                         this.controller.handlePageChange(pageNum);
-                        this.scrollToFilters();
                     }
                 }
             });
-        }
-        
-        // 5. Results Header Events (For items-per-page select when searching/filtering)
-        const resultsHeader = document.getElementById('results-header');
-        if (resultsHeader) {
-            resultsHeader.addEventListener('change', (event) => {
+            
+            paginationContainer.addEventListener('change', (event) => {
                 const itemsPerPageSelect = event.target.closest('[data-action="change-items-per-page"]');
                 if (itemsPerPageSelect && this.controller) {
                     this.controller.handleItemsPerPage(itemsPerPageSelect.value);
-                    this.scrollToFilters();
                 }
             });
         }
@@ -256,11 +194,11 @@ class StoreView {
             observer.observe(catContainer, { childList: true, subtree: true });
             
             scrollLeftBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                catContainer.scrollBy({ left: -200 });
             });
             
             scrollRightBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                catContainer.scrollBy({ left: 200 });
             });
         }
     }
@@ -289,33 +227,18 @@ class StoreView {
             this.renderCategories(data.categories, data.state.selectedCategory);
             this._lastSelectedCategory = data.state.selectedCategory;
             this._categoriesRendered = true;
-
-            // Scroll the newly active category into view
-            setTimeout(() => {
-                const container = document.getElementById('categories-container');
-                if (container) {
-                    const activeBtn = container.querySelector('.gnome-category-btn.active');
-                    if (activeBtn) {
-                        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                    }
-                }
-            }, 50);
         }
         
         // Check if featured section actually needs an update to prevent animation flashing
-        const featuredNeedsUpdate = 
-            this._lastFeaturedTab !== data.state.featuredTab || 
-            this._lastIsFeaturedHidden !== data.state.isFeaturedHidden ||
-            this._lastFeaturedItemsPerPage !== data.state.itemsPerPage;
+        const featuredNeedsUpdate = this._lastFeaturedTab !== data.state.featuredTab;
             
         if (featuredNeedsUpdate) {
-            this.renderFeatured(data.featured, data.state.featuredTab, data.state.isFeaturedHidden, data.state.itemsPerPage);
+            this.renderFeatured(data.featured, data.state.featuredTab);
             this._lastFeaturedTab = data.state.featuredTab;
-            this._lastIsFeaturedHidden = data.state.isFeaturedHidden;
-            this._lastFeaturedItemsPerPage = data.state.itemsPerPage;
         }
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
+        const isSearchOrVersionFiltering = data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
         
         const gridNeedsUpdate =
             this._lastGridSearchTerm !== data.state.searchTerm ||
@@ -329,8 +252,8 @@ class StoreView {
 
         if (gridNeedsUpdate) {
             // Grid elements always update based on pagination/filtering
-            this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.itemsPerPage, data.pagination.totalItems, data.state.layoutMode, isFiltering);
-            this.renderPagination(data.pagination);
+            this.renderExtensions(data.filtered, data.state.selectedCategory, data.pagination.totalItems, data.state.layoutMode, isFiltering);
+            this.renderPagination(data.pagination, data.state.itemsPerPage);
             
             this._lastGridSearchTerm = data.state.searchTerm;
             this._lastGridCategory = data.state.selectedCategory;
@@ -363,15 +286,19 @@ class StoreView {
             }
         }
         
-        // Hide Featured components when searching/filtering
+        // Hide Featured components when searching/filtering (except when only category is filtered)
         if (featuredSection && mainDivider && resultsHeader) {
-            if (isFiltering) {
+            if (isSearchOrVersionFiltering) {
                 featuredSection.classList.add('hidden');
                 mainDivider.classList.add('hidden');
-                resultsHeader.classList.remove('hidden');
             } else {
                 featuredSection.classList.remove('hidden');
                 mainDivider.classList.remove('hidden');
+            }
+            
+            if (isFiltering) {
+                resultsHeader.classList.remove('hidden');
+            } else {
                 resultsHeader.classList.add('hidden');
             }
         }
@@ -408,34 +335,10 @@ class StoreView {
         container.innerHTML = buttons;
     }
 
-    renderFeatured(featured, activeTab, isHidden, itemsPerPage) {
+    renderFeatured(featured, activeTab) {
         const featuredSection = document.getElementById('featured-section');
         if (!featuredSection) return;
         
-        if (isHidden) {
-            // Remove the large bottom margin when hidden so the gap isn't huge
-            featuredSection.classList.remove('mb-12');
-            featuredSection.classList.add('mb-2');
-            
-            featuredSection.innerHTML = `
-                <div class="flex justify-end items-center gap-3 animate-fade-in">
-                    <select data-action="change-items-per-page" class="gnome-select h-[38px]">
-                        <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
-                        <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
-                        <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
-                        <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
-                        <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
-                    </select>
-                    <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 bg-[#f6f5f4] dark:bg-[#2d2640]">
-                        <i class="icon icon-angles-down"></i>
-                        Show Featured
-                    </button>
-                </div>
-            `;
-            return;
-        }
-
-        // Restore the original margin when the section is visible
         featuredSection.classList.remove('mb-2');
         featuredSection.classList.add('mb-12');
 
@@ -455,29 +358,12 @@ class StoreView {
             `;
         }).join('');
         
-        const controlsHtml = `
-            <div class="ml-auto flex items-center gap-3">
-                <select data-action="change-items-per-page" class="gnome-select h-[38px]">
-                    <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
-                    <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
-                    <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
-                    <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
-                    <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
-                </select>
-                <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 bg-[#f6f5f4] dark:bg-[#2d2640]" title="Hide Featured">
-                    <i class="icon icon-angles-up"></i>
-                    Hide
-                </button>
-            </div>
-        `;
-        
         const extensionsToShow = featured[activeTab] || [];
         
         featuredSection.innerHTML = `
-            <div class="flex flex-col gap-6 animate-fade-in">
+            <div class="flex flex-col gap-4 animate-fade-in">
                 <div class="flex items-center gap-2 overflow-x-auto scrollbar-hide w-full">
                     ${tabsHtml}
-                    ${controlsHtml}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     ${extensionsToShow.map(ext => this.generateCardHTML(ext)).join('')}
@@ -486,7 +372,7 @@ class StoreView {
         `;
     }
 
-    renderExtensions(visible, selectedCategory, itemsPerPage, totalItems, layoutMode, isFiltering) {
+    renderExtensions(visible, selectedCategory, totalItems, layoutMode, isFiltering) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
         const resultsHeader = document.getElementById('results-header');
@@ -501,20 +387,10 @@ class StoreView {
         }
         
         emptyState.classList.add('hidden');
-
         resultsHeader.innerHTML = `
             <div class="animate-fade-in ${isFiltering ? '' : 'hidden'}">
                 <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
                 <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
-            </div>
-            <div class="animate-fade-in flex items-center ml-auto">
-                <select data-action="change-items-per-page" class="gnome-select h-[38px]">
-                    <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
-                    <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
-                    <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
-                    <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
-                    <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
-                </select>
             </div>
         `;
         
@@ -527,41 +403,58 @@ class StoreView {
         }
     }
 
-    renderPagination(pagination) {
+    renderPagination(pagination, itemsPerPage) {
         const container = document.getElementById('pagination-container');
         if (!container) return;
         
-        if (!pagination || pagination.totalPages <= 1) {
+        if (!pagination || pagination.totalItems === 0) {
             container.innerHTML = '';
             return;
         }
         
-        let paginationHtml = '';
+        let paginationHtml = '<div class="hidden sm:block flex-1"></div>';
         
-        // Previous page button
-        const isPrevDisabled = pagination.currentPage === 1;
-        paginationHtml += `
-            <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="gnome-page-btn px-3.5" aria-label="Previous page">
-                <i class="icon icon-arrow-left"></i>
-            </button>
-        `;
-        
-        // Page index buttons
-        for (let i = 1; i <= pagination.totalPages; i++) {
-            const isCurrent = i === pagination.currentPage;
+        paginationHtml += '<div class="flex items-center justify-center gap-2 shrink-0">';
+        if (pagination.totalPages > 1) {
+            // Previous page button
+            const isPrevDisabled = pagination.currentPage === 1;
             paginationHtml += `
-                <button type="button" data-page="${i}" class="gnome-page-btn ${isCurrent ? 'active' : ''}" aria-label="Page ${i}">
-                    ${i}
+                <button type="button" data-page="${pagination.currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''} class="gnome-page-btn px-3.5" aria-label="Previous page">
+                    <i class="icon icon-arrow-left"></i>
+                </button>
+            `;
+            
+            // Page index buttons
+            for (let i = 1; i <= pagination.totalPages; i++) {
+                const isCurrent = i === pagination.currentPage;
+                paginationHtml += `
+                    <button type="button" data-page="${i}" class="gnome-page-btn ${isCurrent ? 'active' : ''}" aria-label="Page ${i}">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            // Next page button
+            const isNextDisabled = pagination.currentPage === pagination.totalPages;
+            paginationHtml += `
+                <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="gnome-page-btn px-3.5" aria-label="Next page">
+                    <i class="icon icon-arrow-right"></i>
                 </button>
             `;
         }
+        paginationHtml += '</div>';
         
-        // Next page button
-        const isNextDisabled = pagination.currentPage === pagination.totalPages;
+        // Paginator Items Per Page Layout
         paginationHtml += `
-            <button type="button" data-page="${pagination.currentPage + 1}" ${isNextDisabled ? 'disabled' : ''} class="gnome-page-btn px-3.5" aria-label="Next page">
-                <i class="icon icon-arrow-right"></i>
-            </button>
+            <div class="flex-1 flex sm:justify-end w-full sm:w-auto">
+                <select data-action="change-items-per-page" class="gnome-select h-[38px] w-full sm:w-auto">
+                    <option value="8" ${itemsPerPage === 8 ? 'selected' : ''}>8 items per page</option>
+                    <option value="16" ${itemsPerPage === 16 ? 'selected' : ''}>16 items per page</option>
+                    <option value="32" ${itemsPerPage === 32 ? 'selected' : ''}>32 items per page</option>
+                    <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
+                    <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
+                </select>
+            </div>
         `;
         
         container.innerHTML = paginationHtml;

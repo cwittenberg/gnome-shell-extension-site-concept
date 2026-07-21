@@ -1,4 +1,5 @@
 // mvc/views/DetailView.js
+
 class DetailView {
     constructor() {
         this.currentMediaItems = [];
@@ -467,7 +468,7 @@ class DetailView {
 
         carouselMain.className = "w-full max-h-72 sm:max-h-80 md:max-h-96 aspect-video bg-[#241F31] dark:bg-black rounded-xl overflow-hidden mb-3 relative group shadow-inner";
         carouselMain.innerHTML = `
-            <div id="carousel-track" class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth">
+            <div id="carousel-track" class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                 ${trackHtml}
             </div>
             <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/50 hover:scale-105 hover:shadow-lg border border-white/20 z-10 hidden sm:flex pointer-events-none" aria-label="Previous image">
@@ -489,6 +490,7 @@ class DetailView {
                 if (ytId) thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
                 else thumbUrl = media.poster || '';
             }
+
             const activeClasses = index === 0 ? 'border-gnome-blue opacity-100 scale-100' : 'border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             
             return `
@@ -543,12 +545,12 @@ class DetailView {
 
         updateUI();
 
-        if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }); });
-        if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); });
+        if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth }); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth }); });
 
         const navigateTo = (e) => {
             const idx = parseInt(e.currentTarget.getAttribute('data-dot-index') || e.currentTarget.getAttribute('data-thumb-index'), 10);
-            track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+            track.scrollTo({ left: idx * track.clientWidth });
         };
 
         dots.forEach(dot => dot.addEventListener('click', navigateTo));
@@ -567,7 +569,7 @@ class DetailView {
                 if (width === 0) return;
                 const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
                 const nextIndex = (activeIndex + 1) % dots.length;
-                track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
+                track.scrollTo({ left: nextIndex * width });
             }, 4000);
         };
 

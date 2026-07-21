@@ -44,12 +44,14 @@
   <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body class="gnome-layout-body">
+
   <!-- Scroll to Top Button -->
   <button id="scroll-to-top-btn"
     class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
-    onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Scroll to top">
+    onclick="window.scrollTo(0, 0)" aria-label="Scroll to top">
     <i class="icon icon-up-color"></i>
   </button>
+
   <!-- Header -->
   <header class="gnome-header">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center gap-y-3 gap-x-4">
@@ -59,17 +61,20 @@
         onclick="window.showViewHandler('home')">
         <i class="icon icon-gnome-extensions"></i>
       </div>
+
       <!-- Mobile Menu Toggle -->
       <div class="sm:hidden flex shrink-0 items-center gap-1 order-2 ml-auto">
         <button id="mobile-menu-btn" class="gnome-btn-icon font-bold px-3 w-auto" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
           <i class="icon icon-sidebar-color text-lg"></i>
         </button>
       </div>
+
       <!-- Search -->
       <div id="search-container"
-        class="relative order-3 basis-full w-full sm:order-2 sm:basis-auto sm:w-auto sm:flex-1 sm:max-w-xl">
+        class="relative hidden sm:block order-3 basis-full w-full sm:order-2 sm:basis-auto sm:w-auto sm:flex-1 sm:max-w-xl">
         <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input" />
       </div>
+
       <!-- Desktop Nav -->
       <nav class="hidden sm:flex shrink-0 items-center gap-1 order-3 ml-auto">
         <a href="#" data-nav="store" class="gnome-nav-link active">Store</a>
@@ -81,6 +86,7 @@
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
       </nav>
     </div>
+
     <!-- Mobile Menu -->
     <div id="mobile-menu"
       class="hidden sm:hidden border-t border-[#c0bfbc] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
@@ -92,6 +98,7 @@
       <button id="nav-logout-mobile-btn" class="gnome-btn-icon w-full mt-2 auth-user hidden">Log Out</button>
     </div>
   </header>
+
   <!-- Native Connector Warning -->
   <div id="connector-warning"
     class="hidden bg-gnome-blue text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
@@ -112,6 +119,7 @@
       </div>
     </div>
   </div>
+
   <!-- STORE VIEW (Combines Home & Search) -->
   <div id="store-view" class="block">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -127,10 +135,12 @@
           </p>
         </div>
       </section>
+
       <!-- Featured Extensions Section -->
       <div id="featured-section" class="mb-12 animate-fade-in">
         <!-- Rendered by JS -->
       </div>
+
       <!-- SEARCH / CATALOG SECTION -->
       <div id="search-catalog-section">
         <div id="main-divider" class="flex items-center gap-4 mb-8 transition-opacity duration-300">
@@ -138,13 +148,14 @@
           <span class="text-sm font-bold text-gnome-grey uppercase tracking-wider">Explore Extensions</span>
           <hr class="flex-1 border-[#c0bfbc] dark:border-[#3d3846]">
         </div>
+
         <!-- Filters Bar with Scrollable Categories -->
         <div class="flex flex-col md:flex-row gap-3 mb-8">
           <div class="gnome-filter-container">
             <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
               <i class="icon icon-angles-left text-lg"></i>
             </button>
-            <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth w-full relative z-0 px-1">
+            <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide w-full relative z-0 px-1">
               <!-- Rendered by JS -->
             </div>
             <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:via-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
@@ -177,24 +188,29 @@
             </select>
           </div>
         </div>
+
         <!-- Results Header -->
         <div id="results-header" class="flex items-center justify-between mb-4 animate-fade-in">
           <!-- Rendered by JS -->
         </div>
+
         <!-- Main Extensions Grid -->
         <div id="extensions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <!-- Rendered by JS -->
         </div>
+
         <!-- Pagination Controls Container -->
-        <div id="pagination-container" class="mt-10 flex justify-center items-center gap-2 animate-fade-in">
+        <div id="pagination-container" class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 w-full animate-fade-in">
           <!-- Dynamic pagination node injection -->
         </div>
+
         <!-- Empty State -->
         <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-center animate-fade-in">
           <h3 class="text-lg font-bold text-gnome-black dark:text-gnome-white mb-2">No extensions found</h3>
           <p class="text-sm text-gnome-grey max-w-sm">Try adjusting your search or category filter to find what you're looking for.</p>
         </div>
       </div>
+
       <!-- BOTTOM BANNERS -->
       <div id="home-bottom-content" class="mt-16 animate-fade-in">
         <!-- Official App Banner -->
@@ -230,10 +246,13 @@
       </div>
     </main>
   </div>
+
   <!-- AUTH VIEW -->
   <div id="auth-view" class="hidden relative pb-16"></div>
+
   <!-- PROFILE VIEW -->
   <div id="profile-view" class="hidden relative pb-16"></div>
+
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
     <!-- Back Header (Non-sticky to prevent overlap and save space) -->
@@ -246,6 +265,7 @@
         </button>
       </div>
     </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
       <!-- Main Layout Split -->
       <div class="flex flex-col md:flex-row gap-8 md:gap-12">
@@ -283,6 +303,7 @@
               </div>
             </div>
           </div>
+
           <!-- Carousel Section -->
           <div class="mb-12 gnome-card-panel p-4 animate-fade-in">
             <div id="carousel-main"
@@ -293,12 +314,14 @@
               <!-- JS injected -->
             </div>
           </div>
+
           <!-- Description -->
           <div class="mb-16">
             <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
               <!-- Rendered by marked.js -->
             </div>
           </div>
+
           <!-- User Reviews -->
           <div class="gnome-section-divider">
             <h3 class="gnome-title-section mb-6">User Reviews</h3>
@@ -322,10 +345,12 @@
                 <button class="gnome-btn-primary">Submit</button>
               </div>
             </div>
+
             <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
               <!-- JS Injected Reviews -->
             </div>
           </div>
+
           <!-- Version History -->
           <div class="gnome-section-divider">
             <h3 class="gnome-title-section mb-6">Version History</h3>
@@ -334,6 +359,7 @@
             </div>
           </div>
         </div>
+
         <!-- RIGHT COLUMN: Buttons + Information Track -->
         <div class="w-full md:w-80 flex-shrink-0 animate-fade-in relative">
           <div class="flex flex-col gap-6">
@@ -350,18 +376,23 @@
               <button id="detail-install-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-extension-add text-sm"></i> Install
               </button>
+
               <button id="detail-update-container" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-download-color text-sm"></i> Update
               </button>
+
               <div id="detail-incompatible-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none gap-1.5 shrink-0">
                   <i class="icon icon-warning text-sm"></i> Incompatible
               </div>
+
               <button id="detail-prefs-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] gap-1.5 shrink-0">
                   <i class="icon icon-settings text-sm"></i> Settings
               </button>
+
               <button id="detail-uninstall-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] gap-1.5 shrink-0">
                   <i class="icon icon-extension-remove text-sm"></i> Remove
               </button>
+
               <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] gap-1.5 shrink-0">
                     Donate
               </a>
@@ -371,6 +402,7 @@
                   <i class="icon icon-virus text-sm"></i> Report Bug
               </a>
             </div>
+
             <!-- Information Container (Sticks when scrolling down) -->
             <div class="gnome-card-panel p-6 shrink-0 sticky top-24">
               <h3 class="gnome-title-uppercase">Information</h3>
@@ -413,17 +445,22 @@
                 </div>
               </dl>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <!-- UPLOAD VIEW (Managed by UploadView.js) -->
   <div id="upload-view" class="hidden relative pb-16"></div>
+
   <!-- LOCAL VIEW (Managed by LocalView.js) -->
   <div id="local-view" class="hidden relative pb-16"></div>
+
   <!-- ABOUT VIEW (Managed by AboutView.js) -->
   <div id="about-view" class="hidden relative pb-16"></div>
+
   <!-- Footer -->
   <footer class="gnome-footer">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -495,19 +532,23 @@
       </div>
     </div>
   </footer>
+
   <!-- MVC Logic (Order matters) -->
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
+
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
+
   <!-- New Static Views -->
   <script src="mvc/views/AuthView.js"></script>
   <script src="mvc/views/ProfileView.js"></script>
   <script src="mvc/views/UploadView.js"></script>
   <script src="mvc/views/LocalView.js"></script>
   <script src="mvc/views/AboutView.js"></script>
+
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>

@@ -1,4 +1,5 @@
 // app.js
+
 (function () {
     let detailController;
     let storeController;
@@ -18,6 +19,7 @@
                 document.documentElement.classList.remove('dark');
             }
         };
+
         updateTheme(darkModeMediaQuery);
         darkModeMediaQuery.addEventListener('change', updateTheme);
     }
@@ -100,10 +102,12 @@
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
+
         document.querySelectorAll('.auth-guest').forEach(el => {
             if (!isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
+
         document.querySelectorAll('.auth-required').forEach(el => {
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
@@ -115,9 +119,17 @@
         if (mobileMenuButton) {
             mobileMenuButton.addEventListener('click', () => {
                 const mobileMenu = document.getElementById('mobile-menu');
+                const searchContainer = document.getElementById('search-container');
                 if (mobileMenu) {
                     const isHidden = mobileMenu.classList.toggle('hidden');
                     mobileMenuButton.setAttribute('aria-expanded', String(!isHidden));
+                    if (searchContainer) {
+                        if (isHidden) {
+                            searchContainer.classList.add('hidden');
+                        } else {
+                            searchContainer.classList.remove('hidden');
+                        }
+                    }
                 }
             });
         }
@@ -137,9 +149,13 @@
                 
                 const mobileMenu = document.getElementById('mobile-menu');
                 const mobileMenuButton = document.getElementById('mobile-menu-btn');
+                const searchContainer = document.getElementById('search-container');
                 if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                     mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    if (searchContainer) {
+                        searchContainer.classList.add('hidden');
+                    }
                 }
             });
         });
@@ -150,7 +166,7 @@
             logo.addEventListener('click', () => {
                 showView('store');
                 if (storeController) storeController.handleReset();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo(0, 0);
             });
         }
         
