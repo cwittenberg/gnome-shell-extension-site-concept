@@ -103,7 +103,14 @@ class StoreView {
             categoriesContainer.addEventListener('click', (event) => {
                 const categoryBtn = event.target.closest('[data-category]');
                 if (categoryBtn && this.controller) {
-                    this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
+                    const category = categoryBtn.getAttribute('data-category');
+                    
+                    // Toggle behavior: Deselect if clicking the already active category
+                    if (this._lastSelectedCategory === category && category !== 'All') {
+                        this.controller.handleCategory('All');
+                    } else {
+                        this.controller.handleCategory(category);
+                    }
                 }
             });
         }
@@ -123,7 +130,14 @@ class StoreView {
                 const catFilterBtn = event.target.closest('[data-category-filter]');
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
-                    this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
+                    const category = catFilterBtn.getAttribute('data-category-filter');
+                    
+                    // Toggle behavior for card category pills
+                    if (this._lastSelectedCategory === category && category !== 'All') {
+                        this.controller.handleCategory('All');
+                    } else {
+                        this.controller.handleCategory(category);
+                    }
                     return;
                 }
                 
@@ -148,7 +162,14 @@ class StoreView {
                 const catFilterBtn = event.target.closest('[data-category-filter]');
                 if (catFilterBtn && this.controller) {
                     event.stopPropagation();
-                    this.controller.handleCategory(catFilterBtn.getAttribute('data-category-filter'));
+                    const category = catFilterBtn.getAttribute('data-category-filter');
+                    
+                    // Toggle behavior for card category pills
+                    if (this._lastSelectedCategory === category && category !== 'All') {
+                        this.controller.handleCategory('All');
+                    } else {
+                        this.controller.handleCategory(category);
+                    }
                     return;
                 }
 
