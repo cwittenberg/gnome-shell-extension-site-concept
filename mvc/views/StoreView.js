@@ -613,14 +613,14 @@ class StoreView {
                         </p>
                         <div class="hidden lg:flex col-span-3 items-center justify-end gap-4 shrink-0">
                             <button type="button" data-category-filter="${this.escapeHtml(extension.category)}" class="gnome-badge max-w-[100px] truncate hover:bg-gnome-blue hover:text-white transition-colors cursor-pointer relative z-10">${this.escapeHtml(extension.category)}</button>
-                            <div class="flex flex-col items-end gap-1.5 w-16">
-                                <div class="text-sm font-semibold text-gnome-blue flex items-center gap-1.5">
-                                    <i class="icon icon-star text-xs flex-shrink-0"></i>
-                                    <span>${extension.rating.toFixed(1)}</span>
+                            <div class="flex flex-col items-end justify-center shrink-0">
+                                <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1 w-max ml-auto mb-1">
+                                    <span class="font-medium">${extension.rating.toFixed(1)}</span>
+                                    <i class="icon icon-star text-sm"></i>
                                 </div>
-                                <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1.5">
-                                    <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                                <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                                     <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
+                                    <i class="icon icon-download text-xs"></i>
                                 </div>
                             </div>
                         </div>
@@ -628,18 +628,18 @@ class StoreView {
                 </div>
                 
                 <div class="flex items-center justify-end gap-3 shrink-0 pl-2 border-l border-[#c0bfbc] dark:border-[#3d3846] sm:border-0 sm:pl-0">
-                    <div class="hidden sm:flex lg:hidden flex-col items-end gap-1.5">
-                        <div class="text-sm font-semibold text-gnome-blue flex items-center gap-1.5">
-                            <i class="icon icon-star text-xs flex-shrink-0"></i>
-                            <span>${extension.rating.toFixed(1)}</span>
+                    <div class="hidden sm:flex lg:hidden flex-col items-end justify-center shrink-0">
+                        <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1 w-max ml-auto mb-1">
+                            <span class="font-medium">${extension.rating.toFixed(1)}</span>
+                            <i class="icon icon-star text-sm"></i>
                         </div>
-                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1.5">
-                            <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                             <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
+                            <i class="icon icon-download text-xs"></i>
                         </div>
                     </div>
                     <button type="button" class="gnome-btn-icon bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent group-hover:text-white group-hover:bg-gnome-blue sm:group-hover:bg-gnome-blue transition-colors" title="View details">
-                        <i class="icon icon-arrow-right block leading-none"></i>
+                        <i class="icon icon-arrow-right"></i>
                     </button>
                 </div>
             </article>
@@ -660,14 +660,14 @@ class StoreView {
                                 <p class="text-sm text-gnome-grey mt-1 truncate">${this.escapeHtml(extension.author)}</p>
                             </div>
                         </div>
-                        <div class="text-right shrink-0 flex flex-col items-end gap-1.5">
-                            <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1.5">
-                                <i class="icon icon-star text-xs flex-shrink-0"></i>
-                                <span>${extension.rating.toFixed(1)}</span>
+                        <div class="text-right shrink-0">
+                            <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1 w-max ml-auto mb-1">
+                                <span class="font-medium">${extension.rating.toFixed(1)}</span>
+                                <i class="icon icon-star text-sm"></i>
                             </div>
-                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1.5">
-                                <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                                 <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
+                                <i class="icon icon-download text-xs"></i>
                             </div>
                         </div>
                     </div>
@@ -677,7 +677,7 @@ class StoreView {
                 <div class="mt-4 flex items-center justify-between pt-4 border-t border-[#c0bfbc] dark:border-[#3d3846]">
                     <button type="button" data-category-filter="${this.escapeHtml(extension.category)}" class="gnome-badge hover:bg-gnome-blue hover:text-white transition-colors cursor-pointer relative z-10">${this.escapeHtml(extension.category)}</button>
                     <button type="button" class="gnome-btn-icon bg-[#f6f5f4] dark:bg-[#3d3846] group-hover:text-white group-hover:bg-gnome-blue transition-colors" title="View details">
-                        <i class="icon icon-arrow-right block leading-none"></i>
+                        <i class="icon icon-arrow-right"></i>
                     </button>
                 </div>
             </article>
