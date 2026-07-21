@@ -1,4 +1,3 @@
-// mvc/views/LocalView.js
 class LocalView {
     constructor() {
         this.container = document.getElementById('local-view');

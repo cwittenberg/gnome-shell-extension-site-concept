@@ -1,5 +1,3 @@
-// app.js
-
 (function () {
     let detailController;
     let storeController;

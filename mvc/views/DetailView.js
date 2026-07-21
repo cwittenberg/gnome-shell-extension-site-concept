@@ -1,5 +1,3 @@
-// mvc/views/DetailView.js
-
 class DetailView {
     constructor() {
         this.currentMediaItems = [];
@@ -81,6 +79,7 @@ class DetailView {
                     iconHtml = extension.icon;
                 }
             }
+
             detailIcon.innerHTML = `
               <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
                 ${iconHtml}
@@ -515,6 +514,7 @@ class DetailView {
         const updateUI = () => {
             const width = track.clientWidth;
             if (width === 0) return;
+
             const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
 
             dots.forEach((dot, idx) => {
@@ -537,11 +537,11 @@ class DetailView {
             }
         };
 
-        let scrollTimeout;
+        let scrollFrame;
         track.addEventListener('scroll', () => {
-            window.clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(updateUI, 15);
-        });
+            if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
+            scrollFrame = window.requestAnimationFrame(updateUI);
+        }, { passive: true });
 
         updateUI();
 

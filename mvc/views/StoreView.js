@@ -1,4 +1,3 @@
-// mvc/views/StoreView.js
 // GoF Pattern: Observer (Observer Participant)
 class StoreView {
     constructor() {

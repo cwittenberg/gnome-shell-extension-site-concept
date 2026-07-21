@@ -1,4 +1,3 @@
-// mvc/views/UploadView.js
 class UploadView {
     constructor() {
         this.container = document.getElementById('upload-view');

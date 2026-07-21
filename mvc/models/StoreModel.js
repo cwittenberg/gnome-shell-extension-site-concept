@@ -1,4 +1,3 @@
-// mvc/models/StoreModel.js
 // GoF Pattern: Observer (Subject Participant)
 class StoreModel {
     constructor() {

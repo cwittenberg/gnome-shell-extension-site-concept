@@ -1,4 +1,3 @@
-// mvc/views/ProfileView.js
 class ProfileView {
     constructor() {
         this.container = document.getElementById('profile-view');
