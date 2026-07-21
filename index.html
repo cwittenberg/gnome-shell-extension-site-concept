@@ -69,9 +69,9 @@
 
   <!-- Scroll to Top Button -->
   <button id="scroll-to-top-btn"
-    class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-gnome-blue-hover transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
+    class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white w-12 h-12 p-0 flex items-center justify-center rounded-full shadow-lg hover:bg-gnome-blue-hover transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
     onclick="window.scrollTo(0, 0)" aria-label="Scroll to top">
-    <i class="icon icon-up-color"></i>
+    <i class="icon icon-up-color text-xl"></i>
   </button>
 
   <!-- Header -->
@@ -305,195 +305,188 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center">
         <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner alignment -->
         <button onclick="window.showViewHandler('store')"
-          class="flex items-center gap-3 px-3 py-1.5 -ml-[5px] rounded-lg text-sm font-semibold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-all duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
-          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 text-center"></i>
-          <span>Back to Store</span>
+          class="inline-flex items-center gap-2 px-3 py-1.5 -ml-[5px] rounded-lg text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-all duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
+          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 flex items-center justify-center"></i>
+          <span class="mt-px">Back to Store</span>
         </button>
       </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
-      <!-- Main Layout Split -->
-      <div class="flex flex-col md:flex-row gap-8 md:gap-12">
+      <!-- Main Layout Grid Matrix (Perfect mobile interleaving without display: contents bugs) -->
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_20rem] gap-y-10 md:gap-x-12 items-start">
         
-        <!-- LEFT COLUMN: Logo, Title, Carousel, Description, Reviews -->
-        <div class="flex-1 min-w-0 w-full">
-          
-          <!-- Header Area -->
-          <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start mb-8 animate-fade-in">
-            <div id="detail-icon" class="gnome-detail-icon-box flex-shrink-0 animate-fade-in">
-              <!-- JS injected SVG -->
-            </div>
-            <div class="flex-1 w-full min-w-0 animate-fade-in">
-              <div class="flex flex-wrap items-center gap-3 mb-2">
-                <h1 id="detail-title" class="gnome-title-page text-4xl"></h1>
-                <span id="detail-system-badge" class="hidden gnome-badge-status gnome-badge-system">System Extension</span>
-              </div>
-              
-              <p id="detail-author" class="text-lg text-gnome-secondary font-semibold mb-4"></p>
-              
-              <div id="detail-rating-container" class="mb-4"></div>
-              
-              <!-- Error Banner -->
-              <div id="detail-error-banner" class="hidden mb-4 gnome-error-banner w-full max-w-2xl">
-                <i class="icon icon-exclamation-color"></i>
-                <div class="min-w-0">
-                  <p>This extension has reported an error and may not function correctly.</p>
-                  <p id="detail-error-message" class="font-mono text-xs mt-1 opacity-80 break-all"></p>
-                </div>
-              </div>
-              
-              <!-- Security Warnings Banner -->
-              <div id="detail-warnings-container" class="mb-4 flex flex-wrap gap-2">
-                <!-- JS Injected Warnings -->
-              </div>
-            </div>
+        <!-- Header Area (Col 1, Row 1) -->
+        <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start animate-fade-in col-start-1 row-start-1 md:col-start-1 md:row-start-1">
+          <div id="detail-icon" class="gnome-detail-icon-box flex-shrink-0 animate-fade-in">
+            <!-- JS injected SVG -->
           </div>
-
-          <!-- Carousel Section -->
-          <div class="mb-12 gnome-card-panel p-4 animate-fade-in">
-            <div id="carousel-main"
-              class="w-full aspect-video bg-gnome-bg-light dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
-              <!-- JS injected -->
+          <div class="flex-1 w-full min-w-0 animate-fade-in">
+            <div class="flex flex-wrap items-center gap-3 mb-2">
+              <h1 id="detail-title" class="gnome-title-page text-4xl"></h1>
+              <span id="detail-system-badge" class="hidden gnome-badge-status gnome-badge-system">System Extension</span>
             </div>
-            <div id="carousel-thumbnails" class="flex gap-3 overflow-x-auto scrollbar-hide py-1">
-              <!-- JS injected -->
-            </div>
-          </div>
-
-          <!-- Description -->
-          <div class="mb-16">
-            <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
-              <!-- Rendered by marked.js -->
-            </div>
-          </div>
-
-          <!-- User Reviews -->
-          <div class="gnome-section-divider">
-            <h3 class="gnome-title-section mb-6">User Reviews</h3>
             
-            <!-- Interactive Review Form -->
-            <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-gnome-bg-light">
-              <h4 class="text-sm font-bold text-gnome-black dark:text-gnome-white mb-3">Write a Review</h4>
-              <div class="flex items-center gap-2 mb-3 text-gnome-text-muted-dark dark:text-gnome-text-muted-light text-xl cursor-pointer"
-                id="interactive-star-rating">
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="1"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="2"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="3"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="4"></i>
-                <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="5"></i>
-              </div>
-              <textarea
-                class="gnome-input mb-3 resize-y bg-gnome-white dark:bg-gnome-black"
-                rows="3" placeholder="Leave a review using Markdown..."></textarea>
-              <div class="flex justify-between items-center">
-                <span class="text-xs text-gnome-grey"><i class="icon icon-markdown mr-1"></i> Markdown supported</span>
-                <button class="gnome-btn-primary">Submit</button>
+            <p id="detail-author" class="text-lg text-gnome-secondary font-semibold mb-4"></p>
+            
+            <div id="detail-rating-container" class="mb-4"></div>
+            
+            <!-- Error Banner -->
+            <div id="detail-error-banner" class="hidden mb-4 gnome-error-banner w-full max-w-2xl">
+              <i class="icon icon-exclamation-color"></i>
+              <div class="min-w-0">
+                <p>This extension has reported an error and may not function correctly.</p>
+                <p id="detail-error-message" class="font-mono text-xs mt-1 opacity-80 break-all"></p>
               </div>
             </div>
-
-            <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
-              <!-- JS Injected Reviews -->
+            
+            <!-- Security Warnings Banner -->
+            <div id="detail-warnings-container" class="mb-4 flex flex-wrap gap-2">
+              <!-- JS Injected Warnings -->
             </div>
           </div>
+        </div>
 
-          <!-- Version History -->
-          <div class="gnome-section-divider">
-            <h3 class="gnome-title-section mb-6">Version History</h3>
-            <div id="detail-versions-container" class="space-y-4 animate-fade-in">
-              <!-- JS Injected Versions -->
+        <!-- Carousel Section (Col 1, Row 2) -->
+        <div class="gnome-card-panel p-4 animate-fade-in col-start-1 row-start-2 md:col-start-1 md:row-start-2">
+          <div id="carousel-main"
+            class="w-full aspect-video bg-gnome-bg-light dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative">
+            <!-- JS injected -->
+          </div>
+          <div id="carousel-thumbnails" class="flex gap-3 overflow-x-auto scrollbar-hide py-1">
+            <!-- JS injected -->
+          </div>
+        </div>
+
+        <!-- Description (Col 1, Row 3) -->
+        <div class="col-start-1 row-start-3 md:col-start-1 md:row-start-3">
+          <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
+            <!-- Rendered by marked.js -->
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Buttons + Information Track (Mobile: Col 1, Row 4 / Desktop: Col 2, Rows 1-5 spanning) -->
+        <div class="w-full flex flex-col gap-6 animate-fade-in relative col-start-1 row-start-4 md:col-start-2 md:row-start-1 md:row-span-5">
+          
+          <!-- Host Actions Container (Scrolls normally with page) -->
+          <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
+            <div class="flex items-center justify-between mb-3 px-1 shrink-0">
+                <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
+                <button id="detail-install-toggle" class="gnome-toggle pointer-events-none opacity-50 shrink-0" role="switch" aria-checked="false">
+                    <span id="detail-toggle-knob" class="gnome-toggle-knob"></span>
+                </button>
             </div>
+            
+            <button id="detail-install-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-green text-white font-bold text-sm shadow-sm hover:bg-gnome-green-hover transition-colors relative shrink-0">
+                Install <i class="icon icon-extension-add text-xl absolute right-4"></i>
+            </button>
+
+            <button id="detail-update-container" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-blue text-white font-bold text-sm shadow-sm hover:bg-gnome-blue-hover transition-colors relative shrink-0">
+                Update <i class="icon icon-download-color text-xl absolute right-4"></i>
+            </button>
+
+            <div id="detail-incompatible-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-orange text-white font-bold text-sm shadow-sm select-none relative shrink-0">
+                Incompatible <i class="icon icon-warning text-xl absolute right-4"></i>
+            </div>
+
+            <button id="detail-prefs-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-purple text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-purple-hover relative shrink-0">
+                Settings <i class="icon icon-settings text-xl absolute right-4"></i>
+            </button>
+
+            <button id="detail-uninstall-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-red text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-red-hover relative shrink-0">
+                Remove <i class="icon icon-extension-remove text-xl absolute right-4"></i>
+            </button>
+
+            <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-grey text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-text-muted-light relative shrink-0">
+                Donate <i class="icon icon-heart text-xl absolute right-4"></i>
+            </a>
+            
+            <!-- Bug Report -->
+            <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2.5 flex items-center justify-center rounded-lg border border-gnome-border-light/60 dark:border-gnome-border-dark/60 text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors relative mt-2 shrink-0">
+                Report Bug <i class="icon icon-virus text-xl absolute right-4"></i>
+            </a>
+
+          </div>
+
+          <!-- Information Container (Sticks when scrolling down) -->
+          <div class="gnome-card-panel p-6 shrink-0 sticky top-24">
+            <h3 class="gnome-title-uppercase">Information</h3>
+            <dl class="space-y-4 text-sm">
+              <div>
+                <dt class="text-gnome-grey font-semibold">UUID</dt>
+                <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Categories</dt>
+                <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Maintainers</dt>
+                <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
+                <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Version</dt>
+                <dd class="mt-1">
+                  <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
+                </dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Downloads</dt>
+                <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">License</dt>
+                <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
+              </div>
+              <div>
+                <dt class="text-gnome-grey font-semibold">Links</dt>
+                <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
+                  <!-- JS Injected Links -->
+                </dd>
+              </div>
+            </dl>
           </div>
 
         </div>
 
-        <!-- RIGHT COLUMN: Buttons + Information Track -->
-        <div class="w-full md:w-80 flex-shrink-0 animate-fade-in relative">
-          <div class="flex flex-col gap-6">
-            
-            <!-- Host Actions Container (Scrolls normally with page) -->
-            <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
-              <div class="flex items-center justify-between mb-3 px-1 shrink-0">
-                  <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
-                  <button id="detail-install-toggle" class="gnome-toggle pointer-events-none opacity-50 shrink-0" role="switch" aria-checked="false">
-                      <span id="detail-toggle-knob" class="gnome-toggle-knob"></span>
-                  </button>
-              </div>
-              
-              <button id="detail-install-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-green text-white font-bold text-sm shadow-sm hover:bg-gnome-green-hover transition-colors relative shrink-0">
-                  Install <i class="icon icon-extension-add text-xl absolute right-4"></i>
-              </button>
-
-              <button id="detail-update-container" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-blue text-white font-bold text-sm shadow-sm hover:bg-gnome-blue-hover transition-colors relative shrink-0">
-                  Update <i class="icon icon-download-color text-xl absolute right-4"></i>
-              </button>
-
-              <div id="detail-incompatible-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-orange text-white font-bold text-sm shadow-sm select-none relative shrink-0">
-                  Incompatible <i class="icon icon-warning text-xl absolute right-4"></i>
-              </div>
-
-              <button id="detail-prefs-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-purple text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-purple-hover relative shrink-0">
-                  Settings <i class="icon icon-settings text-xl absolute right-4"></i>
-              </button>
-
-              <button id="detail-uninstall-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-red text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-red-hover relative shrink-0">
-                  Remove <i class="icon icon-extension-remove text-xl absolute right-4"></i>
-              </button>
-
-              <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-grey text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-text-muted-light relative shrink-0">
-                  Donate <i class="icon icon-heart text-xl absolute right-4"></i>
-              </a>
-              
-              <!-- Bug Report -->
-              <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2.5 flex items-center justify-center rounded-lg border border-gnome-border-light/60 dark:border-gnome-border-dark/60 text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors relative mt-2 shrink-0">
-                  Report Bug <i class="icon icon-virus text-xl absolute right-4"></i>
-              </a>
-
+        <!-- User Reviews (Col 1, Row 5) -->
+        <div class="w-full border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 col-start-1 row-start-5 md:col-start-1 md:row-start-4">
+          <h3 class="gnome-title-section mb-6">User Reviews</h3>
+          
+          <!-- Interactive Review Form -->
+          <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-gnome-bg-light">
+            <h4 class="text-sm font-bold text-gnome-black dark:text-gnome-white mb-3">Write a Review</h4>
+            <div class="flex items-center gap-2 mb-3 text-gnome-text-muted-dark dark:text-gnome-text-muted-light text-xl cursor-pointer"
+              id="interactive-star-rating">
+              <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="1"></i>
+              <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="2"></i>
+              <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="3"></i>
+              <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="4"></i>
+              <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="5"></i>
             </div>
-
-            <!-- Information Container (Sticks when scrolling down) -->
-            <div class="gnome-card-panel p-6 shrink-0 sticky top-24">
-              <h3 class="gnome-title-uppercase">Information</h3>
-              <dl class="space-y-4 text-sm">
-                <div>
-                  <dt class="text-gnome-grey font-semibold">UUID</dt>
-                  <dd id="detail-meta-uuid" class="font-medium text-gnome-black dark:text-gnome-white mt-1 break-all"></dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Categories</dt>
-                  <dd id="detail-meta-categories" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Maintainers</dt>
-                  <dd id="detail-meta-maintainers" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Locale(s)</dt>
-                  <dd id="detail-meta-locale" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Version</dt>
-                  <dd class="mt-1">
-                    <span id="detail-meta-version" class="font-medium text-gnome-black dark:text-gnome-white"></span>
-                  </dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Downloads</dt>
-                  <dd id="detail-meta-downloads" class="font-medium text-gnome-black dark:text-gnome-white mt-1"></dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">License</dt>
-                  <dd class="font-medium text-gnome-black dark:text-gnome-white mt-1 cursor-pointer hover:underline">GPL-3.0-or-later</dd>
-                </div>
-                <div>
-                  <dt class="text-gnome-grey font-semibold">Links</dt>
-                  <dd id="detail-meta-links" class="mt-2 flex flex-col gap-2">
-                    <!-- JS Injected Links -->
-                  </dd>
-                </div>
-              </dl>
+            <textarea
+              class="gnome-input mb-3 resize-y bg-gnome-white dark:bg-gnome-black"
+              rows="3" placeholder="Leave a review using Markdown..."></textarea>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-gnome-grey"><i class="icon icon-markdown mr-1"></i> Markdown supported</span>
+              <button class="gnome-btn-primary">Submit</button>
             </div>
+          </div>
 
+          <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
+            <!-- JS Injected Reviews -->
+          </div>
+        </div>
+
+        <!-- Version History (Col 1, Row 6) -->
+        <div class="w-full border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 col-start-1 row-start-6 md:col-start-1 md:row-start-5">
+          <h3 class="gnome-title-section mb-6">Version History</h3>
+          <div id="detail-versions-container" class="space-y-4 animate-fade-in">
+            <!-- JS Injected Versions -->
           </div>
         </div>
 
