@@ -72,39 +72,37 @@
     class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white w-12 h-12 p-0 flex items-center justify-center rounded-full shadow-lg hover:bg-gnome-blue-hover transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
     onclick="window.scrollTo(0, 0)" aria-label="Scroll to top">
     <span class="flex items-center justify-center w-full h-full pointer-events-none">
-      <i class="icon icon-up-color text-2xl"></i>
+      <i class="icon icon-up text-2xl block leading-none"></i>
     </span>
   </button>
 
   <!-- Header -->
   <header class="gnome-header">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-wrap items-center gap-y-3 gap-x-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-16 py-3 flex flex-row items-center justify-between gap-2 sm:gap-4">
       
       <!-- Logo -->
-      <div class="logo flex shrink-0 sm:flex-none items-center gap-3 min-w-0 cursor-pointer order-1"
-        onclick="window.showViewHandler('store')">
+      <div class="logo flex shrink-0 items-center gap-3 cursor-pointer" onclick="window.showViewHandler('store')">
         <i class="icon icon-gnome-extensions"></i>
       </div>
 
       <!-- Search (Flathub Style) -->
-      <div id="search-container"
-        class="relative hidden sm:block order-2 flex-1 min-w-0 sm:max-w-xl mx-2 sm:mx-4 group">
+      <div id="search-container" class="relative flex-1 min-w-0 group">
         <i class="icon icon-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gnome-grey group-focus-within:text-gnome-blue transition-colors text-lg z-10 pointer-events-none"></i>
-        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input pl-11 pr-12 w-full !rounded-full bg-gnome-bg-light dark:bg-gnome-card-dark border border-transparent focus:bg-gnome-card-light dark:focus:bg-gnome-focus-dark focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
+        <input type="search" id="search-input" placeholder="Search..." class="gnome-input pl-11 pr-4 sm:pr-12 w-full h-11 !rounded-full bg-gnome-bg-light dark:bg-gnome-card-dark border border-transparent focus:bg-gnome-card-light dark:focus:bg-gnome-focus-dark focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
         <div class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center pointer-events-none z-10 group-focus-within:hidden">
           <kbd class="px-1.5 py-0.5 text-[10px] font-bold font-mono text-gnome-grey bg-gnome-white dark:bg-gnome-black border border-gnome-border-light dark:border-gnome-text-muted-light rounded shadow-sm">/</kbd>
         </div>
       </div>
 
       <!-- Mobile Menu Toggle -->
-      <div class="sm:hidden flex shrink-0 items-center gap-1 order-3 ml-auto">
-        <button id="mobile-menu-btn" class="gnome-btn-icon font-bold px-3 w-auto" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
-          <i class="icon icon-sidebar-color text-lg"></i>
+      <div class="sm:hidden flex shrink-0 items-center ml-1">
+        <button id="mobile-menu-btn" class="gnome-btn-icon font-bold w-11 h-11 flex items-center justify-center transition-colors" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
+          <i class="icon icon-sidebar text-xl block leading-none"></i>
         </button>
       </div>
 
       <!-- Desktop Nav -->
-      <nav class="hidden sm:flex shrink-0 items-center gap-1 order-4 ml-auto">
+      <nav class="hidden sm:flex shrink-0 items-center gap-1 ml-auto">
         <a href="#" data-nav="store" class="gnome-nav-link active">Store</a>
         <a href="#" data-nav="local" class="gnome-nav-link">Installed</a>
         <a href="#" data-nav="upload" class="gnome-nav-link auth-required hidden">Developers</a>
@@ -113,12 +111,10 @@
         <button id="nav-profile-btn" data-nav="profile" class="gnome-btn-primary ml-2 auth-user hidden">Profile</button>
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
       </nav>
-
     </div>
-
+    
     <!-- Mobile Menu -->
-    <div id="mobile-menu"
-      class="hidden sm:hidden border-t border-gnome-border-light dark:border-gnome-border-dark bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
+    <div id="mobile-menu" class="hidden sm:hidden border-t border-gnome-border-light dark:border-gnome-border-dark bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
       <a href="#" data-nav="store" class="gnome-nav-link active py-2">Store</a>
       <a href="#" data-nav="local" class="gnome-nav-link py-2">Installed</a>
       <a href="#" data-nav="upload" class="gnome-nav-link auth-required hidden py-2">Developers</a>
@@ -132,7 +128,6 @@
   <div id="connector-warning"
     class="hidden bg-gnome-grey text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_auto_auto] items-center gap-y-3 sm:gap-y-0 text-sm font-medium">
-
       <!-- Icon + Text Wrapper -->
       <div class="col-start-1 row-start-1 flex items-start sm:items-center pr-2 sm:pr-4 ml-[7px] gap-3">
         <i class="icon icon-info text-lg shrink-0 w-5 text-center mt-0.5 sm:mt-0"></i>
@@ -140,16 +135,13 @@
           We cannot detect a running copy of GNOME on this system. You must install the GNOME Shell integration to enable extensions.
         </p>
       </div>
-
-      <!-- Close Button (Mobile: Col 2, Row 1 | Desktop: Col 3, Row 1) -->
+      <!-- Close Button -->
       <div class="col-start-2 sm:col-start-3 row-start-1 justify-self-end self-start sm:self-center">
-        <!-- px-3 h-9 mathematically mirrors the padding boundaries of the header "open sidebar" button -->
         <button id="close-connector-warning" class="text-gnome-white hover:bg-white/20 transition-all duration-150 rounded-lg shrink-0 flex items-center justify-center px-3 h-9" aria-label="Dismiss warning">
           <i class="icon icon-close text-xl leading-none"></i>
         </button>
       </div>
-
-      <!-- Action Button (Mobile: Col 1-2, Row 2 | Desktop: Col 2, Row 1) -->
+      <!-- Action Button -->
       <div class="col-start-1 col-span-2 sm:col-span-1 sm:col-start-2 row-start-2 sm:row-start-1 mt-2 sm:mt-0 flex justify-center w-full sm:w-auto sm:mr-2">
         <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html"
           target="_blank" rel="noreferrer"
@@ -157,7 +149,6 @@
           Installation Guide
         </a>
       </div>
-
     </div>
   </div>
 
@@ -214,7 +205,6 @@
               <div class="w-px h-full bg-gnome-border-light dark:bg-gnome-border-dark shrink-0"></div>
               <button id="layout-row-btn" class="gnome-btn-icon shrink-0 h-full rounded-none" title="List view"><i class="icon icon-rows-view"></i></button>
             </div>
-
             <select id="shell-version-select" class="gnome-select shrink-0 h-[44px]">
               <option value="all">All versions</option>
               <option value="current">Current Shell</option>
@@ -307,18 +297,18 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center">
         <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner alignment -->
         <button onclick="window.showViewHandler('store')"
-          class="flex items-center gap-3 px-3 py-2 -ml-[5px] rounded-lg text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-colors duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
-          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 flex items-center justify-center"></i>
-          <span>Back to Store</span>
+          class="flex items-center justify-center gap-2 px-3 py-2 -ml-[5px] rounded-lg text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-colors duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none leading-none">
+          <i class="icon icon-navigation-back text-lg shrink-0 flex items-center justify-center leading-none"></i>
+          <span class="leading-none mt-0.5">Back to Store</span>
         </button>
       </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
-      <!-- Main Layout Grid Matrix (Perfect mobile interleaving without display: contents bugs) -->
+      <!-- Main Layout Grid Matrix -->
       <div class="grid grid-cols-1 md:grid-cols-[1fr_20rem] gap-y-10 md:gap-x-12 items-start">
         
-        <!-- Header Area (Col 1, Row 1) -->
+        <!-- Header Area -->
         <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start animate-fade-in col-start-1 row-start-1 md:col-start-1 md:row-start-1">
           <div id="detail-icon" class="gnome-detail-icon-box flex-shrink-0 animate-fade-in">
             <!-- JS injected SVG -->
@@ -349,7 +339,7 @@
           </div>
         </div>
 
-        <!-- Carousel Section (Col 1, Row 2) -->
+        <!-- Carousel Section -->
         <div class="gnome-card-panel p-4 animate-fade-in col-start-1 row-start-2 md:col-start-1 md:row-start-2">
           <div id="carousel-main"
             class="w-full aspect-video bg-gnome-bg-light dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative">
@@ -360,17 +350,17 @@
           </div>
         </div>
 
-        <!-- Description (Col 1, Row 3) -->
+        <!-- Description -->
         <div class="col-start-1 row-start-3 md:col-start-1 md:row-start-3">
           <div id="detail-description" class="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
             <!-- Rendered by marked.js -->
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: Buttons + Information Track (Mobile: Col 1, Row 4 / Desktop: Col 2, Rows 1-5 spanning) -->
+        <!-- RIGHT COLUMN: Buttons + Information Track -->
         <div class="w-full flex flex-col gap-6 animate-fade-in relative col-start-1 row-start-4 md:col-start-2 md:row-start-1 md:row-span-5">
           
-          <!-- Host Actions Container (Scrolls normally with page) -->
+          <!-- Host Actions Container -->
           <div id="detail-actions-wrapper" class="w-full flex flex-col gap-2 gnome-card-panel p-5 shrink-0">
             <div class="flex items-center justify-between mb-3 px-1 shrink-0">
                 <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">Enabled</span>
@@ -382,23 +372,18 @@
             <button id="detail-install-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-green text-white font-bold text-sm shadow-sm hover:bg-gnome-green-hover transition-colors relative shrink-0">
                 Install <i class="icon icon-extension-add text-xl absolute right-4"></i>
             </button>
-
             <button id="detail-update-container" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-blue text-white font-bold text-sm shadow-sm hover:bg-gnome-blue-hover transition-colors relative shrink-0">
                 Update <i class="icon icon-download-color text-xl absolute right-4"></i>
             </button>
-
             <div id="detail-incompatible-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-orange text-white font-bold text-sm shadow-sm select-none relative shrink-0">
                 Incompatible <i class="icon icon-warning text-xl absolute right-4"></i>
             </div>
-
             <button id="detail-prefs-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-purple text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-purple-hover relative shrink-0">
                 Settings <i class="icon icon-settings text-xl absolute right-4"></i>
             </button>
-
             <button id="detail-uninstall-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-red text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-red-hover relative shrink-0">
                 Remove <i class="icon icon-extension-remove text-xl absolute right-4"></i>
             </button>
-
             <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-grey text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-text-muted-light relative shrink-0">
                 Donate <i class="icon icon-heart text-xl absolute right-4"></i>
             </a>
@@ -407,10 +392,9 @@
             <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2.5 flex items-center justify-center rounded-lg border border-gnome-border-light/60 dark:border-gnome-border-dark/60 text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors relative mt-2 shrink-0">
                 Report Bug <i class="icon icon-virus text-xl absolute right-4"></i>
             </a>
-
           </div>
 
-          <!-- Information Container (Sticks when scrolling down) -->
+          <!-- Information Container -->
           <div class="gnome-card-panel p-6 shrink-0 sticky top-24">
             <h3 class="gnome-title-uppercase">Information</h3>
             <dl class="space-y-4 text-sm">
@@ -452,10 +436,9 @@
               </div>
             </dl>
           </div>
-
         </div>
 
-        <!-- User Reviews (Col 1, Row 5) -->
+        <!-- User Reviews -->
         <div class="w-full border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 col-start-1 row-start-5 md:col-start-1 md:row-start-4">
           <h3 class="gnome-title-section mb-6">User Reviews</h3>
           
@@ -478,13 +461,12 @@
               <button class="gnome-btn-primary">Submit</button>
             </div>
           </div>
-
           <div id="detail-reviews-container" class="space-y-4 animate-fade-in">
             <!-- JS Injected Reviews -->
           </div>
         </div>
 
-        <!-- Version History (Col 1, Row 6) -->
+        <!-- Version History -->
         <div class="w-full border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 col-start-1 row-start-6 md:col-start-1 md:row-start-5">
           <h3 class="gnome-title-section mb-6">Version History</h3>
           <div id="detail-versions-container" class="space-y-4 animate-fade-in">
@@ -496,13 +478,13 @@
     </div>
   </div>
 
-  <!-- UPLOAD VIEW (Managed by UploadView.js) -->
+  <!-- UPLOAD VIEW -->
   <div id="upload-view" class="hidden relative pb-16"></div>
 
-  <!-- LOCAL VIEW (Managed by LocalView.js) -->
+  <!-- LOCAL VIEW -->
   <div id="local-view" class="hidden relative pb-16"></div>
 
-  <!-- ABOUT VIEW (Managed by AboutView.js) -->
+  <!-- ABOUT VIEW -->
   <div id="about-view" class="hidden relative pb-16"></div>
 
   <!-- Footer -->
@@ -518,7 +500,6 @@
             tools.
           </p>
         </div>
-
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Extensions</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -528,7 +509,6 @@
             <li><a href="#" data-nav="upload" class="hover:text-gnome-blue transition-colors auth-required hidden">Add yours</a></li>
           </ul>
         </div>
-
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Developers</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -542,7 +522,6 @@
                 rel="noreferrer" class="hover:text-gnome-blue transition-colors">Bug Reports</a></li>
           </ul>
         </div>
-
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">GNOME</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -557,11 +536,10 @@
           </ul>
         </div>
       </div>
-
       <div
         class="border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
-          <p>Copyright © 2005—2026 The GNOME Project.</p>
+          <p>Copyright © 2005–2026 The GNOME Project.</p>
           <p class="mt-1 text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark">
             Made with <span class="text-gnome-red">♥</span> by the GNOME community.
           </p>
@@ -584,7 +562,6 @@
   <!-- MVC Logic (Order matters) -->
   <script src="mvc/views/NavigationView.js"></script>
   <script src="mvc/controllers/NavigationController.js"></script>
-
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
@@ -593,7 +570,7 @@
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
 
-  <!-- New Static Views -->
+  <!-- Static Views -->
   <script src="mvc/views/AuthView.js"></script>
   <script src="mvc/views/ProfileView.js"></script>
   <script src="mvc/views/UploadView.js"></script>

@@ -46,6 +46,7 @@ class DetailView {
             this.clearDetails();
             return;
         }
+
         this.renderDetails(extension);
     }
 
@@ -79,7 +80,6 @@ class DetailView {
                     iconHtml = extension.icon;
                 }
             }
-
             detailIcon.innerHTML = `
               <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
                 ${iconHtml}
@@ -445,8 +445,8 @@ class DetailView {
                                </video>`;
                 }
             } else {
-                // Added pointer-events-none to prevent images from trapping touch and mouse drag events
-                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-contain pointer-events-none select-none" draggable="false">`;
+                // Ensure touch maps naturally to the track but prevents file drag highlighting
+                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-contain select-none" draggable="false">`;
             }
             
             let captionHtml = '';
@@ -459,9 +459,8 @@ class DetailView {
                     </div>
                 `;
             }
-
-            // Using snap-start ensures track exactly aligns the 0-point of the track with the 0-point of the image regardless of margins
-            return `<div class="min-w-full h-full flex-shrink-0 snap-start relative flex items-center justify-center bg-black" data-index="${index}">${content}${captionHtml}</div>`;
+            // Add max-w-full and overflow-hidden to specifically clip bounds on mobile screens
+            return `<div class="w-full min-w-full max-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black overflow-hidden" data-index="${index}">${content}${captionHtml}</div>`;
         }).join('');
 
         const dotsHtml = this.currentMediaItems.map((_, index) => {
@@ -493,7 +492,6 @@ class DetailView {
                 if (ytId) thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
                 else thumbUrl = media.poster || '';
             }
-
             const activeClasses = index === 0 ? 'border-gnome-blue opacity-100 scale-100' : 'border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             
             return `
@@ -518,18 +516,26 @@ class DetailView {
         const updateUI = () => {
             const width = track.clientWidth;
             if (width === 0) return;
-            // Snapping calculation changed to explicitly track nearest start position
-            const activeIndex = Math.round(track.scrollLeft / width);
 
+            const activeIndex = Math.round(track.scrollLeft / width);
+            
             dots.forEach((dot, idx) => {
                 if (idx === activeIndex) dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-5 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
                 else dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-1.5 bg-white/50 hover:bg-white/90 shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
             });
-
+            
             thumbs.forEach((thumb, idx) => {
                 if (idx === activeIndex) thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-gnome-blue opacity-100 scale-100';
                 else thumb.className = 'carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             });
+
+            // Auto-scroll thumbnails tray to keep the active thumb centered during swipes
+            const thumbContainer = document.getElementById('carousel-thumbnails');
+            if (thumbContainer && thumbs[activeIndex]) {
+                const thumb = thumbs[activeIndex];
+                const scrollLeft = thumb.offsetLeft - (thumbContainer.clientWidth / 2) + (thumb.clientWidth / 2);
+                thumbContainer.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            }
 
             if (prevBtn) {
                 if (activeIndex === 0) { prevBtn.style.opacity = '0'; prevBtn.style.pointerEvents = 'none'; }
@@ -537,7 +543,7 @@ class DetailView {
             }
             if (nextBtn) {
                 if (activeIndex === dots.length - 1) { nextBtn.style.opacity = '0'; nextBtn.style.pointerEvents = 'none'; }
-                else { nextBtn.style.opacity = ''; prevBtn.style.pointerEvents = 'auto'; }
+                else { nextBtn.style.opacity = ''; nextBtn.style.pointerEvents = 'auto'; }
             }
         };
 
@@ -553,8 +559,17 @@ class DetailView {
         if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); });
 
         const navigateTo = (e) => {
-            const idx = parseInt(e.currentTarget.getAttribute('data-dot-index') || e.currentTarget.getAttribute('data-thumb-index'), 10);
-            track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+            // Evaluates both fallbacks properly instead of parsing NaN
+            const attr = e.currentTarget.getAttribute('data-dot-index') ?? e.currentTarget.getAttribute('data-thumb-index');
+            const idx = parseInt(attr, 10);
+            if (!isNaN(idx)) {
+                const slide = track.querySelector(`[data-index="${idx}"]`);
+                if (slide) {
+                    track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
+                } else {
+                    track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+                }
+            }
         };
 
         dots.forEach(dot => dot.addEventListener('click', navigateTo));
@@ -564,7 +579,7 @@ class DetailView {
 
         const onlyPictures = this.currentMediaItems.every(media => media.type !== 'video');
         let autoplayTimer = null;
-
+        
         const startAutoplay = () => {
             if (!onlyPictures || dots.length <= 1) return;
             stopAutoplay();
@@ -576,16 +591,16 @@ class DetailView {
                 track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
             }, 4000);
         };
-
+        
         const stopAutoplay = () => {
             if (autoplayTimer) {
                 clearInterval(autoplayTimer);
                 autoplayTimer = null;
             }
         };
-
+        
         startAutoplay();
-
+        
         const carouselMain = document.getElementById('carousel-main');
         if (carouselMain) {
             carouselMain.addEventListener('mouseenter', stopAutoplay);
