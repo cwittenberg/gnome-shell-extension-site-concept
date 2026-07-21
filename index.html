@@ -44,7 +44,6 @@
   <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body class="gnome-layout-body">
-
   <!-- Scroll to Top Button -->
   <button id="scroll-to-top-btn"
     class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
@@ -58,14 +57,18 @@
       
       <!-- Logo -->
       <div class="logo flex shrink-0 sm:flex-none items-center gap-3 min-w-0 cursor-pointer order-1"
-        onclick="window.showViewHandler('home')">
+        onclick="window.showViewHandler('store')">
         <i class="icon icon-gnome-extensions"></i>
       </div>
 
-      <!-- Search -->
+      <!-- Search (Flathub Style) -->
       <div id="search-container"
-        class="relative hidden sm:block order-2 flex-1 min-w-0 sm:max-w-xl mx-2 sm:mx-4">
-        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input" />
+        class="relative hidden sm:block order-2 flex-1 min-w-0 sm:max-w-xl mx-2 sm:mx-4 group">
+        <i class="icon icon-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gnome-grey group-focus-within:text-gnome-blue transition-colors text-lg z-10 pointer-events-none"></i>
+        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input pl-11 pr-12 w-full !rounded-full bg-[#f6f5f4] dark:bg-[#2d2640] border border-transparent focus:bg-white dark:focus:bg-[#1e192b] focus:border-[#3584e4] focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
+        <div class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center pointer-events-none z-10">
+          <kbd class="px-1.5 py-0.5 text-[10px] font-bold font-mono text-gnome-grey bg-white dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#5e5c64] rounded shadow-sm">/</kbd>
+        </div>
       </div>
 
       <!-- Mobile Menu Toggle -->
@@ -238,6 +241,7 @@
             </div>
         </div>
       </div>
+
     </main>
   </div>
 
@@ -352,7 +356,6 @@
               <!-- JS Injected Versions -->
             </div>
           </div>
-
         </div>
 
         <!-- RIGHT COLUMN: Buttons + Information Track -->
@@ -371,18 +374,23 @@
               <button id="detail-install-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-extension-add text-sm"></i> Install
               </button>
+
               <button id="detail-update-container" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors gap-1.5 shrink-0">
                   <i class="icon icon-download-color text-sm"></i> Update
               </button>
+
               <div id="detail-incompatible-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none gap-1.5 shrink-0">
                   <i class="icon icon-warning text-sm"></i> Incompatible
               </div>
+
               <button id="detail-prefs-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] gap-1.5 shrink-0">
                   <i class="icon icon-settings text-sm"></i> Settings
               </button>
+
               <button id="detail-uninstall-btn" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] gap-1.5 shrink-0">
                   <i class="icon icon-extension-remove text-sm"></i> Remove
               </button>
+
               <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] gap-1.5 shrink-0">
                     Donate
               </a>
@@ -438,7 +446,6 @@
 
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -465,6 +472,7 @@
             tools.
           </p>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Extensions</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -474,6 +482,7 @@
             <li><a href="#" data-nav="upload" class="hover:text-gnome-blue transition-colors auth-required hidden">Add yours</a></li>
           </ul>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Developers</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -487,6 +496,7 @@
                 rel="noreferrer" class="hover:text-gnome-blue transition-colors">Bug Reports</a></li>
           </ul>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">GNOME</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -501,6 +511,7 @@
           </ul>
         </div>
       </div>
+
       <div
         class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
@@ -509,6 +520,7 @@
             Made with <span class="text-gnome-red">♥</span> by the GNOME community.
           </p>
         </div>
+
         <div class="flex items-center gap-5">
           <a href="https://gitlab.gnome.org/" target="_blank" rel="noreferrer"
             class="hover:text-gnome-blue transition-colors" aria-label="GitLab"><i
@@ -528,7 +540,7 @@
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>
-  
+
   <script src="mvc/models/StoreModel.js"></script>
   <script src="mvc/views/StoreView.js"></script>
   <script src="mvc/controllers/StoreController.js"></script>
@@ -539,7 +551,7 @@
   <script src="mvc/views/UploadView.js"></script>
   <script src="mvc/views/LocalView.js"></script>
   <script src="mvc/views/AboutView.js"></script>
-  
+
   <script src="data-mock.js"></script>
   <script src="data-extensions.js"></script>
   <script src="app.js"></script>

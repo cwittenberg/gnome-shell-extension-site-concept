@@ -118,9 +118,11 @@
             mobileMenuButton.addEventListener('click', () => {
                 const mobileMenu = document.getElementById('mobile-menu');
                 const searchContainer = document.getElementById('search-container');
+                
                 if (mobileMenu) {
                     const isHidden = mobileMenu.classList.toggle('hidden');
                     mobileMenuButton.setAttribute('aria-expanded', String(!isHidden));
+
                     if (searchContainer) {
                         if (isHidden) {
                             searchContainer.classList.add('hidden');
@@ -148,6 +150,7 @@
                 const mobileMenu = document.getElementById('mobile-menu');
                 const mobileMenuButton = document.getElementById('mobile-menu-btn');
                 const searchContainer = document.getElementById('search-container');
+                
                 if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                     mobileMenuButton.setAttribute('aria-expanded', 'false');
@@ -204,6 +207,18 @@
                 }
             }
         });
+
+        // Flathub-style Global Search Hotkey (/)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                const searchInput = document.getElementById('search-input');
+                if (searchInput && searchInput.offsetParent !== null) { 
+                    e.preventDefault();
+                    searchInput.focus();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        });
     }
 
     function openExtension(extensionId) {
@@ -215,7 +230,7 @@
 
     function showView(view) {
         const views = ['store', 'details', 'upload', 'local', 'about', 'auth', 'profile'];
-
+        
         views.forEach(v => {
             const el = document.getElementById(`${v}-view`);
             if (el) {
