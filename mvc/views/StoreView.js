@@ -48,6 +48,7 @@ class StoreView {
         const shellVersionSelect = document.getElementById('shell-version-select');
         const gridBtn = document.getElementById('layout-grid-btn');
         const rowBtn = document.getElementById('layout-row-btn');
+        const mobileCategorySelect = document.getElementById('mobile-category-select');
         
         if (searchInput) {
             searchInput.addEventListener('input', (event) => {
@@ -96,13 +97,21 @@ class StoreView {
             });
         }
         
-        // 1. Categories Container Events
+        // 1. Categories Container Events (Desktop & Mobile Sync)
         const categoriesContainer = document.getElementById('categories-container');
         if (categoriesContainer) {
             categoriesContainer.addEventListener('click', (event) => {
                 const categoryBtn = event.target.closest('[data-category]');
                 if (categoryBtn && this.controller) {
                     this.controller.handleCategory(categoryBtn.getAttribute('data-category'));
+                }
+            });
+        }
+        
+        if (mobileCategorySelect) {
+            mobileCategorySelect.addEventListener('change', (event) => {
+                if (this.controller) {
+                    this.controller.handleCategory(event.target.value);
                 }
             });
         }
@@ -192,12 +201,55 @@ class StoreView {
             observer.observe(catContainer, { childList: true, subtree: true });
             
             scrollLeftBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: -200 });
+                catContainer.scrollBy({ left: -200, behavior: 'smooth' });
             });
             
             scrollRightBtn.addEventListener('click', () => {
-                catContainer.scrollBy({ left: 200 });
+                catContainer.scrollBy({ left: 200, behavior: 'smooth' });
             });
+
+            // Drag-to-scroll functionality for categories
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let didDrag = false;
+
+            catContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                didDrag = false;
+                catContainer.style.cursor = 'grabbing';
+                startX = e.pageX - catContainer.offsetLeft;
+                scrollLeft = catContainer.scrollLeft;
+            });
+
+            catContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+                catContainer.style.cursor = '';
+            });
+
+            catContainer.addEventListener('mouseup', () => {
+                isDown = false;
+                catContainer.style.cursor = '';
+            });
+
+            catContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - catContainer.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed multiplier
+                if (Math.abs(walk) > 5) {
+                    didDrag = true; // Prevents click event if dragged
+                }
+                catContainer.scrollLeft = scrollLeft - walk;
+            });
+
+            catContainer.addEventListener('click', (e) => {
+                if (didDrag) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    didDrag = false;
+                }
+            }, { capture: true });
         }
     }
 
@@ -216,6 +268,11 @@ class StoreView {
         const shellVersionSelect = document.getElementById('shell-version-select');
         if (shellVersionSelect && shellVersionSelect.value !== data.state.shellVersion) {
             shellVersionSelect.value = data.state.shellVersion;
+        }
+        
+        const mobileCategorySelect = document.getElementById('mobile-category-select');
+        if (mobileCategorySelect && mobileCategorySelect.value !== data.state.selectedCategory) {
+            mobileCategorySelect.value = data.state.selectedCategory;
         }
         
         this.updateLayoutToggleUI(data.state.layoutMode);
@@ -299,19 +356,26 @@ class StoreView {
     }
 
     renderCategories(categories, selectedCategory) {
-        const container = document.getElementById('categories-container');
-        if (!container) return;
+        const desktopContainer = document.getElementById('categories-container');
+        const mobileContainer = document.getElementById('mobile-category-select');
         
-        const buttons = categories.map((category) => {
-            const active = category === selectedCategory;
-            return `
-                <button type="button" data-category="${this.escapeHtml(category)}" class="gnome-category-btn ${active ? 'active' : ''}">
-                    ${this.escapeHtml(category)}
-                </button>
-            `;
-        }).join('');
+        if (desktopContainer) {
+            desktopContainer.innerHTML = categories.map((category) => {
+                const active = category === selectedCategory;
+                return `
+                    <button type="button" data-category="${this.escapeHtml(category)}" class="gnome-category-btn ${active ? 'active' : ''}">
+                        ${this.escapeHtml(category)}
+                    </button>
+                `;
+            }).join('');
+        }
         
-        container.innerHTML = buttons;
+        if (mobileContainer) {
+            mobileContainer.innerHTML = categories.map((category) => {
+                const active = category === selectedCategory;
+                return `<option value="${this.escapeHtml(category)}" ${active ? 'selected' : ''}>${this.escapeHtml(category)}</option>`;
+            }).join('');
+        }
     }
 
     renderFeatured(featured, activeTab) {
