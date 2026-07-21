@@ -237,7 +237,7 @@ class StoreView {
         }
         
         const isFiltering = data.state.selectedCategory !== 'All' || data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
-        const isSearchOrVersionFiltering = data.state.searchTerm.trim() !== '' || data.state.shellVersion !== 'all';
+        const isSearching = data.state.searchTerm.trim() !== '';
         
         const gridNeedsUpdate = 
             this._lastGridSearchTerm !== data.state.searchTerm ||
@@ -265,28 +265,12 @@ class StoreView {
         }
         
         // Element Hooks
-        const heroSection = document.getElementById('hero-section');
-        const heroContent = document.getElementById('hero-content');
-        const homeBottomContent = document.getElementById('home-bottom-content');
         const featuredSection = document.getElementById('featured-section');
         const resultsHeader = document.getElementById('results-header');
         
-        // Smooth Auto-hide Hero section logic and home banners
-        if (heroSection && heroContent) {
-            if (isFiltering) {
-                heroSection.classList.add('hero-hidden');
-                heroContent.classList.add('opacity-0', 'scale-95');
-                if (homeBottomContent) homeBottomContent.classList.add('hidden');
-            } else {
-                heroSection.classList.remove('hero-hidden');
-                heroContent.classList.remove('opacity-0', 'scale-95');
-                if (homeBottomContent) homeBottomContent.classList.remove('hidden');
-            }
-        }
-        
-        // Hide Featured components when searching/filtering (except when only category is filtered)
+        // Hide Featured components only when actively searching to prevent UI jumping on dropdown changes
         if (featuredSection && resultsHeader) {
-            if (isSearchOrVersionFiltering) {
+            if (isSearching) {
                 featuredSection.classList.add('hidden');
             } else {
                 featuredSection.classList.remove('hidden');
@@ -419,6 +403,10 @@ class StoreView {
         const container = document.getElementById('pagination-container');
         if (!container) return;
         
+        // Preserve focus for select element to avoid layout jump
+        const activeEl = document.activeElement;
+        const hadFocus = activeEl && activeEl.getAttribute('data-action') === 'change-items-per-page';
+
         if (!pagination || pagination.totalItems === 0) {
             container.innerHTML = '';
             return;
@@ -472,6 +460,11 @@ class StoreView {
         `;
         
         container.innerHTML = paginationHtml;
+        
+        if (hadFocus) {
+            const newSelect = container.querySelector('[data-action="change-items-per-page"]');
+            if (newSelect) newSelect.focus();
+        }
     }
 
     formatDownloads(downloads) {
