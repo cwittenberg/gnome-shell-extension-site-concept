@@ -88,7 +88,7 @@
       <!-- Search (Flathub Style) -->
       <div id="search-container" class="relative flex-1 min-w-0 group">
         <i class="icon icon-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gnome-grey group-focus-within:text-gnome-blue transition-colors text-lg z-10 pointer-events-none"></i>
-        <input type="search" id="search-input" placeholder="Search..." class="gnome-input pl-11 pr-4 sm:pr-12 w-full h-11 !rounded-full bg-gnome-bg-light dark:bg-gnome-card-dark border border-transparent focus:bg-gnome-card-light dark:focus:bg-gnome-focus-dark focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
+        <input type="search" id="search-input" placeholder="Search..." class="gnome-input pl-11 pr-4 sm:pr-12 w-full h-11 !rounded-full bg-white dark:bg-gnome-card-dark border border-gnome-border-light dark:border-transparent shadow-sm focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all" />
         <div class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center pointer-events-none z-10 group-focus-within:hidden">
           <kbd class="px-1.5 py-0.5 text-[10px] font-bold font-mono text-gnome-grey bg-gnome-white dark:bg-gnome-black border border-gnome-border-light dark:border-gnome-text-muted-light rounded shadow-sm">/</kbd>
         </div>
@@ -126,7 +126,7 @@
 
   <!-- Native Connector Warning -->
   <div id="connector-warning"
-    class="hidden bg-gnome-grey text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
+    class="hidden bg-[#deddda] dark:bg-[#3d3846] text-gnome-black dark:text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_auto_auto] items-center gap-y-3 sm:gap-y-0 text-sm font-medium">
       <!-- Icon + Text Wrapper -->
       <div class="col-start-1 row-start-1 flex items-start sm:items-center pr-2 sm:pr-4 ml-[7px] gap-3">
@@ -137,7 +137,7 @@
       </div>
       <!-- Close Button -->
       <div class="col-start-2 sm:col-start-3 row-start-1 justify-self-end self-start sm:self-center">
-        <button id="close-connector-warning" class="text-gnome-white hover:bg-white/20 transition-all duration-150 rounded-lg shrink-0 flex items-center justify-center px-3 h-9" aria-label="Dismiss warning">
+        <button id="close-connector-warning" class="text-gnome-black dark:text-gnome-white hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-150 rounded-lg shrink-0 flex items-center justify-center px-3 h-9" aria-label="Dismiss warning">
           <i class="icon icon-close text-xl leading-none"></i>
         </button>
       </div>
@@ -145,7 +145,7 @@
       <div class="col-start-1 col-span-2 sm:col-span-1 sm:col-start-2 row-start-2 sm:row-start-1 mt-2 sm:mt-0 flex justify-center w-full sm:w-auto sm:mr-2">
         <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html"
           target="_blank" rel="noreferrer"
-          class="px-4 py-2 rounded-lg font-bold transition-all duration-150 hover:bg-white/20 text-white flex justify-center items-center bg-white/10 sm:bg-transparent whitespace-nowrap">
+          class="px-4 py-2 rounded-lg font-bold transition-all duration-150 hover:bg-black/10 dark:hover:bg-white/20 text-gnome-black dark:text-white flex justify-center items-center bg-black/5 dark:bg-white/10 sm:bg-transparent sm:dark:bg-transparent whitespace-nowrap">
           Installation Guide
         </a>
       </div>
@@ -176,17 +176,17 @@
       <!-- SEARCH / CATALOG SECTION -->
       <div id="search-catalog-section">
         <!-- Filters Bar with Scrollable Categories -->
-        <div class="flex flex-col md:flex-row gap-3 mb-8">
+        <div class="flex flex-col md:flex-row gap-3 mb-4">
           
           <!-- Categories (Desktop) -->
           <div class="gnome-filter-container hidden sm:flex relative">
-            <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full w-14 flex items-center justify-start pl-2 bg-gradient-to-r from-gnome-bg-light dark:from-gnome-card-dark from-50% to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full w-14 flex items-center justify-start pl-2 bg-gradient-to-r from-gnome-bg-light dark:from-gnome-card-dark from-50% to-transparent text-gnome-grey hover:text-gnome-blue transition-colors focus:outline-none">
               <i class="icon icon-angles-left text-lg"></i>
             </button>
             <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide w-full relative z-0 px-1">
               <!-- Rendered by JS -->
             </div>
-            <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full w-14 flex items-center justify-end pr-2 bg-gradient-to-l from-gnome-bg-light dark:from-gnome-card-dark from-50% to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full w-14 flex items-center justify-end pr-2 bg-gradient-to-l from-gnome-bg-light dark:from-gnome-card-dark from-50% to-transparent text-gnome-grey hover:text-gnome-blue transition-colors focus:outline-none">
               <i class="icon icon-angles-right text-lg"></i>
             </button>
           </div>
@@ -226,7 +226,7 @@
         </div>
 
         <!-- Results Header -->
-        <div id="results-header" class="flex items-center justify-between mb-4 animate-fade-in">
+        <div id="results-header" class="mb-4">
           <!-- Rendered by JS -->
         </div>
 

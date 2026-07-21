@@ -201,6 +201,17 @@ class StoreView {
                 }
             });
         }
+        
+        // 5. Reset Filter Button Event
+        const resultsHeader = document.getElementById('results-header');
+        if (resultsHeader) {
+            resultsHeader.addEventListener('click', (event) => {
+                const resetBtn = event.target.closest('#reset-filters-btn');
+                if (resetBtn && this.controller) {
+                    this.controller.handleReset();
+                }
+            });
+        }
     }
     
     bindScrollEvents() {
@@ -336,7 +347,7 @@ class StoreView {
 
         if (gridNeedsUpdate) {
             // Grid elements always update based on pagination/filtering
-            this.renderExtensions(data.filtered, data.state.selectedCategory, data.pagination.totalItems, data.state.layoutMode, isFiltering);
+            this.renderExtensions(data.filtered, data.state.selectedCategory, data.state.searchTerm, data.pagination.totalItems, data.state.layoutMode, isFiltering, isSearching);
             this.renderPagination(data.pagination, data.state.itemsPerPage);
             
             this._lastGridSearchTerm = data.state.searchTerm;
@@ -459,7 +470,7 @@ class StoreView {
         cardsContainer.innerHTML = extensionsToShow.map(ext => this.generateCardHTML(ext)).join('');
     }
 
-    renderExtensions(visible, selectedCategory, totalItems, layoutMode, isFiltering) {
+    renderExtensions(visible, selectedCategory, searchTerm, totalItems, layoutMode, isFiltering, isSearching) {
         const grid = document.getElementById('extensions-grid');
         const emptyState = document.getElementById('empty-state');
         const resultsHeader = document.getElementById('results-header');
@@ -476,9 +487,13 @@ class StoreView {
         emptyState.classList.add('hidden');
 
         resultsHeader.innerHTML = `
-            <div class="animate-fade-in ${isFiltering ? '' : 'hidden'}">
-                <h3 class="text-sm font-bold text-gnome-black dark:text-gnome-white">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
-                <p class="text-sm text-gnome-grey">Filtered by ${this.escapeHtml(selectedCategory)}</p>
+            <div class="animate-fade-in w-full ${isFiltering ? 'flex flex-row items-center justify-between gap-4 bg-gnome-blue/5 dark:bg-transparent border border-gnome-blue/20 dark:border-transparent p-2 rounded-xl' : 'hidden'}">
+                <div class="min-w-0">
+                    <h3 class="text-sm font-bold text-gnome-black dark:text-[#c0bfbc] truncate">Found ${totalItems} extension${totalItems !== 1 ? 's' : ''}</h3>
+                </div>
+                <button id="reset-filters-btn" class="shrink-0 flex items-center gap-1.5 bg-white dark:bg-transparent hover:bg-gnome-hover-light dark:hover:bg-white/10 text-gnome-black dark:text-[#c0bfbc] dark:hover:text-white border border-gnome-border-light dark:border-[#5e5c64] px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shadow-sm dark:shadow-none focus:outline-none">
+                    <i class="icon icon-close"></i> Clear
+                </button>
             </div>
         `;
         
@@ -596,29 +611,31 @@ class StoreView {
                         <p class="text-xs sm:text-sm text-gnome-grey sm:text-gnome-black sm:dark:text-gnome-white line-clamp-1 sm:line-clamp-2 col-span-1 sm:col-span-8 lg:col-span-6" title="${this.escapeHtml(extension.description)}">
                             ${this.escapeHtml(extension.description)}
                         </p>
-                        <div class="hidden lg:flex col-span-3 items-center justify-end gap-3 shrink-0">
+                        <div class="hidden lg:flex col-span-3 items-center justify-end gap-4 shrink-0">
                             <button type="button" data-category-filter="${this.escapeHtml(extension.category)}" class="gnome-badge max-w-[100px] truncate hover:bg-gnome-blue hover:text-white transition-colors cursor-pointer relative z-10">${this.escapeHtml(extension.category)}</button>
-                            <div class="text-sm font-semibold text-gnome-blue w-12 text-right flex items-center justify-end gap-1 leading-none">
-                                <i class="icon icon-star text-sm block leading-none"></i>
-                                <span class="leading-none mt-0.5">${extension.rating.toFixed(1)}</span>
-                            </div>
-                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey w-16 text-right flex items-center justify-end gap-1 leading-none">
-                                <i class="icon icon-download-color text-[11px] block leading-none"></i>
-                                <span class="leading-none mt-0.5">${this.formatDownloads(extension.downloads)}</span>
+                            <div class="flex flex-col items-end gap-1.5 w-16">
+                                <div class="text-sm font-semibold text-gnome-blue flex items-center gap-1.5">
+                                    <i class="icon icon-star text-xs flex-shrink-0"></i>
+                                    <span>${extension.rating.toFixed(1)}</span>
+                                </div>
+                                <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1.5">
+                                    <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                                    <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="flex items-center justify-end gap-3 shrink-0 pl-2 border-l border-[#c0bfbc] dark:border-[#3d3846] sm:border-0 sm:pl-0">
-                    <div class="hidden sm:flex lg:hidden items-center gap-3">
-                        <div class="text-sm font-semibold text-gnome-blue flex items-center gap-1 leading-none">
-                            <i class="icon icon-star text-sm block leading-none"></i>
-                            <span class="leading-none mt-0.5">${extension.rating.toFixed(1)}</span>
+                    <div class="hidden sm:flex lg:hidden flex-col items-end gap-1.5">
+                        <div class="text-sm font-semibold text-gnome-blue flex items-center gap-1.5">
+                            <i class="icon icon-star text-xs flex-shrink-0"></i>
+                            <span>${extension.rating.toFixed(1)}</span>
                         </div>
-                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1 leading-none">
-                            <i class="icon icon-download-color text-[11px] block leading-none"></i>
-                            <span class="leading-none mt-0.5">${this.formatDownloads(extension.downloads)}</span>
+                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1.5">
+                            <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                            <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
                         </div>
                     </div>
                     <button type="button" class="gnome-btn-icon bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent group-hover:text-white group-hover:bg-gnome-blue sm:group-hover:bg-gnome-blue transition-colors" title="View details">
@@ -643,14 +660,14 @@ class StoreView {
                                 <p class="text-sm text-gnome-grey mt-1 truncate">${this.escapeHtml(extension.author)}</p>
                             </div>
                         </div>
-                        <div class="text-right shrink-0">
-                            <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1 leading-none">
-                                <i class="icon icon-star text-sm block leading-none"></i>
-                                <span class="leading-none mt-0.5">${extension.rating.toFixed(1)}</span>
+                        <div class="text-right shrink-0 flex flex-col items-end gap-1.5">
+                            <div class="text-sm font-semibold text-gnome-blue flex items-center justify-end gap-1.5">
+                                <i class="icon icon-star text-xs flex-shrink-0"></i>
+                                <span>${extension.rating.toFixed(1)}</span>
                             </div>
-                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 mt-1.5 leading-none">
-                                <i class="icon icon-download-color text-[11px] block leading-none"></i>
-                                <span class="leading-none mt-0.5">${this.formatDownloads(extension.downloads)}</span>
+                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1.5">
+                                <i class="icon icon-download-color text-[11px] flex-shrink-0"></i>
+                                <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
                             </div>
                         </div>
                     </div>
