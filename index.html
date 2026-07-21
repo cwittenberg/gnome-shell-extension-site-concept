@@ -6,8 +6,10 @@
   <meta name="referrer" content="no-referrer">
   <link class="favicon" rel="icon" type="image/svg+xml" href="favicon.png">
   <title>GNOME Extensions Store</title>
+
   <script src="https://cdn.tailwindcss.com?plugins=typography" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" referrerpolicy="no-referrer"></script>
+
   <!-- Tailwind Configuration for Dark Mode & Animations -->
   <script>
     tailwind.config = {
@@ -16,14 +18,33 @@
         extend: {
           colors: {
             gnome: {
-              blue: '#3584e4',
-              orange: '#FF7800',
-              purple: '#9141AC',
-              green: '#33D17A',
-              red: '#E01B24',
-              white: '#FFFFFF',
-              grey: '#77767B',
-              black: '#241F31',
+              blue: 'var(--gnome-blue)',
+              'blue-hover': 'var(--gnome-blue-hover)',
+              orange: 'var(--gnome-orange)',
+              purple: 'var(--gnome-purple)',
+              'purple-hover': 'var(--gnome-purple-hover)',
+              green: 'var(--gnome-green)',
+              'green-hover': 'var(--gnome-green-hover)',
+              red: 'var(--gnome-red)',
+              'red-hover': 'var(--gnome-red-hover)',
+              white: 'var(--gnome-white)',
+              grey: 'var(--gnome-grey)',
+              black: 'var(--gnome-black)',
+              
+              /* System Backgrounds & Panels */
+              'bg-light': 'var(--gnome-bg-light)',
+              'bg-dark': 'var(--gnome-bg-dark)',
+              'card-light': 'var(--gnome-card-light)',
+              'card-dark': 'var(--gnome-card-dark)',
+              'card-dark-hover': 'var(--gnome-card-dark-hover)',
+              'border-light': 'var(--gnome-border-light)',
+              'border-dark': 'var(--gnome-border-dark)',
+              'text-light': 'var(--gnome-text-light)',
+              'text-dark': 'var(--gnome-text-dark)',
+              'muted-light': 'var(--gnome-text-muted-light)',
+              'muted-dark': 'var(--gnome-text-muted-dark)',
+              'hover-light': 'var(--gnome-hover-light)',
+              'focus-dark': 'var(--gnome-focus-dark)',
             }
           },
           keyframes: {
@@ -39,6 +60,7 @@
       }
     }
   </script>
+
   <!-- Optimized Gnome public domain icon library  -->
   <link rel="stylesheet" href="gnome.css">
   <link rel="stylesheet" href="stylesheet.css">
@@ -47,7 +69,7 @@
 
   <!-- Scroll to Top Button -->
   <button id="scroll-to-top-btn"
-    class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-[#1c71d8] transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
+    class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white p-3 rounded-full shadow-lg hover:bg-gnome-blue-hover transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
     onclick="window.scrollTo(0, 0)" aria-label="Scroll to top">
     <i class="icon icon-up-color"></i>
   </button>
@@ -66,9 +88,9 @@
       <div id="search-container"
         class="relative hidden sm:block order-2 flex-1 min-w-0 sm:max-w-xl mx-2 sm:mx-4 group">
         <i class="icon icon-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gnome-grey group-focus-within:text-gnome-blue transition-colors text-lg z-10 pointer-events-none"></i>
-        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input pl-11 pr-12 w-full !rounded-full bg-[#f6f5f4] dark:bg-[#2d2640] border border-transparent focus:bg-white dark:focus:bg-[#1e192b] focus:border-[#3584e4] focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
-        <div class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center pointer-events-none z-10">
-          <kbd class="px-1.5 py-0.5 text-[10px] font-bold font-mono text-gnome-grey bg-white dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#5e5c64] rounded shadow-sm">/</kbd>
+        <input type="search" id="search-input" placeholder="Search for an extension..." class="gnome-input pl-11 pr-12 w-full !rounded-full bg-gnome-bg-light dark:bg-gnome-card-dark border border-transparent focus:bg-gnome-card-light dark:focus:bg-gnome-focus-dark focus:border-gnome-blue focus:ring-2 focus:ring-gnome-blue/20 transition-all shadow-none" />
+        <div class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center pointer-events-none z-10 group-focus-within:hidden">
+          <kbd class="px-1.5 py-0.5 text-[10px] font-bold font-mono text-gnome-grey bg-gnome-white dark:bg-gnome-black border border-gnome-border-light dark:border-gnome-text-muted-light rounded shadow-sm">/</kbd>
         </div>
       </div>
 
@@ -89,12 +111,13 @@
         <button id="nav-profile-btn" data-nav="profile" class="gnome-btn-primary ml-2 auth-user hidden">Profile</button>
         <button id="nav-logout-btn" class="gnome-btn-icon ml-1 auth-user hidden" title="Log Out"><i class="icon icon-logout text-lg"></i></button>
       </nav>
+
     </div>
 
     <!-- Mobile Menu -->
     <div id="mobile-menu"
-      class="hidden sm:hidden border-t border-[#c0bfbc] dark:border-[#3d3846] bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
-      <a href="#" data-nav="store" class="gnome-nav-link py-2">Store</a>
+      class="hidden sm:hidden border-t border-gnome-border-light dark:border-gnome-border-dark bg-gnome-white dark:bg-gnome-black px-4 py-3 flex flex-col gap-2">
+      <a href="#" data-nav="store" class="gnome-nav-link active py-2">Store</a>
       <a href="#" data-nav="local" class="gnome-nav-link py-2">Installed</a>
       <a href="#" data-nav="upload" class="gnome-nav-link auth-required hidden py-2">Developers</a>
       <button data-nav="auth" class="gnome-btn-primary w-full mt-2 auth-guest">Login</button>
@@ -105,22 +128,33 @@
 
   <!-- Native Connector Warning -->
   <div id="connector-warning"
-    class="hidden bg-gnome-blue text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm font-medium">
-      <div class="flex items-center gap-3 text-center sm:text-left">
-        <i class="icon icon-circle text-xl shrink-0 hidden sm:block"></i>
-        <p>We cannot detect a running copy of GNOME on this system. You must install the GNOME Shell integration to enable extensions.</p>
+    class="hidden bg-gnome-grey text-gnome-white py-3 shadow-sm transition-colors duration-300 relative z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_auto_auto] items-center gap-y-3 sm:gap-y-0 text-sm font-medium">
+
+      <!-- Icon + Text Wrapper -->
+      <div class="col-start-1 row-start-1 flex items-start sm:items-center ml-[7px] gap-3 pr-2 sm:pr-4">
+        <i class="icon icon-info text-lg shrink-0 w-5 text-center mt-0.5 sm:mt-0"></i>
+        <p class="leading-relaxed">
+          We cannot detect a running copy of GNOME on this system. You must install the GNOME Shell integration to enable extensions.
+        </p>
       </div>
-      <div class="flex items-center gap-3 shrink-0">
-        <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html"
-          target="_blank" rel="noreferrer"
-          class="bg-gnome-white text-gnome-blue hover:bg-[#f6f5f4] px-4 py-2 rounded-lg font-bold transition-colors shadow-sm whitespace-nowrap">
-          Installation Guide
-        </a>
-        <button id="close-connector-warning" class="text-gnome-white hover:text-gnome-white/70 transition-colors p-1" aria-label="Dismiss warning">
-          <i class="icon icon-close text-xl"></i>
+
+      <!-- Close Button (Mobile: Col 2, Row 1 | Desktop: Col 3, Row 1) -->
+      <div class="col-start-2 sm:col-start-3 row-start-1 justify-self-end self-start sm:self-center">
+        <button id="close-connector-warning" class="text-gnome-white hover:bg-white/20 transition-all duration-150 p-1.5 rounded-lg shrink-0 flex items-center justify-center -mr-1.5 sm:mr-0" aria-label="Dismiss warning">
+          <i class="icon icon-close text-xl leading-none"></i>
         </button>
       </div>
+
+      <!-- Action Button (Mobile: Col 1-2, Row 2 | Desktop: Col 2, Row 1) -->
+      <div class="col-start-1 col-span-2 sm:col-span-1 sm:col-start-2 row-start-2 sm:row-start-1 ml-[39px] sm:ml-0 sm:mr-2">
+        <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html"
+          target="_blank" rel="noreferrer"
+          class="px-3 py-1.5 rounded-lg font-bold transition-all duration-150 hover:bg-white/20 text-white flex justify-center w-full sm:w-auto sm:inline-flex whitespace-nowrap">
+          Installation Guide
+        </a>
+      </div>
+
     </div>
   </div>
 
@@ -128,7 +162,7 @@
   <div id="store-view" class="block">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-8">
       
-      <section id="hero-section" class="relative overflow-hidden bg-gradient-to-r from-[#3584e4] to-[#1c71d8] rounded-2xl transition-all duration-500 ease-in-out shadow-md mb-12">
+      <section id="hero-section" class="relative overflow-hidden bg-gradient-to-r from-gnome-blue to-gnome-blue-hover rounded-2xl transition-all duration-500 ease-in-out shadow-md mb-12">
         <div id="hero-content"
           class="relative px-4 sm:px-6 py-8 sm:py-12 text-center transition-all duration-500 transform transform-gpu">
           <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
@@ -152,13 +186,13 @@
           
           <!-- Categories (Desktop) -->
           <div class="gnome-filter-container hidden sm:flex">
-            <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:from-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <button id="cat-scroll-left" class="hidden absolute left-0 z-10 h-full px-2 bg-gradient-to-r from-gnome-bg-light dark:from-gnome-card-dark via-gnome-bg-light dark:via-gnome-card-dark to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
               <i class="icon icon-angles-left text-lg"></i>
             </button>
             <div id="categories-container" class="flex gap-2 overflow-x-auto scrollbar-hide w-full relative z-0 px-1">
               <!-- Rendered by JS -->
             </div>
-            <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-[#f6f5f4] dark:from-[#2d2640] via-[#f6f5f4] dark:from-[#2d2640] to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
+            <button id="cat-scroll-right" class="hidden absolute right-0 z-10 h-full px-2 bg-gradient-to-l from-gnome-bg-light dark:from-gnome-card-dark via-gnome-bg-light dark:via-gnome-card-dark to-transparent text-gnome-grey hover:text-gnome-black dark:hover:text-gnome-white transition-colors">
               <i class="icon icon-angles-right text-lg"></i>
             </button>
           </div>
@@ -172,11 +206,12 @@
           
           <!-- Layout & Sorting Options -->
           <div class="flex items-center gap-2 flex-shrink-0">
-            <div class="flex items-center bg-gnome-white dark:bg-[#2d2640] border border-transparent contrast-more:border-[#c0bfbc] dark:border-transparent dark:contrast-more:border-[#3d3846] rounded-xl overflow-hidden shadow-sm h-[44px] shrink-0">
+            <div class="flex items-center bg-gnome-card-light dark:bg-gnome-card-dark border border-transparent contrast-more:border-gnome-border-light dark:border-transparent dark:contrast-more:border-gnome-border-dark rounded-xl overflow-hidden shadow-sm h-[44px] shrink-0">
               <button id="layout-grid-btn" class="gnome-btn-icon shrink-0 h-full rounded-none" title="Grid view"><i class="icon icon-grid-view"></i></button>
-              <div class="w-px h-full bg-[#c0bfbc] dark:bg-[#3d3846] shrink-0"></div>
+              <div class="w-px h-full bg-gnome-border-light dark:bg-gnome-border-dark shrink-0"></div>
               <button id="layout-row-btn" class="gnome-btn-icon shrink-0 h-full rounded-none" title="List view"><i class="icon icon-rows-view"></i></button>
             </div>
+
             <select id="shell-version-select" class="gnome-select shrink-0 h-[44px]">
               <option value="all">All versions</option>
               <option value="current">Current Shell</option>
@@ -222,7 +257,7 @@
       <!-- BOTTOM BANNERS -->
       <div id="home-bottom-content" class="mt-16 animate-fade-in">
         <!-- Official App Banner -->
-        <div class="gnome-card-panel bg-gradient-to-r from-[#3584e4] to-[#1c71d8] text-white p-8 sm:p-10 mb-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg border-transparent">
+        <div class="gnome-card-panel bg-gradient-to-r from-gnome-blue to-gnome-blue-hover text-white p-8 sm:p-10 mb-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-lg border-transparent">
             <div class="flex items-center gap-6">
                 <i class="icon icon-download text-6xl opacity-90 hidden sm:block"></i>
                 <div>
@@ -234,7 +269,7 @@
         </div>
         
         <!-- Developer CTA -->
-        <div class="gnome-card-panel bg-[#f6f5f4] dark:bg-[#2d2640] p-8 sm:p-10 mb-8 flex flex-col md:flex-row items-center gap-8">
+        <div class="gnome-card-panel bg-gnome-bg-light dark:bg-gnome-card-dark p-8 sm:p-10 mb-8 flex flex-col md:flex-row items-center gap-8">
             <div class="flex-1">
                 <div class="flex items-center gap-3 mb-3">
                     <i class="icon icon-developer text-3xl text-gnome-blue"></i>
@@ -252,6 +287,7 @@
             </div>
         </div>
       </div>
+
     </main>
   </div>
 
@@ -264,12 +300,13 @@
   <!-- DETAILS VIEW -->
   <div id="details-view" class="hidden relative pb-16">
     <!-- Back Header (Non-sticky to prevent overlap and save space) -->
-    <div class="border-b border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-gnome-black py-2.5">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <div class="border-b border-gnome-border-light dark:border-gnome-border-dark bg-gnome-bg-light dark:bg-gnome-bg-dark py-2.5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center">
+        <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner grid -->
         <button onclick="window.showViewHandler('store')"
-          class="text-sm font-bold text-gnome-grey hover:text-gnome-blue transition-colors flex items-center gap-2 w-fit leading-none py-1">
-          <i class="icon icon-navigation-back-color text-lg shrink-0"></i>
-          Back to Store
+          class="group flex items-center gap-3 px-3 py-2 -ml-[5px] rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-all w-fit cursor-pointer focus:outline-none focus:ring-2 focus:ring-gnome-blue/30 active:scale-95">
+          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 text-center text-gnome-grey group-hover:text-gnome-blue transition-colors"></i>
+          <span class="text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark group-hover:text-gnome-text-light dark:group-hover:text-gnome-text-dark transition-colors">Back to Store</span>
         </button>
       </div>
     </div>
@@ -315,7 +352,7 @@
           <!-- Carousel Section -->
           <div class="mb-12 gnome-card-panel p-4 animate-fade-in">
             <div id="carousel-main"
-              class="w-full aspect-video bg-[#f6f5f4] dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
+              class="w-full aspect-video bg-gnome-bg-light dark:bg-gnome-black rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
               <!-- JS injected -->
             </div>
             <div id="carousel-thumbnails" class="flex gap-3 overflow-x-auto scrollbar-hide py-1">
@@ -335,9 +372,9 @@
             <h3 class="gnome-title-section mb-6">User Reviews</h3>
             
             <!-- Interactive Review Form -->
-            <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-[#f6f5f4]">
+            <div class="gnome-card-panel p-5 animate-fade-in mb-8 bg-gnome-bg-light">
               <h4 class="text-sm font-bold text-gnome-black dark:text-gnome-white mb-3">Write a Review</h4>
-              <div class="flex items-center gap-2 mb-3 text-[#c0bfbc] dark:text-[#5e5c64] text-xl cursor-pointer"
+              <div class="flex items-center gap-2 mb-3 text-gnome-text-muted-dark dark:text-gnome-text-muted-light text-xl cursor-pointer"
                 id="interactive-star-rating">
                 <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="1"></i>
                 <i class="icon icon-star hover:text-gnome-orange transition-colors" data-rating="2"></i>
@@ -382,29 +419,35 @@
                   </button>
               </div>
               
-              <button id="detail-install-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#33D17A] text-white font-bold text-sm shadow-sm hover:bg-[#2ebc6c] transition-colors relative shrink-0">
+              <button id="detail-install-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-green text-white font-bold text-sm shadow-sm hover:bg-gnome-green-hover transition-colors relative shrink-0">
                   Install <i class="icon icon-extension-add text-xl absolute right-4"></i>
               </button>
-              <button id="detail-update-container" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#3584e4] text-white font-bold text-sm shadow-sm hover:bg-[#1c71d8] transition-colors relative shrink-0">
+
+              <button id="detail-update-container" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-blue text-white font-bold text-sm shadow-sm hover:bg-gnome-blue-hover transition-colors relative shrink-0">
                   Update <i class="icon icon-download-color text-xl absolute right-4"></i>
               </button>
-              <div id="detail-incompatible-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#FF7800] text-white font-bold text-sm shadow-sm select-none relative shrink-0">
+
+              <div id="detail-incompatible-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-orange text-white font-bold text-sm shadow-sm select-none relative shrink-0">
                   Incompatible <i class="icon icon-warning text-xl absolute right-4"></i>
               </div>
-              <button id="detail-prefs-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#9141AC] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#7b3794] relative shrink-0">
+
+              <button id="detail-prefs-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-purple text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-purple-hover relative shrink-0">
                   Settings <i class="icon icon-settings text-xl absolute right-4"></i>
               </button>
-              <button id="detail-uninstall-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#E01B24] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#c01c28] relative shrink-0">
+
+              <button id="detail-uninstall-btn" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-red text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-red-hover relative shrink-0">
                   Remove <i class="icon icon-extension-remove text-xl absolute right-4"></i>
               </button>
-              <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-[#77767B] text-white shadow-sm font-bold text-sm transition-colors hover:bg-[#5e5c64] relative shrink-0">
+
+              <a id="detail-donate-btn" href="#" target="_blank" class="hidden w-full py-2.5 flex items-center justify-center rounded-lg bg-gnome-grey text-white shadow-sm font-bold text-sm transition-colors hover:bg-gnome-text-muted-light relative shrink-0">
                   Donate <i class="icon icon-heart text-xl absolute right-4"></i>
               </a>
               
               <!-- Bug Report -->
-              <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2.5 flex items-center justify-center rounded-lg border border-[#c0bfbc]/60 dark:border-[#3d3846]/60 text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-[#3584e4] dark:hover:border-[#3584e4] transition-colors relative mt-2 shrink-0">
+              <a id="detail-bug-btn" href="#" target="_blank" class="w-full py-2.5 flex items-center justify-center rounded-lg border border-gnome-border-light/60 dark:border-gnome-border-dark/60 text-gnome-black dark:text-gnome-white font-bold text-sm hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors relative mt-2 shrink-0">
                   Report Bug <i class="icon icon-virus text-xl absolute right-4"></i>
               </a>
+
             </div>
 
             <!-- Information Container (Sticks when scrolling down) -->
@@ -449,6 +492,7 @@
                 </div>
               </dl>
             </div>
+
           </div>
         </div>
 
@@ -478,6 +522,7 @@
             tools.
           </p>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Extensions</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -487,6 +532,7 @@
             <li><a href="#" data-nav="upload" class="hover:text-gnome-blue transition-colors auth-required hidden">Add yours</a></li>
           </ul>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">Developers</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -500,6 +546,7 @@
                 rel="noreferrer" class="hover:text-gnome-blue transition-colors">Bug Reports</a></li>
           </ul>
         </div>
+
         <div>
           <h4 class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-5">GNOME</h4>
           <ul class="flex flex-col gap-3 text-[12pt] font-medium text-gnome-grey">
@@ -514,11 +561,12 @@
           </ul>
         </div>
       </div>
+
       <div
-        class="border-t border-[#c0bfbc] dark:border-[#3d3846] pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
+        class="border-t border-gnome-border-light dark:border-gnome-border-dark pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[12pt] text-gnome-grey font-medium text-center md:text-left">
         <div>
-          <p>Copyright © 2005–2026 The GNOME Project.</p>
-          <p class="mt-1 text-sm text-[#5e5c64] dark:text-[#c0bfbc]">
+          <p>Copyright © 2005—2026 The GNOME Project.</p>
+          <p class="mt-1 text-sm text-gnome-text-muted-light dark:text-gnome-text-muted-dark">
             Made with <span class="text-gnome-red">♥</span> by the GNOME community.
           </p>
         </div>
@@ -538,6 +586,9 @@
   </footer>
 
   <!-- MVC Logic (Order matters) -->
+  <script src="mvc/views/NavigationView.js"></script>
+  <script src="mvc/controllers/NavigationController.js"></script>
+
   <script src="mvc/models/ExtensionModel.js"></script>
   <script src="mvc/views/DetailView.js"></script>
   <script src="mvc/controllers/DetailController.js"></script>

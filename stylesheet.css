@@ -1,6 +1,49 @@
 /* stylesheet.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+:root {
+    /* Primary Brand Colors */
+    --gnome-blue: #3584e4;
+    --gnome-blue-hover: #1c71d8;
+    --gnome-orange: #FF7800;
+    --gnome-purple: #9141AC;
+    --gnome-purple-hover: #7b3794;
+    --gnome-green: #33D17A;
+    --gnome-green-hover: #2ebc6c;
+    --gnome-red: #E01B24;
+    --gnome-red-hover: #c01c28;
+
+    /* Neutrals */
+    --gnome-white: #FFFFFF;
+    --gnome-black: #241F31;
+    --gnome-grey: #77767B;
+
+    /* Extended UI Colors (Light) */
+    --gnome-bg-light: #f6f5f4;
+    --gnome-card-light: #ffffff;
+    --gnome-border-light: #c0bfbc;
+    --gnome-text-light: #241F31;
+    --gnome-text-muted-light: #5e5c64;
+    --gnome-hover-light: #deddda;
+
+    /* Extended UI Colors (Dark) */
+    --gnome-bg-dark: #241F31;
+    --gnome-card-dark: #2d2640;
+    --gnome-card-dark-hover: #322b47;
+    --gnome-border-dark: #3d3846;
+    --gnome-text-dark: #ffffff;
+    --gnome-text-muted-dark: #c0bfbc;
+    --gnome-focus-dark: #1e192b;
+
+    /* Banners */
+    --gnome-banner-info-bg: #d9edf7;
+    --gnome-banner-info-border: #bce8f1;
+    --gnome-banner-info-text: #31708f;
+    --gnome-banner-info-bg-dark: #243f55;
+    --gnome-banner-info-border-dark: #2f5573;
+    --gnome-banner-info-text-dark: #9bc2d5;
+}
+
 html {
     /* Prevents horizontal layout shift when switching between long/short views */
     overflow-y: scroll;
@@ -22,17 +65,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #77767B;
+    background: var(--gnome-grey);
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #5e5c64;
+    background: var(--gnome-text-muted-light);
 }
 
 .scrollbar-hide {
     scrollbar-width: thin;
-    scrollbar-color: #77767B transparent;
+    scrollbar-color: var(--gnome-grey) transparent;
 }
 
 /* Hide scrollbar for category pills */
@@ -73,37 +116,37 @@ body {
 
 /* Clean Markdown Typography Styling for Light & Dark Mode */
 .prose {
-    color: #241F31;
+    color: var(--gnome-text-light);
 }
 
 .dark .prose {
-    color: #c0bfbc;
+    color: var(--gnome-text-muted-dark);
 }
 
 .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 {
-    color: #ffffff;
+    color: var(--gnome-text-dark);
 }
 
 .dark .prose a {
-    color: #3584e4;
+    color: var(--gnome-blue);
 }
 
 .dark .prose strong, .dark .prose b {
-    color: #ffffff;
+    color: var(--gnome-text-dark);
 }
 
 .dark .prose code {
-    color: #ffffff;
-    background-color: #3d3846;
+    color: var(--gnome-text-dark);
+    background-color: var(--gnome-border-dark);
 }
 
 .dark .prose blockquote {
-    color: #c0bfbc;
-    border-left-color: #3d3846;
+    color: var(--gnome-text-muted-dark);
+    border-left-color: var(--gnome-border-dark);
 }
 
 .dark .prose hr {
-    border-color: #3d3846;
+    border-color: var(--gnome-border-dark);
 }
 
 /* Extension card hover polish */
@@ -115,15 +158,15 @@ body {
 .extension-card:hover, 
 .extension-card:focus-within {
     transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px #3584e4;
-    border-color: #3584e4;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--gnome-blue);
+    border-color: var(--gnome-blue);
     cursor: pointer;
 }
 
 .dark .extension-card:hover, 
 .dark .extension-card:focus-within {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px #3584e4;
-    background-color: #322b47;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--gnome-blue);
+    background-color: var(--gnome-card-dark-hover);
 }
 
 /* Unfolding Animation for Card Clicks */
@@ -140,7 +183,7 @@ body {
 }
 
 .dark .text-gnome-grey {
-    color: #deddda;
+    color: var(--gnome-hover-light);
 }
 
 .logo .icon, .logo2 .icon {
@@ -158,12 +201,12 @@ body {
 
 /* Global Layout & Structure */
 .gnome-layout-body {
-    background-color: #f6f5f4;
-    color: #241F31;
+    background-color: var(--gnome-bg-light);
+    color: var(--gnome-text-light);
     transition: background-color 300ms ease, color 300ms ease;
     min-height: 100vh;
 }
-.dark .gnome-layout-body { background-color: #241F31; color: #ffffff; }
+.dark .gnome-layout-body { background-color: var(--gnome-bg-dark); color: var(--gnome-text-dark); }
 
 .gnome-header {
     position: sticky;
@@ -181,31 +224,31 @@ body {
 }
 
 .gnome-footer {
-    border-top: 1px solid #c0bfbc;
+    border-top: 1px solid var(--gnome-border-light);
     margin-top: 4rem;
     padding-top: 4rem;
     padding-bottom: 4rem;
     transition: border-color 300ms ease;
 }
-.dark .gnome-footer { border-top-color: #3d3846; }
+.dark .gnome-footer { border-top-color: var(--gnome-border-dark); }
 
 .gnome-section-divider {
-    border-top: 1px solid #c0bfbc;
+    border-top: 1px solid var(--gnome-border-light);
     padding-top: 2.5rem;
     margin-top: 2.5rem;
 }
-.dark .gnome-section-divider { border-top-color: #3d3846; }
+.dark .gnome-section-divider { border-top-color: var(--gnome-border-dark); }
 
 
 /* Panels, Cards & Containers */
 .gnome-card-panel {
-    background-color: #ffffff;
+    background-color: var(--gnome-card-light);
     border: 1px solid transparent;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .dark .gnome-card-panel { 
-    background-color: #2d2640; 
+    background-color: var(--gnome-card-dark); 
     border-color: transparent; 
 }
 
@@ -217,20 +260,20 @@ body {
     overflow: hidden;
     border: 1px solid transparent;
     border-radius: 0.75rem;
-    background-color: #f6f5f4;
+    background-color: var(--gnome-bg-light);
     padding: 0.25rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 .dark .gnome-filter-container { 
     border-color: transparent; 
-    background-color: #2d2640; 
+    background-color: var(--gnome-card-dark); 
 }
 
 .gnome-detail-icon-box {
     width: 8rem;
     height: 8rem;
     border-radius: 1.5rem;
-    background-color: #ffffff;
+    background-color: var(--gnome-card-light);
     border: 1px solid transparent;
     display: flex;
     align-items: center;
@@ -238,10 +281,10 @@ body {
     flex-shrink: 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    color: #3584e4;
+    color: var(--gnome-blue);
 }
 .dark .gnome-detail-icon-box { 
-    background-color: #2d2640; 
+    background-color: var(--gnome-card-dark); 
     border-color: transparent; 
 }
 
@@ -249,7 +292,7 @@ body {
 .gnome-error-banner {
     background-color: rgba(224, 27, 36, 0.1);
     border: 1px solid rgba(224, 27, 36, 0.3);
-    color: #E01B24;
+    color: var(--gnome-red);
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
@@ -259,8 +302,8 @@ body {
 }
 
 .gnome-info-banner {
-    background-color: #d9edf7;
-    border: 1px solid #bce8f1;
+    background-color: var(--gnome-banner-info-bg);
+    border: 1px solid var(--gnome-banner-info-border);
     border-radius: 0.75rem;
     padding: 1rem 1.25rem;
     display: flex;
@@ -268,47 +311,47 @@ body {
     gap: 1rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
-.dark .gnome-info-banner { background-color: #243f55; border-color: #2f5573; }
+.dark .gnome-info-banner { background-color: var(--gnome-banner-info-bg-dark); border-color: var(--gnome-banner-info-border-dark); }
 
 .gnome-info-banner-text {
-    color: #31708f;
+    color: var(--gnome-banner-info-text);
     font-size: 12pt;
     line-height: 1.625;
 }
-.dark .gnome-info-banner-text { color: #9bc2d5; }
+.dark .gnome-info-banner-text { color: var(--gnome-banner-info-text-dark); }
 
 /* Typography */
 .gnome-title-page {
     font-size: 24pt;
     font-weight: 800;
-    color: #241F31;
+    color: var(--gnome-text-light);
     letter-spacing: -0.025em;
 }
-.dark .gnome-title-page { color: #ffffff; }
+.dark .gnome-title-page { color: var(--gnome-text-dark); }
 
 .gnome-title-section {
     font-size: 18pt;
     font-weight: 800;
-    color: #241F31;
+    color: var(--gnome-text-light);
 }
-.dark .gnome-title-section { color: #ffffff; }
+.dark .gnome-title-section { color: var(--gnome-text-dark); }
 
 .gnome-title-uppercase {
     font-size: 0.875rem;
     font-weight: 700;
-    color: #241F31;
+    color: var(--gnome-text-light);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #c0bfbc;
+    border-bottom: 1px solid var(--gnome-border-light);
     padding-bottom: 0.5rem;
 }
-.dark .gnome-title-uppercase { color: #ffffff; border-bottom-color: #3d3846; }
+.dark .gnome-title-uppercase { color: var(--gnome-text-dark); border-bottom-color: var(--gnome-border-dark); }
 
 .gnome-title-uppercase-clean {
     font-size: 0.875rem;
     font-weight: 700;
-    color: #77767B;
+    color: var(--gnome-grey);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -320,20 +363,20 @@ body {
     font-size: 0.875rem;
     border-radius: 0.75rem;
     padding: 0.5rem 1rem;
-    background-color: #ffffff;
-    color: #241F31;
+    background-color: var(--gnome-card-light);
+    color: var(--gnome-text-light);
     border: 1px solid transparent; 
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     transition: all 150ms ease;
     outline: none;
 }
 
-.gnome-select { width: auto; padding: 0.375rem 1rem; font-weight: 600; color: #5e5c64; cursor: pointer; }
+.gnome-select { width: auto; padding: 0.375rem 1rem; font-weight: 600; color: var(--gnome-text-muted-light); cursor: pointer; }
 .gnome-select option { border-radius: 0.5rem; padding: 0.5rem; }
-.gnome-input:focus, .gnome-select:focus { border-color: #3584e4; box-shadow: 0 0 0 2px rgba(53, 132, 228, 0.2); }
+.gnome-input:focus, .gnome-select:focus { border-color: var(--gnome-blue); box-shadow: 0 0 0 2px rgba(53, 132, 228, 0.2); }
 
-.dark .gnome-input, .dark .gnome-select { background-color: #2d2640; color: #ffffff; border-color: transparent; }
-.dark .gnome-select { color: #c0bfbc; }
+.dark .gnome-input, .dark .gnome-select { background-color: var(--gnome-card-dark); color: var(--gnome-text-dark); border-color: transparent; }
+.dark .gnome-select { color: var(--gnome-text-muted-dark); }
 
 /* Custom Dropdown UI to replace native selects */
 .gnome-dropdown-menu {
@@ -358,7 +401,7 @@ body {
 }
 
 .gnome-dropdown-item {
-    color: #241F31;
+    color: var(--gnome-text-light);
     border-radius: 0.5rem; /* 8px inner items */
     transition: background-color 150ms ease, color 150ms ease;
     margin-bottom: 2px;
@@ -368,26 +411,26 @@ body {
 }
 
 .gnome-dropdown-item:hover {
-    background-color: #f6f5f4;
+    background-color: var(--gnome-bg-light);
 }
 
 .dark .gnome-dropdown-item {
-    color: #ffffff;
+    color: var(--gnome-text-dark);
 }
 
 .dark .gnome-dropdown-item:hover {
-    background-color: #3d3846;
+    background-color: var(--gnome-border-dark);
 }
 
 .gnome-dropdown-item.selected {
-    background-color: #f6f5f4;
+    background-color: var(--gnome-bg-light);
     font-weight: 700;
-    color: #3584e4;
+    color: var(--gnome-blue);
 }
 
 .dark .gnome-dropdown-item.selected {
-    background-color: #3d3846;
-    color: #3584e4;
+    background-color: var(--gnome-border-dark);
+    color: var(--gnome-blue);
 }
 
 
@@ -444,55 +487,55 @@ body {
 
 /* 1. Primary Button (Solid Blue) */
 .gnome-btn-primary {
-    background-color: #3584e4;
-    color: #ffffff;
+    background-color: var(--gnome-blue);
+    color: var(--gnome-white);
 }
 .gnome-btn-primary:hover:not(:disabled), a.gnome-btn-primary:hover {
-    background-color: #1c71d8;
+    background-color: var(--gnome-blue-hover);
 }
 
 /* 2. Ghost Button (Outlined Blue) */
 .gnome-btn-ghost {
     background-color: transparent;
-    color: #3584e4;
-    border-color: #3584e4;
+    color: var(--gnome-blue);
+    border-color: var(--gnome-blue);
 }
 .gnome-btn-ghost:hover:not(:disabled), a.gnome-btn-ghost:hover {
-    background-color: #3584e4;
-    color: #ffffff;
+    background-color: var(--gnome-blue);
+    color: var(--gnome-white);
 }
 .dark .gnome-btn-ghost {
-    border-color: #3584e4;
-    color: #3584e4;
+    border-color: var(--gnome-blue);
+    color: var(--gnome-blue);
 }
 
 /* 3. Inverted Button (Solid White -> Blue) */
 .gnome-btn-inverted {
-    background-color: #ffffff;
-    color: #1c71d8;
+    background-color: var(--gnome-white);
+    color: var(--gnome-blue-hover);
 }
 .gnome-btn-inverted:hover:not(:disabled), a.gnome-btn-inverted:hover {
-    background-color: #f6f5f4;
+    background-color: var(--gnome-bg-light);
 }
 
 /* 4. Danger Button (Outlined Red) */
 .gnome-btn-danger {
     background-color: transparent;
-    color: #E01B24;
-    border-color: #E01B24;
+    color: var(--gnome-red);
+    border-color: var(--gnome-red);
 }
 .gnome-btn-danger:hover:not(:disabled), a.gnome-btn-danger:hover {
-    background-color: #E01B24;
-    color: #ffffff;
+    background-color: var(--gnome-red);
+    color: var(--gnome-white);
 }
 
 /* 5. Danger Filled Button (Solid Red) */
 .gnome-btn-danger-filled {
-    background-color: #E01B24;
-    color: #ffffff;
+    background-color: var(--gnome-red);
+    color: var(--gnome-white);
 }
 .gnome-btn-danger-filled:hover:not(:disabled), a.gnome-btn-danger-filled:hover {
-    background-color: #c01c28;
+    background-color: var(--gnome-red-hover);
 }
 
 /* Detail specific shine effect */
@@ -527,32 +570,32 @@ body {
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 0.5rem;
-    color: #77767B;
+    color: var(--gnome-grey);
     border: 1px solid transparent;
     transition: all 150ms ease;
     cursor: pointer;
 }
-.gnome-btn-icon:not(.active):hover { background-color: #f6f5f4; color: #241F31; }
-.dark .gnome-btn-icon:not(.active):hover { background-color: #2d2640; color: #ffffff; }
+.gnome-btn-icon:not(.active):hover { background-color: var(--gnome-bg-light); color: var(--gnome-text-light); }
+.dark .gnome-btn-icon:not(.active):hover { background-color: var(--gnome-card-dark); color: var(--gnome-text-dark); }
 
-.gnome-btn-icon.active { color: #3584e4; background-color: #f6f5f4; }
-.dark .gnome-btn-icon.active { color: #3584e4; background-color: #3d3846; }
+.gnome-btn-icon.active { color: var(--gnome-blue); background-color: var(--gnome-bg-light); }
+.dark .gnome-btn-icon.active { color: var(--gnome-blue); background-color: var(--gnome-border-dark); }
 
 /* Navigation Links */
 .gnome-nav-link {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #5e5c64;
+    color: var(--gnome-text-muted-light);
     padding: 0.375rem 0.75rem;
     border-radius: 0.5rem;
     transition: all 150ms ease;
 }
-.gnome-nav-link:hover { color: #241F31; background-color: #f6f5f4; }
-.gnome-nav-link.active { color: #241F31; background-color: #f6f5f4; }
+.gnome-nav-link:hover { color: var(--gnome-text-light); background-color: var(--gnome-bg-light); }
+.gnome-nav-link.active { color: var(--gnome-text-light); background-color: var(--gnome-bg-light); }
 
-.dark .gnome-nav-link { color: #c0bfbc; }
-.dark .gnome-nav-link:hover { color: #ffffff; background-color: #2d2640; }
-.dark .gnome-nav-link.active { color: #ffffff; background-color: #2d2640; }
+.dark .gnome-nav-link { color: var(--gnome-text-muted-dark); }
+.dark .gnome-nav-link:hover { color: var(--gnome-text-dark); background-color: var(--gnome-card-dark); }
+.dark .gnome-nav-link.active { color: var(--gnome-text-dark); background-color: var(--gnome-card-dark); }
 
 /* Categories & Tabs */
 .gnome-category-btn, .gnome-tab-btn {
@@ -560,20 +603,20 @@ body {
     border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #5e5c64;
+    color: var(--gnome-text-muted-light);
     transition: all 150ms ease;
     white-space: nowrap;
     flex-shrink: 0;
 }
 .gnome-tab-btn { border-radius: 9999px; font-weight: 700; padding: 0.375rem 1.25rem; background-color: transparent;}
-.gnome-category-btn:not(.active):hover, .gnome-tab-btn:not(.active):hover { background-color: #deddda; color: #241F31; }
+.gnome-category-btn:not(.active):hover, .gnome-tab-btn:not(.active):hover { background-color: var(--gnome-hover-light); color: var(--gnome-text-light); }
 
-.dark .gnome-category-btn, .dark .gnome-tab-btn { color: #c0bfbc; }
-.dark .gnome-category-btn:not(.active):hover, .dark .gnome-tab-btn:not(.active):hover { background-color: #3d3846; color: #ffffff; }
+.dark .gnome-category-btn, .dark .gnome-tab-btn { color: var(--gnome-text-muted-dark); }
+.dark .gnome-category-btn:not(.active):hover, .dark .gnome-tab-btn:not(.active):hover { background-color: var(--gnome-border-dark); color: var(--gnome-text-dark); }
 
 .gnome-category-btn.active, .gnome-tab-btn.active {
-    background-color: #3584e4;
-    color: #ffffff;
+    background-color: var(--gnome-blue);
+    color: var(--gnome-white);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 .gnome-tab-btn.active { transform: scale(1.05); }
@@ -584,17 +627,17 @@ body {
     border-radius: 0.75rem;
     font-size: 0.875rem;
     font-weight: 700;
-    color: #5e5c64;
+    color: var(--gnome-text-muted-light);
     border: 1px solid transparent;
     transition: all 150ms ease;
 }
-.gnome-page-btn:not(.active):not(:disabled):hover { background-color: #deddda; color: #241F31; }
-.gnome-page-btn.active { background-color: #3584e4; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transform: scale(1.05); }
+.gnome-page-btn:not(.active):not(:disabled):hover { background-color: var(--gnome-hover-light); color: var(--gnome-text-light); }
+.gnome-page-btn.active { background-color: var(--gnome-blue); color: var(--gnome-white); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transform: scale(1.05); }
 .gnome-page-btn:disabled { opacity: 0.3; cursor: not-allowed; background-color: transparent; }
 
-.dark .gnome-page-btn { color: #c0bfbc; }
-.dark .gnome-page-btn:not(.active):not(:disabled):hover { background-color: #3d3846; color: #ffffff; }
-.dark .gnome-page-btn.active { background-color: #3584e4; color: #ffffff; }
+.dark .gnome-page-btn { color: var(--gnome-text-muted-dark); }
+.dark .gnome-page-btn:not(.active):not(:disabled):hover { background-color: var(--gnome-border-dark); color: var(--gnome-text-dark); }
+.dark .gnome-page-btn.active { background-color: var(--gnome-blue); color: var(--gnome-white); }
 
 
 /* Badges */
@@ -603,10 +646,10 @@ body {
     font-weight: 600;
     padding: 0.25rem 0.625rem;
     border-radius: 9999px;
-    background-color: #f6f5f4;
-    color: #77767B;
+    background-color: var(--gnome-bg-light);
+    color: var(--gnome-grey);
 }
-.dark .gnome-badge { background-color: #3d3846; color: #c0bfbc; }
+.dark .gnome-badge { background-color: var(--gnome-border-dark); color: var(--gnome-text-muted-dark); }
 
 .gnome-badge-status {
     font-size: 10px;
@@ -617,12 +660,12 @@ body {
     border-radius: 9999px;
     border: 1px solid transparent;
 }
-.gnome-badge-system { background-color: #deddda; color: #77767B; border-color: transparent; }
-.dark .gnome-badge-system { background-color: #3d3846; color: #c0bfbc; border-color: transparent; }
+.gnome-badge-system { background-color: var(--gnome-hover-light); color: var(--gnome-grey); border-color: transparent; }
+.dark .gnome-badge-system { background-color: var(--gnome-border-dark); color: var(--gnome-text-muted-dark); border-color: transparent; }
 
-.gnome-badge-success { background-color: rgba(51, 209, 122, 0.15); color: #33D17A; }
-.gnome-badge-danger { background-color: rgba(224, 27, 36, 0.15); color: #E01B24; }
-.gnome-badge-warning { background-color: rgba(255, 120, 0, 0.15); color: #FF7800; }
+.gnome-badge-success { background-color: rgba(51, 209, 122, 0.15); color: var(--gnome-green); }
+.gnome-badge-danger { background-color: rgba(224, 27, 36, 0.15); color: var(--gnome-red); }
+.gnome-badge-warning { background-color: rgba(255, 120, 0, 0.15); color: var(--gnome-orange); }
 
 /* Custom Toggle Switch */
 .gnome-toggle {
@@ -633,21 +676,21 @@ body {
     align-items: center;
     border-radius: 9999px;
     transition: background-color 200ms ease;
-    background-color: #c0bfbc;
+    background-color: var(--gnome-border-light);
     outline: none;
     cursor: pointer;
     flex-shrink: 0;
 }
-.dark .gnome-toggle { background-color: #3d3846; }
+.dark .gnome-toggle { background-color: var(--gnome-border-dark); }
 
-.gnome-toggle[aria-checked="true"] { background-color: #3584e4; }
+.gnome-toggle[aria-checked="true"] { background-color: var(--gnome-blue); }
 
 .gnome-toggle-knob {
     display: inline-block;
     height: 1rem;
     width: 1rem;
     border-radius: 9999px;
-    background-color: #ffffff;
+    background-color: var(--gnome-white);
     transform: translateX(0.25rem);
     transition: transform 200ms ease;
 }
@@ -655,15 +698,15 @@ body {
     transform: translateX(1.5rem);
 }
 
-#cat-scroll-left, #cat-scroll-right { color: #3584e4; }
-#cat-scroll-left:hover, #cat-scroll-right:hover { color: #fff; }
+#cat-scroll-left, #cat-scroll-right { color: var(--gnome-blue); }
+#cat-scroll-left:hover, #cat-scroll-right:hover { color: var(--gnome-white); }
 
 /* High Contrast Mode Overrides */
 @media (prefers-contrast: more) {
     .gnome-card-panel, .gnome-filter-container, .gnome-detail-icon-box, .gnome-input, .gnome-select, .gnome-page-btn, .gnome-btn-icon, .gnome-dropdown-menu {
-        border: 1px solid #c0bfbc;
+        border: 1px solid var(--gnome-border-light);
     }
-    .dark .gnome-card-panel, .dark .gnome-filter-container, .dark .gnome-detail-icon-box, .dark .gnome-input, .dark .gnome-select, .dark .gnome-page-btn, .dark .gnome-btn-icon, .dark .gnome-dropdown-menu {
-        border: 1px solid #3d3846;
+    .dark .gnome-card-panel, .dark .gnome-filter-container, .dark .gnome-detail-icon-box, .dark .gnome-input, .dark .gnome-select, .dark .gnome-page-btn, .dark .gnome-dropdown-menu {
+        border: 1px solid var(--gnome-border-dark);
     }
 }
