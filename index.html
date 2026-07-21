@@ -132,7 +132,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_auto_auto] items-center gap-y-3 sm:gap-y-0 text-sm font-medium">
 
       <!-- Icon + Text Wrapper -->
-      <div class="col-start-1 row-start-1 flex items-start sm:items-center ml-[7px] gap-3 pr-2 sm:pr-4">
+      <div class="col-start-1 row-start-1 flex items-start sm:items-center pr-2 sm:pr-4 ml-[7px] gap-3">
         <i class="icon icon-info text-lg shrink-0 w-5 text-center mt-0.5 sm:mt-0"></i>
         <p class="leading-relaxed">
           We cannot detect a running copy of GNOME on this system. You must install the GNOME Shell integration to enable extensions.
@@ -141,16 +141,17 @@
 
       <!-- Close Button (Mobile: Col 2, Row 1 | Desktop: Col 3, Row 1) -->
       <div class="col-start-2 sm:col-start-3 row-start-1 justify-self-end self-start sm:self-center">
-        <button id="close-connector-warning" class="text-gnome-white hover:bg-white/20 transition-all duration-150 p-1.5 rounded-lg shrink-0 flex items-center justify-center -mr-1.5 sm:mr-0" aria-label="Dismiss warning">
+        <!-- px-3 h-9 mathematically mirrors the padding boundaries of the header "open sidebar" button -->
+        <button id="close-connector-warning" class="text-gnome-white hover:bg-white/20 transition-all duration-150 rounded-lg shrink-0 flex items-center justify-center px-3 h-9" aria-label="Dismiss warning">
           <i class="icon icon-close text-xl leading-none"></i>
         </button>
       </div>
 
       <!-- Action Button (Mobile: Col 1-2, Row 2 | Desktop: Col 2, Row 1) -->
-      <div class="col-start-1 col-span-2 sm:col-span-1 sm:col-start-2 row-start-2 sm:row-start-1 ml-[39px] sm:ml-0 sm:mr-2">
+      <div class="col-start-1 col-span-2 sm:col-span-1 sm:col-start-2 row-start-2 sm:row-start-1 mt-2 sm:mt-0 flex justify-center w-full sm:w-auto sm:mr-2">
         <a href="https://gnome.pages.gitlab.gnome.org/gnome-browser-integration/pages/installation-guide.html"
           target="_blank" rel="noreferrer"
-          class="px-3 py-1.5 rounded-lg font-bold transition-all duration-150 hover:bg-white/20 text-white flex justify-center w-full sm:w-auto sm:inline-flex whitespace-nowrap">
+          class="px-4 py-2 rounded-lg font-bold transition-all duration-150 hover:bg-white/20 text-white flex justify-center items-center bg-white/10 sm:bg-transparent whitespace-nowrap">
           Installation Guide
         </a>
       </div>
@@ -302,11 +303,11 @@
     <!-- Back Header (Non-sticky to prevent overlap and save space) -->
     <div class="border-b border-gnome-border-light dark:border-gnome-border-dark bg-gnome-bg-light dark:bg-gnome-bg-dark py-2.5">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center">
-        <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner grid -->
+        <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner alignment -->
         <button onclick="window.showViewHandler('store')"
-          class="group flex items-center gap-3 px-3 py-2 -ml-[5px] rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-all w-fit cursor-pointer focus:outline-none focus:ring-2 focus:ring-gnome-blue/30 active:scale-95">
-          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 text-center text-gnome-grey group-hover:text-gnome-blue transition-colors"></i>
-          <span class="text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark group-hover:text-gnome-text-light dark:group-hover:text-gnome-text-dark transition-colors">Back to Store</span>
+          class="flex items-center gap-3 px-3 py-1.5 -ml-[5px] rounded-lg text-sm font-semibold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-all duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
+          <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 text-center"></i>
+          <span>Back to Store</span>
         </button>
       </div>
     </div>
