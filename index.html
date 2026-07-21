@@ -71,7 +71,9 @@
   <button id="scroll-to-top-btn"
     class="fixed bottom-8 right-8 z-50 bg-gnome-blue text-gnome-white w-12 h-12 p-0 flex items-center justify-center rounded-full shadow-lg hover:bg-gnome-blue-hover transition-all duration-300 transform scale-0 opacity-0 focus:outline-none"
     onclick="window.scrollTo(0, 0)" aria-label="Scroll to top">
-    <i class="icon icon-up-color text-xl"></i>
+    <span class="flex items-center justify-center w-full h-full pointer-events-none">
+      <i class="icon icon-up-color text-2xl"></i>
+    </span>
   </button>
 
   <!-- Header -->
@@ -305,9 +307,9 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full flex items-center">
         <!-- Mathematically calculated -ml-[5px] + px-3 = 7px visual offset, strictly matching the banner alignment -->
         <button onclick="window.showViewHandler('store')"
-          class="inline-flex items-center gap-2 px-3 py-1.5 -ml-[5px] rounded-lg text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-all duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
+          class="flex items-center gap-3 px-3 py-2 -ml-[5px] rounded-lg text-sm font-bold text-gnome-text-muted-light dark:text-gnome-text-muted-dark transition-colors duration-150 hover:bg-gnome-hover-light hover:text-gnome-text-light dark:hover:bg-gnome-card-dark dark:hover:text-gnome-text-dark w-fit cursor-pointer focus:outline-none">
           <i class="icon icon-navigation-back-color text-lg shrink-0 w-5 flex items-center justify-center"></i>
-          <span class="mt-px">Back to Store</span>
+          <span>Back to Store</span>
         </button>
       </div>
     </div>

@@ -439,12 +439,14 @@ class DetailView {
                 if (ytId) {
                     content = `<iframe class="w-full h-full object-contain pointer-events-auto" src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
                 } else {
-                    content = `<video class="w-full h-full object-contain" controls playsinline poster="${this.escapeHtml(media.poster || '')}">
+                    // Added select-none and draggable=false to prevent native ghost drag interference when swiping
+                    content = `<video class="w-full h-full object-contain select-none" draggable="false" controls playsinline poster="${this.escapeHtml(media.poster || '')}">
                                  <source src="${this.escapeHtml(media.url)}" type="video/mp4">
                                </video>`;
                 }
             } else {
-                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-contain select-none">`;
+                // Added pointer-events-none to prevent images from trapping touch and mouse drag events
+                content = `<img src="${this.escapeHtml(media.url)}" alt="Preview ${index + 1}" class="w-full h-full object-contain pointer-events-none select-none" draggable="false">`;
             }
             
             let captionHtml = '';
@@ -458,7 +460,8 @@ class DetailView {
                 `;
             }
 
-            return `<div class="min-w-full h-full flex-shrink-0 snap-center relative flex items-center justify-center bg-black" data-index="${index}">${content}${captionHtml}</div>`;
+            // Using snap-start ensures track exactly aligns the 0-point of the track with the 0-point of the image regardless of margins
+            return `<div class="min-w-full h-full flex-shrink-0 snap-start relative flex items-center justify-center bg-black" data-index="${index}">${content}${captionHtml}</div>`;
         }).join('');
 
         const dotsHtml = this.currentMediaItems.map((_, index) => {
@@ -495,7 +498,7 @@ class DetailView {
             
             return `
               <button type="button" data-thumb-index="${index}" class="carousel-thumb flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-300 focus:outline-none ${activeClasses}">
-                <img src="${this.escapeHtml(thumbUrl)}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover">
+                <img src="${this.escapeHtml(thumbUrl)}" alt="Thumbnail ${index + 1}" class="w-full h-full object-cover" draggable="false">
               </button>
             `;
         }).join('');
@@ -515,7 +518,8 @@ class DetailView {
         const updateUI = () => {
             const width = track.clientWidth;
             if (width === 0) return;
-            const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
+            // Snapping calculation changed to explicitly track nearest start position
+            const activeIndex = Math.round(track.scrollLeft / width);
 
             dots.forEach((dot, idx) => {
                 if (idx === activeIndex) dot.className = 'carousel-dot transition-all duration-300 ease-out rounded-full h-1.5 w-5 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.5)] focus:outline-none';
@@ -533,7 +537,7 @@ class DetailView {
             }
             if (nextBtn) {
                 if (activeIndex === dots.length - 1) { nextBtn.style.opacity = '0'; nextBtn.style.pointerEvents = 'none'; }
-                else { nextBtn.style.opacity = ''; nextBtn.style.pointerEvents = 'auto'; }
+                else { nextBtn.style.opacity = ''; prevBtn.style.pointerEvents = 'auto'; }
             }
         };
 
@@ -545,12 +549,12 @@ class DetailView {
 
         updateUI();
 
-        if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth }); });
-        if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth }); });
+        if (prevBtn) prevBtn.addEventListener('click', () => { track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' }); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); });
 
         const navigateTo = (e) => {
             const idx = parseInt(e.currentTarget.getAttribute('data-dot-index') || e.currentTarget.getAttribute('data-thumb-index'), 10);
-            track.scrollTo({ left: idx * track.clientWidth });
+            track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
         };
 
         dots.forEach(dot => dot.addEventListener('click', navigateTo));
@@ -567,9 +571,9 @@ class DetailView {
             autoplayTimer = setInterval(() => {
                 const width = track.clientWidth;
                 if (width === 0) return;
-                const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
+                const activeIndex = Math.round(track.scrollLeft / width);
                 const nextIndex = (activeIndex + 1) % dots.length;
-                track.scrollTo({ left: nextIndex * width });
+                track.scrollTo({ left: nextIndex * width, behavior: 'smooth' });
             }, 4000);
         };
 
