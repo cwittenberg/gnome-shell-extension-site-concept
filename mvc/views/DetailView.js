@@ -90,7 +90,7 @@ class DetailView {
         const ratingContainer = document.getElementById('detail-rating-container');
         if (ratingContainer) {
             ratingContainer.innerHTML = `
-              <div class="flex items-center gap-2 text-sm font-semibold text-gnome-black dark:text-gnome-white">
+              <div class="flex items-center justify-center sm:justify-start gap-2 text-sm font-semibold text-gnome-black dark:text-gnome-white">
                 <span class="text-gnome-orange"><i class="icon icon-star"></i> ${extension.rating.toFixed(1)}</span>
                 <span class="text-gnome-grey">(${extension.ratingCount} ratings)</span>
             </div>
@@ -227,6 +227,7 @@ class DetailView {
         }
         
         warningsContainer.classList.remove('hidden');
+        warningsContainer.className = 'mb-4 flex flex-wrap justify-center sm:justify-start gap-2';
         warningsContainer.innerHTML = warnings.map(warn => {
             let icon = '<i class="icon icon-exclamation-color"></i>';
             if (warn.includes('Subprocess')) icon = '<i class="icon icon-terminal-color"></i>';
@@ -514,7 +515,6 @@ class DetailView {
         const updateUI = () => {
             const width = track.clientWidth;
             if (width === 0) return;
-
             const activeIndex = Math.floor((track.scrollLeft + width / 2) / width);
 
             dots.forEach((dot, idx) => {

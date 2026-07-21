@@ -221,17 +221,14 @@ class StoreView {
                 startX = e.pageX - catContainer.offsetLeft;
                 scrollLeft = catContainer.scrollLeft;
             });
-
             catContainer.addEventListener('mouseleave', () => {
                 isDown = false;
                 catContainer.style.cursor = '';
             });
-
             catContainer.addEventListener('mouseup', () => {
                 isDown = false;
                 catContainer.style.cursor = '';
             });
-
             catContainer.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
@@ -560,22 +557,22 @@ class StoreView {
 
     generateRowHTML(extension) {
         return `
-            <article class="extension-card group gnome-card-panel p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
+            <article class="extension-card group gnome-card-panel p-3 flex flex-row items-center justify-between gap-3 animate-fade-in" data-extension-id="${extension.id}">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
-                    <div class="ext-icon-wrapper w-10 h-10">
+                    <div class="ext-icon-wrapper w-10 h-10 shrink-0">
                         <div class="scale-[0.8] flex items-center justify-center w-full h-full">
                             ${this.renderIcon(extension)}
                         </div>
                     </div>
-                    <div class="min-w-0 flex-1 grid grid-cols-1 sm:grid-cols-12 items-center gap-2 sm:gap-4">
+                    <div class="min-w-0 flex-1 flex flex-col sm:grid sm:grid-cols-12 sm:items-center gap-1 sm:gap-4">
                         <div class="col-span-1 sm:col-span-4 lg:col-span-3 min-w-0">
                             <h3 class="font-bold text-sm text-gnome-black dark:text-gnome-white truncate">${this.escapeHtml(extension.name)}</h3>
-                            <p class="text-xs text-gnome-grey truncate mt-0.5">${this.escapeHtml(extension.author)}</p>
+                            <p class="text-xs text-gnome-grey truncate mt-0.5 hidden sm:block">${this.escapeHtml(extension.author)}</p>
                         </div>
-                        <p class="text-sm line-clamp-2 hidden lg:block lg:col-span-6" title="${this.escapeHtml(extension.description)}">
+                        <p class="text-xs sm:text-sm text-gnome-grey sm:text-gnome-black sm:dark:text-gnome-white line-clamp-1 sm:line-clamp-2 col-span-1 sm:col-span-8 lg:col-span-6" title="${this.escapeHtml(extension.description)}">
                             ${this.escapeHtml(extension.description)}
                         </p>
-                        <div class="hidden sm:flex col-span-8 lg:col-span-3 items-center justify-end gap-3 shrink-0">
+                        <div class="hidden lg:flex col-span-3 items-center justify-end gap-3 shrink-0">
                             <button type="button" data-category-filter="${this.escapeHtml(extension.category)}" class="gnome-badge max-w-[100px] truncate hover:bg-gnome-blue hover:text-white transition-colors cursor-pointer relative z-10">${this.escapeHtml(extension.category)}</button>
                             <div class="text-sm font-semibold text-gnome-blue w-12 text-right"><i class="icon icon-star"></i>  ${extension.rating.toFixed(1)}</div>
                             <div class="text-[10px] uppercase tracking-wider text-gnome-grey w-12 text-right flex items-center justify-end gap-1"><i class="icon icon-download-color"></i>${this.formatDownloads(extension.downloads)}</div>
@@ -583,8 +580,8 @@ class StoreView {
                     </div>
                 </div>
                 
-                <div class="flex items-center justify-between sm:justify-end gap-4 shrink-0 sm:ml-4 border-t border-[#c0bfbc] sm:border-t-0 dark:border-[#3d3846] pt-3 sm:pt-0 mt-2 sm:mt-0">
-                    <div class="flex sm:hidden items-center gap-3">
+                <div class="flex items-center justify-end gap-3 shrink-0 pl-2 border-l border-[#c0bfbc] dark:border-[#3d3846] sm:border-0 sm:pl-0">
+                    <div class="hidden sm:flex lg:hidden items-center gap-3">
                         <div class="text-sm font-semibold text-gnome-blue"><i class="icon icon-star"></i>  ${extension.rating.toFixed(1)}</div>
                         <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center gap-1"><i class="icon icon-download-color"></i>${this.formatDownloads(extension.downloads)}</div>
                     </div>
