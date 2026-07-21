@@ -270,7 +270,6 @@ class StoreView {
         const heroContent = document.getElementById('hero-content');
         const homeBottomContent = document.getElementById('home-bottom-content');
         const featuredSection = document.getElementById('featured-section');
-        const mainDivider = document.getElementById('main-divider');
         const resultsHeader = document.getElementById('results-header');
         
         // Smooth Auto-hide Hero section logic and home banners
@@ -287,13 +286,11 @@ class StoreView {
         }
         
         // Hide Featured components when searching/filtering (except when only category is filtered)
-        if (featuredSection && mainDivider && resultsHeader) {
+        if (featuredSection && resultsHeader) {
             if (isSearchOrVersionFiltering) {
                 featuredSection.classList.add('hidden');
-                mainDivider.classList.add('hidden');
             } else {
                 featuredSection.classList.remove('hidden');
-                mainDivider.classList.remove('hidden');
             }
             
             if (isFiltering) {
