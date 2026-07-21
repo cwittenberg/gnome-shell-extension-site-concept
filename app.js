@@ -9,7 +9,22 @@
         user: null
     };
 
+    function initThemeDetection() {
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const updateTheme = (e) => {
+            if (e.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        };
+        updateTheme(darkModeMediaQuery);
+        darkModeMediaQuery.addEventListener('change', updateTheme);
+    }
+
     function init() {
+        initThemeDetection();
+        
         window.GnomeConnector = {
             isConnected: false, 
             shellVersion: 'all', 
@@ -60,7 +75,6 @@
         // Populate the Store
         const extData = typeof EXTENSIONS !== 'undefined' ? EXTENSIONS : [];
         const catData = typeof CATEGORIES !== 'undefined' ? CATEGORIES : [];
-
         storeController.init(extData, catData);
 
         if (window.GnomeConnector.isConnected) {
@@ -86,12 +100,10 @@
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
-
         document.querySelectorAll('.auth-guest').forEach(el => {
             if (!isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
         });
-
         document.querySelectorAll('.auth-required').forEach(el => {
             if (isAuth) el.classList.remove('hidden');
             else el.classList.add('hidden');
@@ -100,9 +112,6 @@
 
     function bindGlobalEvents() {
         const mobileMenuButton = document.getElementById('mobile-menu-btn');
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-
         if (mobileMenuButton) {
             mobileMenuButton.addEventListener('click', () => {
                 const mobileMenu = document.getElementById('mobile-menu');
@@ -112,12 +121,6 @@
                 }
             });
         }
-
-        [themeToggle, themeToggleMobile].forEach((button) => {
-            if (button) {
-                button.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
-            }
-        });
 
         document.querySelectorAll('a[data-nav], button[data-nav]').forEach(link => {
             link.addEventListener('click', (e) => {

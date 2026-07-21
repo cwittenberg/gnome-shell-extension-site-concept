@@ -1,3 +1,4 @@
+// mvc/views/LocalView.js
 class LocalView {
     constructor() {
         this.container = document.getElementById('local-view');
@@ -6,8 +7,8 @@ class LocalView {
 
     render() {
         if (!this.container) return;
-        const isConnected = window.GnomeConnector && window.GnomeConnector.isConnected;
 
+        const isConnected = window.GnomeConnector && window.GnomeConnector.isConnected;
         let contentHtml = '';
 
         if (!isConnected) {
@@ -25,7 +26,7 @@ class LocalView {
                  </div>
                </div>
 
-               <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+               <div class="gnome-card-panel p-10 sm:p-16 shadow-md text-center">
                  <i class="icon icon-extension-disabled text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                  <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No extensions detected</h3>
                  <p class="text-[12pt] text-gnome-grey">GNOME Shell Extensions cannot list your installed extensions without the host connector.</p>
@@ -37,7 +38,7 @@ class LocalView {
 
             if (localExtensions.length === 0) {
                 contentHtml = `
-                   <div class="bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-2xl p-10 sm:p-16 shadow-md text-center">
+                   <div class="gnome-card-panel p-10 sm:p-16 shadow-md text-center">
                      <i class="icon icon-folder-open text-5xl text-gnome-grey mx-auto mb-4 block"></i>
                      <h3 class="text-[18pt] font-extrabold text-gnome-black dark:text-gnome-white mb-2">No Extensions Installed</h3>
                      <p class="text-[12pt] text-gnome-grey mb-6">You don't have any GNOME Shell extensions installed on your system.</p>
@@ -48,7 +49,7 @@ class LocalView {
                 const listHtml = localExtensions.map(ext => this.generateLocalRowHTML(ext)).join('');
                 contentHtml = `
                     <!-- Global Extension Controls -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-gnome-white dark:bg-[#2d2640] border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-5 shadow-sm mb-8 animate-fade-in">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gnome-card-panel p-5 mb-8 animate-fade-in">
                         <div class="flex items-center justify-between w-full sm:w-auto gap-6 mb-4 sm:mb-0">
                             <span class="font-bold text-gnome-black dark:text-gnome-white">Disable All Extensions</span>
                             <button id="local-global-disable" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none bg-[#c0bfbc] dark:bg-[#3d3846]" role="switch" aria-checked="false">
@@ -79,7 +80,6 @@ class LocalView {
                ${contentHtml}
             </div>
         `;
-
         this.bindEvents();
     }
 
@@ -244,8 +244,8 @@ class LocalView {
                     <i class="icon icon-bin"></i>
                 </button>
             `;
-        } else {
-             actionsHtml += `
+        } else { 
+            actionsHtml += `
                 <div class="text-gnome-grey flex items-center justify-center w-8 h-8" title="System extensions cannot be uninstalled here">
                     <i class="icon icon-lock text-sm opacity-50"></i>
                 </div>
@@ -273,7 +273,7 @@ class LocalView {
         }
 
         return `
-            <article class="group bg-gnome-white dark:bg-[#2d2640] border ${hasError ? 'border-gnome-red' : 'border-[#c0bfbc] dark:border-[#3d3846]'} rounded-xl p-4 shadow-sm cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
+            <article class="group gnome-card-panel p-4 cursor-pointer hover:border-gnome-blue hover:shadow-md transition-all duration-300 animate-fade-in ${hasError ? '!border-gnome-red' : ''}" data-extension-id="${extension.id}" data-extension-uuid="${this.escapeHtml(extension.uuid)}">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div class="flex items-center gap-4 min-w-0 flex-1">
                         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#f6f5f4] dark:bg-[#241F31] overflow-hidden text-gnome-blue">

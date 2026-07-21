@@ -1,3 +1,4 @@
+// mvc/views/UploadView.js
 class UploadView {
     constructor() {
         this.container = document.getElementById('upload-view');
@@ -143,7 +144,7 @@ class UploadView {
                       <p class="text-[12pt] text-gnome-grey text-center mb-8">Upload your GNOME Shell extension archive containing your metadata.json and source code.</p>
                       
                       <form id="upload-form" class="space-y-6">
-                        <div id="upload-dropzone" class="border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-[#241F31] hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
+                        <div id="upload-dropzone" class="border-2 border-dashed border-[#c0bfbc] dark:border-[#5e5c64] rounded-xl p-12 flex flex-col items-center justify-center bg-[#f6f5f4] dark:bg-[#241F31] hover:border-gnome-blue dark:hover:border-gnome-blue transition-colors cursor-pointer text-center group">
                           <i class="icon icon-file-add text-4xl text-gnome-grey group-hover:text-gnome-blue transition-colors mb-4"></i>
                           <span class="text-[12pt] font-bold text-gnome-black dark:text-gnome-white mb-1">Select or drop your .zip here</span>
                           <input type="file" id="upload-file-input" class="hidden" accept=".zip" />
@@ -192,7 +193,6 @@ class UploadView {
                             <div id="delete-account-step-1">
                                 <button id="btn-init-delete" class="gnome-btn-danger">Delete Account</button>
                             </div>
-
                             <div id="delete-account-step-2" class="hidden bg-gnome-red/10 border border-gnome-red/30 p-4 rounded-lg">
                                 <p class="font-bold text-gnome-red mb-3">Are you absolutely sure?</p>
                                 <p class="text-sm text-gnome-black dark:text-[#c0bfbc] mb-4">This will permanently delete your account, remove your maintainer status from all extensions, and orphan any extensions you authored.</p>
@@ -235,7 +235,6 @@ class UploadView {
                                 ${statusBadge}
                                 <span class="text-sm font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(ext.status)}</span>
                             </div>
-
                             <div class="flex items-center justify-end gap-1.5 shrink-0">
                                 <button type="button" data-action="view-review" data-id="${this.escapeHtml(ext.id)}" class="gnome-btn-icon hover:bg-[#deddda] dark:hover:bg-[#5e5c64]" title="View EGO Review Log"><i class="icon icon-review-complete"></i></button>
                                 <div class="w-8 flex justify-center">
@@ -277,12 +276,11 @@ class UploadView {
                 <h2 class="text-xl font-extrabold text-gnome-black dark:text-gnome-white m-0">Manage Extension</h2>
                 <button class="gnome-btn-primary">Save Changes</button>
             </div>
-
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-8">
                     
                     <!-- Media Uploads -->
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-6">
+                    <div class="gnome-card-panel p-6">
                         <h3 class="gnome-title-uppercase-clean mb-4">Media</h3>
                         <div class="space-y-6">
                             <div>
@@ -307,7 +305,7 @@ class UploadView {
                     </div>
 
                     <!-- Metadata -->
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-6">
+                    <div class="gnome-card-panel p-6">
                         <h3 class="gnome-title-uppercase-clean mb-4">Metadata</h3>
                         <div class="space-y-4">
                             <div>
@@ -324,7 +322,7 @@ class UploadView {
                     </div>
 
                     <!-- Ownership & Maintainers -->
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-6">
+                    <div class="gnome-card-panel p-6">
                         <h3 class="gnome-title-uppercase-clean mb-4">Ownership & Access</h3>
                         
                         <div class="space-y-6">
@@ -358,11 +356,10 @@ class UploadView {
                     </div>
 
                 </div>
-
                 <!-- Right Column: Stats & Versions -->
                 <div class="space-y-8">
                     <!-- Stats Box -->
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-6">
+                    <div class="gnome-card-panel p-6">
                         <h3 class="gnome-title-uppercase-clean mb-4">Statistics</h3>
                         <dl class="space-y-4 text-sm">
                             <div>
@@ -385,7 +382,7 @@ class UploadView {
                     </div>
 
                     <!-- Version List -->
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-0 overflow-hidden">
+                    <div class="gnome-card-panel p-0 overflow-hidden">
                         <div class="p-4 border-b border-[#c0bfbc] dark:border-[#5e5c64] bg-white dark:bg-[#2d2640]">
                             <h3 class="text-sm font-bold text-gnome-grey uppercase tracking-wider m-0">Versions</h3>
                         </div>
@@ -405,7 +402,7 @@ class UploadView {
         }
         
         if (reviews.length === 0) {
-            return `<div class="p-8 text-center text-gnome-grey border border-[#c0bfbc] dark:border-[#3d3846] rounded-xl bg-[#f6f5f4] dark:bg-[#241F31]">No reviews found.</div>`;
+            return `<div class="p-8 text-center text-gnome-grey gnome-card-panel bg-[#f6f5f4] dark:bg-[#241F31]">No reviews found.</div>`;
         }
 
         return reviews.map(r => `
@@ -443,7 +440,7 @@ class UploadView {
             if (c.type === 'author') dotColor = 'bg-gnome-blue';
             
             return `
-                <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-4 mb-3 bg-white dark:bg-gnome-black">
+                <div class="gnome-card-panel p-4 mb-3 bg-white dark:bg-gnome-black">
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full ${dotColor}"></span>
@@ -513,7 +510,7 @@ class UploadView {
             </div>
             
             <!-- Package Info Box -->
-            <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-4 mb-6 bg-white dark:bg-[#2d2640]">
+            <div class="gnome-card-panel p-4 mb-6 bg-white dark:bg-[#2d2640]">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <div class="text-sm text-gnome-grey mb-1">Project Links</div>
@@ -542,7 +539,7 @@ class UploadView {
                 <!-- Left: Source Code Diff & Versions -->
                 <div class="xl:col-span-8">
                     <h4 class="text-sm font-bold text-gnome-grey uppercase tracking-wider mb-3">Source Code Validation</h4>
-                    <div class="gnome-card-panel overflow-hidden flex flex-col md:flex-row border-[#c0bfbc] dark:border-[#5e5c64] mb-6 h-80">
+                    <div class="gnome-card-panel overflow-hidden flex flex-col md:flex-row mb-6 h-80">
                         <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-[#c0bfbc] dark:border-[#5e5c64] bg-[#deddda] dark:bg-[#3d3846]">
                             <div class="p-2 border-b border-[#c0bfbc] dark:border-[#5e5c64]">
                                 <span class="text-xs font-bold text-gnome-grey uppercase tracking-wider">Files</span>
@@ -556,7 +553,7 @@ class UploadView {
                         </div>
                     </div>
                     
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-4 bg-white dark:bg-[#2d2640]">
+                    <div class="gnome-card-panel p-4 bg-white dark:bg-[#2d2640]">
                         <h4 class="text-sm font-bold text-gnome-grey uppercase tracking-wider mb-2">Alternative Versions</h4>
                         <div class="flex flex-wrap gap-4">
                             ${altVersionsHtml}
@@ -568,7 +565,8 @@ class UploadView {
                 <div class="xl:col-span-4">
                     <h4 class="text-sm font-bold text-gnome-grey uppercase tracking-wider mb-3">Review Log</h4>
                     ${commentsHtml}
-                    <div class="gnome-card-panel border-[#c0bfbc] dark:border-[#5e5c64] p-4 mt-4 bg-white dark:bg-gnome-black">
+
+                    <div class="gnome-card-panel p-4 mt-4 bg-white dark:bg-gnome-black">
                         <textarea class="gnome-input mb-3 resize-y bg-[#f6f5f4] dark:bg-[#241F31]" rows="4" placeholder="Reply to reviewer..."></textarea>
                         <div class="text-right">
                             <button class="gnome-btn-primary">Submit Reply</button>
@@ -626,7 +624,6 @@ class UploadView {
                     p.classList.add('hidden');
                     p.classList.remove('block');
                 });
-
                 document.getElementById(`view-${target}`).classList.remove('hidden');
                 document.getElementById(`view-${target}`).classList.add('block');
                 

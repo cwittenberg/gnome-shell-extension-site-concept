@@ -289,6 +289,7 @@ class StoreView {
             this.renderCategories(data.categories, data.state.selectedCategory);
             this._lastSelectedCategory = data.state.selectedCategory;
             this._categoriesRendered = true;
+
             // Scroll the newly active category into view
             setTimeout(() => {
                 const container = document.getElementById('categories-container');
@@ -425,7 +426,7 @@ class StoreView {
                         <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                         <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                     </select>
-                    <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 border border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-[#2d2640]">
+                    <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 bg-[#f6f5f4] dark:bg-[#2d2640]">
                         <i class="icon icon-angles-down"></i>
                         Show Featured
                     </button>
@@ -463,7 +464,7 @@ class StoreView {
                     <option value="64" ${itemsPerPage === 64 ? 'selected' : ''}>64 items per page</option>
                     <option value="128" ${itemsPerPage === 128 ? 'selected' : ''}>128 items per page</option>
                 </select>
-                <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 border border-[#c0bfbc] dark:border-[#3d3846] bg-[#f6f5f4] dark:bg-[#2d2640]" title="Hide Featured">
+                <button type="button" data-action="toggle-featured" class="gnome-btn-icon w-auto px-4 h-[38px] text-sm font-semibold gap-2 bg-[#f6f5f4] dark:bg-[#2d2640]" title="Hide Featured">
                     <i class="icon icon-angles-up"></i>
                     Hide
                 </button>

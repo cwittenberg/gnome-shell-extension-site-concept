@@ -80,7 +80,6 @@ class DetailView {
                     iconHtml = extension.icon;
                 }
             }
-
             detailIcon.innerHTML = `
               <div class="flex h-full w-full items-center justify-center bg-gnome-white dark:bg-[#2d2640] text-gnome-blue overflow-hidden rounded-3xl">
                 ${iconHtml}
@@ -142,7 +141,7 @@ class DetailView {
                     <div class="flex items-center justify-between gap-3">
                       <div class="flex items-center gap-2">
                         <p class="font-bold text-gnome-black dark:text-gnome-white">${this.escapeHtml(review.user)}</p>
-                        ${review.isAuthor ? `<span class="bg-gnome-blue/15 text-gnome-blue text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-gnome-blue/20">Maintainer</span>` : ''}
+                        ${review.isAuthor ? `<span class="bg-gnome-blue/15 text-gnome-blue text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full border border-transparent contrast-more:border-gnome-blue/20">Maintainer</span>` : ''}
                       </div>
                       <div class="flex items-center gap-3">
                         <p class="text-sm text-gnome-grey">${this.escapeHtml(review.date)}</p>
@@ -490,7 +489,6 @@ class DetailView {
                 if (ytId) thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
                 else thumbUrl = media.poster || '';
             }
-
             const activeClasses = index === 0 ? 'border-gnome-blue opacity-100 scale-100' : 'border-transparent opacity-50 hover:opacity-100 scale-95 hover:scale-100';
             
             return `
@@ -531,7 +529,6 @@ class DetailView {
                 if (activeIndex === 0) { prevBtn.style.opacity = '0'; prevBtn.style.pointerEvents = 'none'; }
                 else { prevBtn.style.opacity = ''; prevBtn.style.pointerEvents = 'auto'; }
             }
-
             if (nextBtn) {
                 if (activeIndex === dots.length - 1) { nextBtn.style.opacity = '0'; nextBtn.style.pointerEvents = 'none'; }
                 else { nextBtn.style.opacity = ''; nextBtn.style.pointerEvents = 'auto'; }
@@ -597,6 +594,7 @@ class DetailView {
         if (!linksContainer) return;
 
         const bugTrackerUrl = extension.bugTracker || extension.url || extension.homepage;
+
         const links = [
             { label: 'Homepage', href: extension.homepage },
             { label: 'Bug tracker', href: bugTrackerUrl }

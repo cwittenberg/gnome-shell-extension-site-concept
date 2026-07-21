@@ -1,3 +1,4 @@
+/* stylesheet.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 html {
@@ -15,17 +16,21 @@ body {
     width: 6px;
     height: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background: #77767B;
     border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: #5e5c64;
 }
-* {
+
+.scrollbar-hide {
     scrollbar-width: thin;
     scrollbar-color: #77767B transparent;
 }
@@ -34,6 +39,7 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
 .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -45,6 +51,7 @@ body {
     background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
     background-size: 1024px;
 }
+
 .dark .gnome-hero {
     color: #fff;
     background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
@@ -56,6 +63,7 @@ body {
     max-height: 600px;
     opacity: 1;
 }
+
 #hero-section.hero-hidden {
     max-height: 0;
     opacity: 0;
@@ -67,26 +75,33 @@ body {
 .prose {
     color: #241F31;
 }
+
 .dark .prose {
     color: #c0bfbc;
 }
+
 .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 {
     color: #ffffff;
 }
+
 .dark .prose a {
     color: #3584e4;
 }
+
 .dark .prose strong, .dark .prose b {
     color: #ffffff;
 }
+
 .dark .prose code {
     color: #ffffff;
     background-color: #3d3846;
 }
+
 .dark .prose blockquote {
     color: #c0bfbc;
     border-left-color: #3d3846;
 }
+
 .dark .prose hr {
     border-color: #3d3846;
 }
@@ -96,6 +111,7 @@ body {
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
     will-change: transform, box-shadow;
 }
+
 .extension-card:hover, 
 .extension-card:focus-within {
     transform: translateY(-4px);
@@ -103,6 +119,7 @@ body {
     border-color: #3584e4;
     cursor: pointer;
 }
+
 .dark .extension-card:hover, 
 .dark .extension-card:focus-within {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px #3584e4;
@@ -125,10 +142,12 @@ body {
 .dark .text-gnome-grey {
     color: #deddda;
 }
+
 .logo .icon, .logo2 .icon {
     font-size: 6em;
     line-height: 0%;
 }
+
 .logo2 .icon {
     transform: translateX(-0.1em);
 }
@@ -176,11 +195,14 @@ body {
 /* Panels, Cards & Containers */
 .gnome-card-panel {
     background-color: #ffffff;
-    border: 1px solid #c0bfbc;
+    border: 1px solid transparent;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-.dark .gnome-card-panel { background-color: #2d2640; border-color: #3d3846; }
+.dark .gnome-card-panel { 
+    background-color: #2d2640; 
+    border-color: transparent; 
+}
 
 .gnome-filter-container {
     position: relative;
@@ -188,20 +210,23 @@ body {
     display: flex;
     align-items: center;
     overflow: hidden;
-    border: 1px solid #c0bfbc;
+    border: 1px solid transparent;
     border-radius: 0.75rem;
     background-color: #f6f5f4;
     padding: 0.25rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
-.dark .gnome-filter-container { border-color: #3d3846; background-color: #2d2640; }
+.dark .gnome-filter-container { 
+    border-color: transparent; 
+    background-color: #2d2640; 
+}
 
 .gnome-detail-icon-box {
     width: 8rem;
     height: 8rem;
     border-radius: 1.5rem;
     background-color: #ffffff;
-    border: 1px solid #c0bfbc;
+    border: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,7 +235,10 @@ body {
     overflow: hidden;
     color: #3584e4;
 }
-.dark .gnome-detail-icon-box { background-color: #2d2640; border-color: #3d3846; }
+.dark .gnome-detail-icon-box { 
+    background-color: #2d2640; 
+    border-color: transparent; 
+}
 
 /* Banners */
 .gnome-error-banner {
@@ -288,583 +316,63 @@ body {
     padding: 0.5rem 1rem;
     background-color: #ffffff;
     color: #241F31;
-    border: 1px solid #c0bfbc;
+    border: 1px solid transparent; 
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     transition: all 150ms ease;
     outline: none;
 }
 .gnome-select { width: auto; padding: 0.375rem 1rem; font-weight: 600; color: #5e5c64; cursor: pointer; }
+.gnome-select option { border-radius: 0.5rem; padding: 0.5rem; }
 .gnome-input:focus, .gnome-select:focus { border-color: #3584e4; box-shadow: 0 0 0 2px rgba(53, 132, 228, 0.2); }
-.dark .gnome-input, .dark .gnome-select { background-color: #2d2640; color: #ffffff; border-color: #3d3846; }
+.dark .gnome-input, .dark .gnome-select { background-color: #2d2640; color: #ffffff; border-color: transparent; }
 .dark .gnome-select { color: #c0bfbc; }
 
-
-/* =========================================
-   UNIFIED BUTTON STYLES & ANIMATIONS
-   ========================================= */
-
-/* Base configuration for all interactive buttons */
-.gnome-btn-primary, 
-.gnome-btn-ghost, 
-.gnome-btn-danger, 
-.gnome-btn-danger-filled, 
-.gnome-btn-inverted,
-.detail-action-btn {
-    padding: 0.375rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    transition: all 300ms ease;
-    will-change: transform, box-shadow;
-    border: 2px solid transparent;
-    text-decoration: none;
-}
-
-/* Unified Hover Animation for all primary action buttons (Handles both native buttons and anchor tags) */
-.gnome-btn-primary:not(:disabled):hover,
-a.gnome-btn-primary:hover,
-.gnome-btn-ghost:not(:disabled):hover,
-a.gnome-btn-ghost:hover,
-.gnome-btn-danger:not(:disabled):hover,
-a.gnome-btn-danger:hover,
-.gnome-btn-danger-filled:not(:disabled):hover,
-a.gnome-btn-danger-filled:hover,
-.gnome-btn-inverted:not(:disabled):hover,
-a.gnome-btn-inverted:hover,
-.detail-action-btn:not(:disabled):hover,
-a.detail-action-btn:hover,
-.detail-action-btn:not(:disabled):focus-visible,
-a.detail-action-btn:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Disabled State Standardization */
-.gnome-btn-primary:disabled, 
-.gnome-btn-ghost:disabled, 
-.gnome-btn-danger:disabled, 
-.gnome-btn-danger-filled:disabled, 
-.gnome-btn-inverted:disabled,
-.detail-action-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* 1. Primary Button (Solid Blue) */
-.gnome-btn-primary {
-    background-color: #3584e4;
-    color: #ffffff;
-}
-.gnome-btn-primary:hover:not(:disabled),
-a.gnome-btn-primary:hover {
-    background-color: #1c71d8;
-}
-
-/* 2. Ghost Button (Outlined Blue) */
-.gnome-btn-ghost {
-    background-color: transparent;
-    color: #3584e4;
-    border-color: #3584e4;
-}
-.gnome-btn-ghost:hover:not(:disabled),
-a.gnome-btn-ghost:hover {
-    background-color: #3584e4;
-    color: #ffffff;
-}
-.dark .gnome-btn-ghost {
-    border-color: #3584e4;
-    color: #3584e4;
-}
-
-/* 3. Inverted Button (Solid White -> Blue) */
-.gnome-btn-inverted {
-    background-color: #ffffff;
-    color: #1c71d8;
-}
-.gnome-btn-inverted:hover:not(:disabled),
-a.gnome-btn-inverted:hover {
-    background-color: #f6f5f4;
-}
-
-/* 4. Danger Button (Outlined Red) */
-.gnome-btn-danger {
-    background-color: transparent;
-    color: #E01B24;
-    border-color: #E01B24;
-}
-.gnome-btn-danger:hover:not(:disabled),
-a.gnome-btn-danger:hover {
-    background-color: #E01B24;
-    color: #ffffff;
-}
-
-/* 5. Danger Filled Button (Solid Red) */
-.gnome-btn-danger-filled {
-    background-color: #E01B24;
-    color: #ffffff;
-}
-.gnome-btn-danger-filled:hover:not(:disabled),
-a.gnome-btn-danger-filled:hover {
-    background-color: #c01c28;
-}
-
-/* Detail specific shine effect */
-.detail-action-btn {
-    position: relative;
-    overflow: hidden;
-    border-width: 1px;
-}
-.detail-action-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
-    transform: translateX(-100%);
-    transition: transform 300ms ease;
-}
-.detail-action-btn:hover::before,
-.detail-action-btn:focus-visible::before {
-    transform: translateX(100%);
-}
-
-/* Size Modifier */
-.gnome-btn-large {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-}
-
-/* Navigation Icons */
-.gnome-btn-icon {
+/* Custom Dropdown UI to replace native selects */
+.gnome-dropdown-menu {
+    border-radius: 0.75rem; /* 12px bounding box */
+    padding: 0.375rem; /* 6px padding inside the popover */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform-origin: top right;
+    animation: dropdownFadeIn 150ms ease-out forwards;
+    overflow: hidden; /* Clips the sharp corners of child elements */
+    z-index: 50;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.5rem;
-    color: #77767B;
-    transition: all 150ms ease;
-    cursor: pointer;
+    flex-direction: column;
 }
-.gnome-btn-icon:hover { background-color: #f6f5f4; color: #241F31; }
-.dark .gnome-btn-icon:hover { background-color: #2d2640; color: #ffffff; }
-.gnome-btn-icon.active { color: #3584e4; background-color: #f6f5f4; }
-.dark .gnome-btn-icon.active { color: #3584e4; background-color: #3d3846; }
-
-/* Navigation Links */
-.gnome-nav-link {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #5e5c64;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.5rem;
-    transition: all 150ms ease;
+@keyframes dropdownFadeIn {
+    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.gnome-nav-link:hover { color: #241F31; background-color: #f6f5f4; }
-.gnome-nav-link.active { color: #241F31; background-color: #f6f5f4; }
-.dark .gnome-nav-link { color: #c0bfbc; }
-.dark .gnome-nav-link:hover { color: #ffffff; background-color: #2d2640; }
-.dark .gnome-nav-link.active { color: #ffffff; background-color: #2d2640; }
-
-/* Categories & Tabs */
-.gnome-category-btn, .gnome-tab-btn {
-    padding: 0.375rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #5e5c64;
-    transition: all 150ms ease;
-    white-space: nowrap;
-    flex-shrink: 0;
+.dark .gnome-dropdown-menu {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
-.gnome-tab-btn { border-radius: 9999px; font-weight: 700; padding: 0.375rem 1.25rem; background-color: transparent;}
-.gnome-category-btn:hover, .gnome-tab-btn:hover { background-color: #deddda; color: #241F31; }
-.dark .gnome-category-btn, .dark .gnome-tab-btn { color: #c0bfbc; }
-.dark .gnome-category-btn:hover, .dark .gnome-tab-btn:hover { background-color: #3d3846; color: #ffffff; }
-.gnome-category-btn.active, .gnome-tab-btn.active { background-color: #3584e4; color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
-.gnome-tab-btn.active { transform: scale(1.05); }
-
-/* Pagination */
-.gnome-page-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #5e5c64;
-    border: 1px solid #c0bfbc;
-    transition: all 150ms ease;
-}
-.gnome-page-btn:hover { background-color: #deddda; color: #241F31; }
-.gnome-page-btn.active { background-color: #3584e4; color: #ffffff; border-color: #3584e4; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transform: scale(1.05); }
-.gnome-page-btn:disabled { opacity: 0.3; cursor: not-allowed; background-color: transparent; }
-.dark .gnome-page-btn { color: #c0bfbc; border-color: #3d3846; }
-.dark .gnome-page-btn:hover { background-color: #3d3846; color: #ffffff; }
-.dark .gnome-page-btn.active { background-color: #3584e4; color: #ffffff; border-color: #3584e4; }
-
-/* Badges */
-.gnome-badge {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.625rem;
-    border-radius: 9999px;
-    background-color: #f6f5f4;
-    color: #77767B;
-}
-.dark .gnome-badge { background-color: #3d3846; color: #c0bfbc; }
-
-.gnome-badge-status {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    border: 1px solid transparent;
-}
-.gnome-badge-system { background-color: #deddda; color: #77767B; border-color: #c0bfbc; }
-.dark .gnome-badge-system { background-color: #3d3846; color: #c0bfbc; border-color: #5e5c64; }
-
-.gnome-badge-success { background-color: rgba(51, 209, 122, 0.15); color: #33D17A; }
-.gnome-badge-danger { background-color: rgba(224, 27, 36, 0.15); color: #E01B24; }
-.gnome-badge-warning { background-color: rgba(255, 120, 0, 0.15); color: #FF7800; }
-
-/* Custom Toggle Switch */
-.gnome-toggle {
-    position: relative;
-    display: inline-flex;
-    height: 1.5rem;
-    width: 2.75rem;
-    align-items: center;
-    border-radius: 9999px;
-    transition: background-color 200ms ease;
-    background-color: #c0bfbc;
-    outline: none;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-.dark .gnome-toggle { background-color: #3d3846; }
-.gnome-toggle[aria-checked="true"] { background-color: #3584e4; }
-
-.gnome-toggle-knob {
-    display: inline-block;
-    height: 1rem;
-    width: 1rem;
-    border-radius: 9999px;
-    background-color: #ffffff;
-    transform: translateX(0.25rem);
-    transition: transform 200ms ease;
-}
-.gnome-toggle[aria-checked="true"] .gnome-toggle-knob {
-    transform: translateX(1.5rem);
-}
-
-#cat-scroll-left, #cat-scroll-right { color: #3584e4; }
-#cat-scroll-left:hover, #cat-scroll-right:hover { color: #fff; }@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-html {
-    /* Prevents horizontal layout shift when switching between long/short views */
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: #77767B;
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #5e5c64;
-}
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #77767B transparent;
-}
-
-/* Hide scrollbar for category pills */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* Header Background */
-.gnome-hero {
-    color: #fff;
-    background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
-    background-size: 1024px;
-}
-.dark .gnome-hero {
-    color: #fff;
-    background: linear-gradient(to top, #433583dd, #5494e000), url(img/tris-d.svg) bottom left no-repeat, linear-gradient(to top, #433583, #5494e0);
-    background-size: 1024px;
-}
-
-/* Hero Section Smooth Autohide */
-#hero-section {
-    max-height: 600px;
-    opacity: 1;
-}
-#hero-section.hero-hidden {
-    max-height: 0;
-    opacity: 0;
-    margin: 0;
-    pointer-events: none;
-}
-
-/* Clean Markdown Typography Styling for Light & Dark Mode */
-.prose {
+.gnome-dropdown-item {
     color: #241F31;
+    border-radius: 0.5rem; /* 8px inner items */
+    transition: background-color 150ms ease, color 150ms ease;
+    margin-bottom: 2px;
 }
-.dark .prose {
-    color: #c0bfbc;
+.gnome-dropdown-item:last-child {
+    margin-bottom: 0;
 }
-.dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 {
+.gnome-dropdown-item:hover {
+    background-color: #f6f5f4;
+}
+.dark .gnome-dropdown-item {
     color: #ffffff;
 }
-.dark .prose a {
-    color: #3584e4;
-}
-.dark .prose strong, .dark .prose b {
-    color: #ffffff;
-}
-.dark .prose code {
-    color: #ffffff;
+.dark .gnome-dropdown-item:hover {
     background-color: #3d3846;
 }
-.dark .prose blockquote {
-    color: #c0bfbc;
-    border-left-color: #3d3846;
-}
-.dark .prose hr {
-    border-color: #3d3846;
-}
-
-/* Extension card hover polish */
-.extension-card {
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
-    will-change: transform, box-shadow;
-}
-.extension-card:hover, 
-.extension-card:focus-within {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px #3584e4;
-    border-color: #3584e4;
-    cursor: pointer;
-}
-.dark .extension-card:hover, 
-.dark .extension-card:focus-within {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px #3584e4;
-    background-color: #322b47;
-}
-
-/* Unfolding Animation for Card Clicks */
-.card-unfold-active {
-    animation: unfoldToCenter 350ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    z-index: 50;
-    position: relative;
-}
-
-@keyframes unfoldToCenter {
-    0% { transform: translateY(-4px) scale(1); opacity: 1; }
-    50% { transform: translateY(-10px) scale(1.02); opacity: 0.8; }
-    100% { transform: translateY(-15px) scale(1.05); opacity: 0; }
-}
-
-.dark .text-gnome-grey {
-    color: #deddda;
-}
-.logo .icon, .logo2 .icon {
-    font-size: 6em;
-    line-height: 0%;
-}
-.logo2 .icon {
-    transform: translateX(-0.1em);
-}
-
-/* =========================================
-   REUSABLE GNOME COMPONENTS
-   ========================================= */
-
-/* Global Layout & Structure */
-.gnome-layout-body {
+.gnome-dropdown-item.selected {
     background-color: #f6f5f4;
-    color: #241F31;
-    transition: background-color 300ms ease, color 300ms ease;
-    min-height: 100vh;
-}
-.dark .gnome-layout-body { background-color: #241F31; color: #ffffff; }
-
-.gnome-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #c0bfbc;
-    transition: background-color 300ms ease, border-color 300ms ease;
-}
-.dark .gnome-header { background-color: rgba(36, 31, 49, 0.95); border-bottom-color: #3d3846; }
-
-.gnome-footer {
-    border-top: 1px solid #c0bfbc;
-    margin-top: 4rem;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-    transition: border-color 300ms ease;
-}
-.dark .gnome-footer { border-top-color: #3d3846; }
-
-.gnome-section-divider {
-    border-top: 1px solid #c0bfbc;
-    padding-top: 2.5rem;
-    margin-top: 2.5rem;
-}
-.dark .gnome-section-divider { border-top-color: #3d3846; }
-
-/* Panels, Cards & Containers */
-.gnome-card-panel {
-    background-color: #ffffff;
-    border: 1px solid #c0bfbc;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-.dark .gnome-card-panel { background-color: #2d2640; border-color: #3d3846; }
-
-.gnome-filter-container {
-    position: relative;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    border: 1px solid #c0bfbc;
-    border-radius: 0.75rem;
-    background-color: #f6f5f4;
-    padding: 0.25rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-.dark .gnome-filter-container { border-color: #3d3846; background-color: #2d2640; }
-
-.gnome-detail-icon-box {
-    width: 8rem;
-    height: 8rem;
-    border-radius: 1.5rem;
-    background-color: #ffffff;
-    border: 1px solid #c0bfbc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    font-weight: 700;
     color: #3584e4;
 }
-.dark .gnome-detail-icon-box { background-color: #2d2640; border-color: #3d3846; }
-
-/* Banners */
-.gnome-error-banner {
-    background-color: rgba(224, 27, 36, 0.1);
-    border: 1px solid rgba(224, 27, 36, 0.3);
-    color: #E01B24;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
+.dark .gnome-dropdown-item.selected {
+    background-color: #3d3846;
+    color: #3584e4;
 }
-
-.gnome-info-banner {
-    background-color: #d9edf7;
-    border: 1px solid #bce8f1;
-    border-radius: 0.75rem;
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-.dark .gnome-info-banner { background-color: #243f55; border-color: #2f5573; }
-
-.gnome-info-banner-text {
-    color: #31708f;
-    font-size: 12pt;
-    line-height: 1.625;
-}
-.dark .gnome-info-banner-text { color: #9bc2d5; }
-
-/* Typography */
-.gnome-title-page {
-    font-size: 24pt;
-    font-weight: 800;
-    color: #241F31;
-    letter-spacing: -0.025em;
-}
-.dark .gnome-title-page { color: #ffffff; }
-
-.gnome-title-section {
-    font-size: 18pt;
-    font-weight: 800;
-    color: #241F31;
-}
-.dark .gnome-title-section { color: #ffffff; }
-
-.gnome-title-uppercase {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #241F31;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #c0bfbc;
-    padding-bottom: 0.5rem;
-}
-.dark .gnome-title-uppercase { color: #ffffff; border-bottom-color: #3d3846; }
-
-.gnome-title-uppercase-clean {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: #77767B;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* Inputs & Selects */
-.gnome-input, .gnome-select {
-    width: 100%;
-    font-size: 0.875rem;
-    border-radius: 0.75rem;
-    padding: 0.5rem 1rem;
-    background-color: #ffffff;
-    color: #241F31;
-    border: 1px solid #c0bfbc;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    transition: all 150ms ease;
-    outline: none;
-}
-.gnome-select { width: auto; padding: 0.375rem 1rem; font-weight: 600; color: #5e5c64; cursor: pointer; }
-.gnome-input:focus, .gnome-select:focus { border-color: #3584e4; box-shadow: 0 0 0 2px rgba(53, 132, 228, 0.2); }
-.dark .gnome-input, .dark .gnome-select { background-color: #2d2640; color: #ffffff; border-color: #3d3846; }
-.dark .gnome-select { color: #c0bfbc; }
-
 
 /* =========================================
    UNIFIED BUTTON STYLES & ANIMATIONS
@@ -893,20 +401,13 @@ body {
 }
 
 /* Unified Hover Animation for all primary action buttons (Handles both native buttons and anchor tags) */
-.gnome-btn-primary:not(:disabled):hover,
-a.gnome-btn-primary:hover,
-.gnome-btn-ghost:not(:disabled):hover,
-a.gnome-btn-ghost:hover,
-.gnome-btn-danger:not(:disabled):hover,
-a.gnome-btn-danger:hover,
-.gnome-btn-danger-filled:not(:disabled):hover,
-a.gnome-btn-danger-filled:hover,
-.gnome-btn-inverted:not(:disabled):hover,
-a.gnome-btn-inverted:hover,
-.detail-action-btn:not(:disabled):hover,
-a.detail-action-btn:hover,
-.detail-action-btn:not(:disabled):focus-visible,
-a.detail-action-btn:focus-visible {
+.gnome-btn-primary:not(:disabled):hover, a.gnome-btn-primary:hover,
+.gnome-btn-ghost:not(:disabled):hover, a.gnome-btn-ghost:hover,
+.gnome-btn-danger:not(:disabled):hover, a.gnome-btn-danger:hover,
+.gnome-btn-danger-filled:not(:disabled):hover, a.gnome-btn-danger-filled:hover,
+.gnome-btn-inverted:not(:disabled):hover, a.gnome-btn-inverted:hover,
+.detail-action-btn:not(:disabled):hover, a.detail-action-btn:hover,
+.detail-action-btn:not(:disabled):focus-visible, a.detail-action-btn:focus-visible {
     transform: translateY(-4px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -929,8 +430,7 @@ a.detail-action-btn:focus-visible {
     background-color: #3584e4;
     color: #ffffff;
 }
-.gnome-btn-primary:hover:not(:disabled),
-a.gnome-btn-primary:hover {
+.gnome-btn-primary:hover:not(:disabled), a.gnome-btn-primary:hover {
     background-color: #1c71d8;
 }
 
@@ -940,8 +440,7 @@ a.gnome-btn-primary:hover {
     color: #3584e4;
     border-color: #3584e4;
 }
-.gnome-btn-ghost:hover:not(:disabled),
-a.gnome-btn-ghost:hover {
+.gnome-btn-ghost:hover:not(:disabled), a.gnome-btn-ghost:hover {
     background-color: #3584e4;
     color: #ffffff;
 }
@@ -955,8 +454,7 @@ a.gnome-btn-ghost:hover {
     background-color: #ffffff;
     color: #1c71d8;
 }
-.gnome-btn-inverted:hover:not(:disabled),
-a.gnome-btn-inverted:hover {
+.gnome-btn-inverted:hover:not(:disabled), a.gnome-btn-inverted:hover {
     background-color: #f6f5f4;
 }
 
@@ -966,8 +464,7 @@ a.gnome-btn-inverted:hover {
     color: #E01B24;
     border-color: #E01B24;
 }
-.gnome-btn-danger:hover:not(:disabled),
-a.gnome-btn-danger:hover {
+.gnome-btn-danger:hover:not(:disabled), a.gnome-btn-danger:hover {
     background-color: #E01B24;
     color: #ffffff;
 }
@@ -977,8 +474,7 @@ a.gnome-btn-danger:hover {
     background-color: #E01B24;
     color: #ffffff;
 }
-.gnome-btn-danger-filled:hover:not(:disabled),
-a.gnome-btn-danger-filled:hover {
+.gnome-btn-danger-filled:hover:not(:disabled), a.gnome-btn-danger-filled:hover {
     background-color: #c01c28;
 }
 
@@ -996,8 +492,7 @@ a.gnome-btn-danger-filled:hover {
     transform: translateX(-100%);
     transition: transform 300ms ease;
 }
-.detail-action-btn:hover::before,
-.detail-action-btn:focus-visible::before {
+.detail-action-btn:hover::before, .detail-action-btn:focus-visible::before {
     transform: translateX(100%);
 }
 
@@ -1016,6 +511,7 @@ a.gnome-btn-danger-filled:hover {
     height: 2.25rem;
     border-radius: 0.5rem;
     color: #77767B;
+    border: 1px solid transparent;
     transition: all 150ms ease;
     cursor: pointer;
 }
@@ -1052,7 +548,7 @@ a.gnome-btn-danger-filled:hover {
 }
 .gnome-tab-btn { border-radius: 9999px; font-weight: 700; padding: 0.375rem 1.25rem; background-color: transparent;}
 .gnome-category-btn:hover, .gnome-tab-btn:hover { background-color: #deddda; color: #241F31; }
-.dark .gnome-category-btn, .dark .gnome-tab-btn { color: #c0bfbc; }
+.dark .gnome-category-btn, .gnome-tab-btn { color: #c0bfbc; }
 .dark .gnome-category-btn:hover, .dark .gnome-tab-btn:hover { background-color: #3d3846; color: #ffffff; }
 .gnome-category-btn.active, .gnome-tab-btn.active { background-color: #3584e4; color: #ffffff; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
 .gnome-tab-btn.active { transform: scale(1.05); }
@@ -1064,15 +560,15 @@ a.gnome-btn-danger-filled:hover {
     font-size: 0.875rem;
     font-weight: 700;
     color: #5e5c64;
-    border: 1px solid #c0bfbc;
+    border: 1px solid transparent;
     transition: all 150ms ease;
 }
 .gnome-page-btn:hover { background-color: #deddda; color: #241F31; }
-.gnome-page-btn.active { background-color: #3584e4; color: #ffffff; border-color: #3584e4; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transform: scale(1.05); }
+.gnome-page-btn.active { background-color: #3584e4; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transform: scale(1.05); }
 .gnome-page-btn:disabled { opacity: 0.3; cursor: not-allowed; background-color: transparent; }
-.dark .gnome-page-btn { color: #c0bfbc; border-color: #3d3846; }
+.dark .gnome-page-btn { color: #c0bfbc; }
 .dark .gnome-page-btn:hover { background-color: #3d3846; color: #ffffff; }
-.dark .gnome-page-btn.active { background-color: #3584e4; color: #ffffff; border-color: #3584e4; }
+.dark .gnome-page-btn.active { background-color: #3584e4; color: #ffffff; }
 
 /* Badges */
 .gnome-badge {
@@ -1094,8 +590,8 @@ a.gnome-btn-danger-filled:hover {
     border-radius: 9999px;
     border: 1px solid transparent;
 }
-.gnome-badge-system { background-color: #deddda; color: #77767B; border-color: #c0bfbc; }
-.dark .gnome-badge-system { background-color: #3d3846; color: #c0bfbc; border-color: #5e5c64; }
+.gnome-badge-system { background-color: #deddda; color: #77767B; border-color: transparent; }
+.dark .gnome-badge-system { background-color: #3d3846; color: #c0bfbc; border-color: transparent; }
 
 .gnome-badge-success { background-color: rgba(51, 209, 122, 0.15); color: #33D17A; }
 .gnome-badge-danger { background-color: rgba(224, 27, 36, 0.15); color: #E01B24; }
@@ -1133,3 +629,13 @@ a.gnome-btn-danger-filled:hover {
 
 #cat-scroll-left, #cat-scroll-right { color: #3584e4; }
 #cat-scroll-left:hover, #cat-scroll-right:hover { color: #fff; }
+
+/* High Contrast Mode Overrides */
+@media (prefers-contrast: more) {
+    .gnome-card-panel, .gnome-filter-container, .gnome-detail-icon-box, .gnome-input, .gnome-select, .gnome-page-btn, .gnome-btn-icon, .gnome-dropdown-menu {
+        border: 1px solid #c0bfbc;
+    }
+    .dark .gnome-card-panel, .dark .gnome-filter-container, .dark .gnome-detail-icon-box, .dark .gnome-input, .dark .gnome-select, .dark .gnome-page-btn, .dark .gnome-btn-icon, .dark .gnome-dropdown-menu {
+        border: 1px solid #3d3846;
+    }
+}

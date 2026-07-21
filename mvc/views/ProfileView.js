@@ -96,14 +96,14 @@ class ProfileView {
     generateProfileCardHTML(extension, isOwner) {
         // Derive review status badge (Mock logic mapping data to EGO UI requirements)
         let statusBadge = '';
-        let borderColor = 'border-[#c0bfbc] dark:border-[#3d3846]';
+        let borderColor = '';
         
         if (extension.hasError) {
             statusBadge = `<span class="bg-gnome-red/15 text-gnome-red border border-gnome-red/20 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Rejected</span>`;
-            borderColor = 'border-gnome-red';
+            borderColor = '!border-gnome-red';
         } else if (extension.new) {
             statusBadge = `<span class="bg-gnome-orange/15 text-gnome-orange border border-gnome-orange/20 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Pending</span>`;
-            borderColor = 'border-gnome-orange';
+            borderColor = '!border-gnome-orange';
         } else {
             statusBadge = `<span class="bg-gnome-green/15 text-gnome-green border border-gnome-green/20 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Active</span>`;
         }
@@ -115,7 +115,7 @@ class ProfileView {
         ` : '';
 
         return `
-            <article class="extension-card group gnome-card-panel p-4 flex flex-col justify-between cursor-pointer border ${borderColor}" data-extension-id="${extension.id}">
+            <article class="extension-card group gnome-card-panel p-4 flex flex-col justify-between cursor-pointer ${borderColor}" data-extension-id="${extension.id}">
                 <div>
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0">
