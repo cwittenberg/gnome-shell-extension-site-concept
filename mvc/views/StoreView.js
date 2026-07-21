@@ -250,6 +250,14 @@ class StoreView {
                     didDrag = false;
                 }
             }, { capture: true });
+
+            // Mouse wheel horizontal scrolling
+            catContainer.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0) {
+                    e.preventDefault(); // Prevent vertical page scrolling while interacting with the categories
+                    catContainer.scrollLeft += e.deltaY;
+                }
+            }, { passive: false });
         }
     }
 
