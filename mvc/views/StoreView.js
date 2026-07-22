@@ -618,9 +618,9 @@ class StoreView {
                                     <span class="font-medium">${extension.rating.toFixed(1)}</span>
                                     <i class="icon icon-star text-sm"></i>
                                 </div>
-                                <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
+                                <div class="download-count-stat text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                                     <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
-                                    <i class="icon icon-download text-xs"></i>
+                                    <i class="icon icon-download text-xs download-count-icon"></i>
                                 </div>
                             </div>
                         </div>
@@ -633,9 +633,9 @@ class StoreView {
                             <span class="font-medium">${extension.rating.toFixed(1)}</span>
                             <i class="icon icon-star text-sm"></i>
                         </div>
-                        <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
+                        <div class="download-count-stat text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                             <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
-                            <i class="icon icon-download text-xs"></i>
+                            <i class="icon icon-download text-xs download-count-icon"></i>
                         </div>
                     </div>
                     <button type="button" class="gnome-btn-icon bg-[#f6f5f4] dark:bg-[#3d3846] sm:bg-transparent sm:dark:bg-transparent group-hover:text-white group-hover:bg-gnome-blue sm:group-hover:bg-gnome-blue transition-colors" title="View details">
@@ -665,9 +665,9 @@ class StoreView {
                                 <span class="font-medium">${extension.rating.toFixed(1)}</span>
                                 <i class="icon icon-star text-sm"></i>
                             </div>
-                            <div class="text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
+                            <div class="download-count-stat text-[10px] uppercase tracking-wider text-gnome-grey flex items-center justify-end gap-1 w-max ml-auto">
                                 <span class="font-medium">${this.formatDownloads(extension.downloads)}</span>
-                                <i class="icon icon-download text-xs"></i>
+                                <i class="icon icon-download text-xs download-count-icon"></i>
                             </div>
                         </div>
                     </div>
