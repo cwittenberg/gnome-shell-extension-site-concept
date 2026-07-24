@@ -286,7 +286,7 @@ class UploadView {
                                 <label class="block text-sm font-bold text-gnome-black dark:text-gnome-white mb-2">Project Icon / Avatar</label>
                                 <div class="flex items-center gap-4">
                                     <div class="w-16 h-16 rounded-xl bg-white dark:bg-gnome-black border border-[#c0bfbc] dark:border-[#5e5c64] flex items-center justify-center text-gnome-grey">
-                                        <i class="icon icon-image-file text-2xl"></i>
+                                        <i class="icon icon-image text-2xl"></i>
                                     </div>
                                     <button class="px-4 py-2 font-bold text-sm bg-white dark:bg-[#3d3846] hover:bg-[#deddda] dark:hover:bg-[#5e5c64] border border-[#c0bfbc] dark:border-[#5e5c64] rounded-lg transition-colors">Upload Icon</button>
                                 </div>
